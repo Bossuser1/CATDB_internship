@@ -1,0 +1,258 @@
+---------------------------------- page 1 ----------------------------------
+#### DownExpandingContainer('title')
+  Paragraph('CATDB\_django Documentation', style='title page title')
+       > (0,0,1,0,2) title page title
+         (0,0,0,0,2) body
+    SingleStyledText('CATDB\_django Documentation')
+  Paragraph('Release V1', style='title page subtitle')
+       > (0,0,1,0,2) title page subtitle
+         (0,0,0,0,2) body
+    SingleStyledText('Release V1')
+  Paragraph('TRAORE BASSIRO', style='title page author')
+       > (0,0,1,0,2) title page author
+         (0,0,0,0,2) body
+    SingleStyledText('TRAORE BASSIRO')
+  Paragraph('février 14, 2019', style='title page date')
+       > (0,0,1,0,2) title page date
+         (0,0,0,0,2) body
+    SingleStyledText('février 14, 2019')
+---------------------------------- page i ----------------------------------
+#### FlowablesContainer('chapter title')
+  Paragraph('Table of Contents', style='front matter section title')
+       > (0,0,1,0,2) front matter section title
+         (0,0,0,0,2) body
+    Field('Table of Contents')
+      SingleStyledText('Table of Contents')
+#### ChainedContainer('column1')
+  TableOfContentsSection(style='table of contents')
+       > (0,0,1,0,1) table of contents section
+         (0,0,0,1,1) chapter
+    TableOfContents()   table of contents
+         > (0,0,0,0,2) table of contents
+#### DownExpandingContainer('footer')
+  Footer('		i')
+       > (0,0,0,0,2) footer
+         (0,0,0,0,1) body
+    MixedStyledText('		i')
+      Tab('	')
+      Tab('	')
+      Field('i')
+        SingleStyledText('i')
+---------------------------------- page 1 ----------------------------------
+#### ChainedContainer('column1')
+  DocumentTree()
+    Paragraph('Contents:')   /export/home/gnet/btraore/WWW_DEV/cgi-bin/projects/CATDB/docs/source/index.rst:9 <paragraph>
+         > (0,0,0,0,2) body
+      MixedStyledText('Contents:')
+        SingleStyledText('Contents:')
+    StaticGroupedFlowables()   /export/home/gnet/btraore/WWW_DEV/cgi-bin/projects/CATDB/docs/source/index.rst:0 <compound>
+    List(style='bulleted')   /export/home/gnet/btraore/WWW_DEV/cgi-bin/projects/CATDB/docs/source/index.rst:14 <bullet_list>
+         > (0,0,1,0,2) bulleted list
+      ListItem()
+           x (0,0,1,0,4) bulleted list item
+           > fallback to default style
+        ListItemLabel('•')
+             > (0,0,1,0,6) bulleted list item label
+               (0,0,0,0,2) list item label
+            MixedStyledText('•')
+              SingleStyledText('')
+              SingleStyledText('•')
+              SingleStyledText('')
+        StaticGroupedFlowables()   /export/home/gnet/btraore/WWW_DEV/cgi-bin/projects/CATDB/docs/source/index.rst:None <list_item>
+             > (0,0,0,0,3) list item body
+          Paragraph('Installation de django')   /export/home/gnet/btraore/WWW_DEV/cgi-bin/projects/CATDB/docs/source/index.rst:14 <paragraph>
+               > (0,0,0,0,5) list item paragraph
+                 (0,0,0,0,2) body
+            MixedStyledText('Installation de django')
+              SingleStyledText('Installation de django')
+      ListItem()
+           x (0,0,1,0,4) bulleted list item
+           > fallback to default style
+        ListItemLabel('•')
+             > (0,0,1,0,6) bulleted list item label
+               (0,0,0,0,2) list item label
+            MixedStyledText('•')
+              SingleStyledText('')
+              SingleStyledText('•')
+              SingleStyledText('')
+        StaticGroupedFlowables()   None:None <list_item>
+             > (0,0,0,0,3) list item body
+          Paragraph('creation du projet')   /export/home/gnet/btraore/WWW_DEV/cgi-bin/projects/CATDB/docs/source/index.rst:15 <paragraph>
+               > (0,0,0,0,5) list item paragraph
+                 (0,0,0,0,2) body
+            MixedStyledText('creation du projet')
+              SingleStyledText('creation du projet')
+          List(style='bulleted')   /export/home/gnet/btraore/WWW_DEV/cgi-bin/projects/CATDB/docs/source/index.rst:17 <bullet_list>
+               > (0,0,1,0,2) bulleted list
+            ListItem()
+                 x (0,0,1,0,4) bulleted list item
+                 > fallback to default style
+              ListItemLabel('•')
+                   > (0,0,1,0,6) bulleted list item label
+                     (0,0,0,0,2) list item label
+                  MixedStyledText('•')
+                    SingleStyledText('')
+                    SingleStyledText('•')
+                    SingleStyledText('')
+              StaticGroupedFlowables()   None:None <list_item>
+                   > (0,0,0,0,3) list item body
+                Paragraph('avec une liste imbriquée')   /export/home/gnet/btraore/WWW_DEV/cgi-bin/projects/CATDB/docs/source/index.rst:17 <paragraph>
+                     > (0,0,0,0,5) list item paragraph
+                       (0,0,0,0,2) body
+                  MixedStyledText('avec une liste imbriquée')
+                    SingleStyledText('avec une liste imbriquée')
+            ListItem()
+                 x (0,0,1,0,4) bulleted list item
+                 > fallback to default style
+              ListItemLabel('•')
+                   > (0,0,1,0,6) bulleted list item label
+                     (0,0,0,0,2) list item label
+                  MixedStyledText('•')
+                    SingleStyledText('')
+                    SingleStyledText('•')
+                    SingleStyledText('')
+              StaticGroupedFlowables()   None:None <list_item>
+                   > (0,0,0,0,3) list item body
+                Paragraph('et un sous-item')   /export/home/gnet/btraore/WWW_DEV/cgi-bin/projects/CATDB/docs/source/index.rst:18 <paragraph>
+                     > (0,0,0,0,5) list item paragraph
+                       (0,0,0,0,2) body
+                  MixedStyledText('et un sous-item')
+                    SingleStyledText('et un sous-item')
+      ListItem()
+           x (0,0,1,0,4) bulleted list item
+           > fallback to default style
+        ListItemLabel('•')
+             > (0,0,1,0,6) bulleted list item label
+               (0,0,0,0,2) list item label
+            MixedStyledText('•')
+              SingleStyledText('')
+              SingleStyledText('•')
+              SingleStyledText('')
+        StaticGroupedFlowables()   /export/home/gnet/btraore/WWW_DEV/cgi-bin/projects/CATDB/docs/source/index.rst:None <list_item>
+             > (0,0,0,0,3) list item body
+          Paragraph('mise a jour')   /export/home/gnet/btraore/WWW_DEV/cgi-bin/projects/CATDB/docs/source/index.rst:20 <paragraph>
+               > (0,0,0,0,5) list item paragraph
+                 (0,0,0,0,2) body
+            MixedStyledText('mise a jour')
+              SingleStyledText('mise a jour')
+      ListItem()
+           x (0,0,1,0,4) bulleted list item
+           > fallback to default style
+        ListItemLabel('•')
+             > (0,0,1,0,6) bulleted list item label
+               (0,0,0,0,2) list item label
+            MixedStyledText('•')
+              SingleStyledText('')
+              SingleStyledText('•')
+              SingleStyledText('')
+        StaticGroupedFlowables()   /export/home/gnet/btraore/WWW_DEV/cgi-bin/projects/CATDB/docs/source/index.rst:None <list_item>
+             > (0,0,0,0,3) list item body
+          Paragraph('Django sphinx ecriture')   /export/home/gnet/btraore/WWW_DEV/cgi-bin/projects/CATDB/docs/source/index.rst:22 <paragraph>
+               > (0,0,0,0,5) list item paragraph
+                 (0,0,0,0,2) body
+            MixedStyledText('Django sphinx ecriture')
+              SingleStyledText('Django sphinx ecriture')
+    DefinitionList()   /export/home/gnet/btraore/WWW_DEV/cgi-bin/projects/CATDB/docs/source/index.rst:0 <definition_list>
+         > (0,0,0,0,2) definition list
+      LabeledFlowable()   /export/home/gnet/btraore/WWW_DEV/cgi-bin/projects/CATDB/docs/source/index.rst:24 <definition_list_item>
+           > (0,0,0,0,4) definition list item
+        StaticGroupedFlowables(style='definition term')
+             > (0,0,1,0,5) definition term
+          Paragraph('::')
+               > (0,0,1,0,7) definition term paragraph
+                 (0,0,0,0,2) body
+            MixedStyledText('::')   /export/home/gnet/btraore/WWW_DEV/cgi-bin/projects/CATDB/docs/source/index.rst:24 <term>
+              SingleStyledText('::')
+        StaticGroupedFlowables(style='definition')   None:None <definition>
+             > (0,0,1,0,5) definition
+          Paragraph('make html sphinx-build -b rinoh ...')   /export/home/gnet/btraore/WWW_DEV/cgi-bin/projects/CATDB/docs/source/index.rst:24 <paragraph>
+               > (0,0,1,0,7) definition paragraph
+                 (0,0,0,0,2) body
+            MixedStyledText('make html sphinx-build -b rinoh ...')
+              SingleStyledText('make html sphinx-build -b rinoh ...')
+    List(style='bulleted')   /export/home/gnet/btraore/WWW_DEV/cgi-bin/projects/CATDB/docs/source/index.rst:29 <bullet_list>
+         > (0,0,1,0,2) bulleted list
+      ListItem()
+           x (0,0,1,0,4) bulleted list item
+           > fallback to default style
+        ListItemLabel('•')
+             > (0,0,1,0,6) bulleted list item label
+               (0,0,0,0,2) list item label
+            MixedStyledText('•')
+              SingleStyledText('')
+              SingleStyledText('•')
+              SingleStyledText('')
+        StaticGroupedFlowables()   /export/home/gnet/btraore/WWW_DEV/cgi-bin/projects/CATDB/docs/source/index.rst:None <list_item>
+             > (0,0,0,0,3) list item body
+          Paragraph('Index')   /export/home/gnet/btraore/WWW_DEV/cgi-bin/projects/CATDB/docs/source/index.rst:29 <paragraph>
+               > (0,0,0,0,5) list item paragraph
+                 (0,0,0,0,2) body
+            MixedStyledText('Index')
+              AnnotatedText('Index', style='internal link')   None:None <reference>
+                   > (0,0,1,0,1) internal hyperlink
+                MixedStyledText('Index')
+                  MixedStyledText('Index')   None:None <inline>
+                    SingleStyledText('Index')
+      ListItem()
+           x (0,0,1,0,4) bulleted list item
+           > fallback to default style
+        ListItemLabel('•')
+             > (0,0,1,0,6) bulleted list item label
+               (0,0,0,0,2) list item label
+            MixedStyledText('•')
+              SingleStyledText('')
+              SingleStyledText('•')
+              SingleStyledText('')
+        StaticGroupedFlowables()   /export/home/gnet/btraore/WWW_DEV/cgi-bin/projects/CATDB/docs/source/index.rst:None <list_item>
+             > (0,0,0,0,3) list item body
+          Paragraph('Module Index')   /export/home/gnet/btraore/WWW_DEV/cgi-bin/projects/CATDB/docs/source/index.rst:30 <paragraph>
+               > (0,0,0,0,5) list item paragraph
+                 (0,0,0,0,2) body
+            MixedStyledText('Module Index')
+              AnnotatedText('Module Index', style='internal link')   None:None <reference>
+                   > (0,0,1,0,1) internal hyperlink
+                MixedStyledText('Module Index')
+                  MixedStyledText('Module Index')   None:None <inline>
+                    SingleStyledText('Module Index')
+      ListItem()
+           x (0,0,1,0,4) bulleted list item
+           > fallback to default style
+        ListItemLabel('•')
+             > (0,0,1,0,6) bulleted list item label
+               (0,0,0,0,2) list item label
+            MixedStyledText('•')
+              SingleStyledText('')
+              SingleStyledText('•')
+              SingleStyledText('')
+        StaticGroupedFlowables()   /export/home/gnet/btraore/WWW_DEV/cgi-bin/projects/CATDB/docs/source/index.rst:None <list_item>
+             > (0,0,0,0,3) list item body
+          Paragraph('Search Page')   /export/home/gnet/btraore/WWW_DEV/cgi-bin/projects/CATDB/docs/source/index.rst:31 <paragraph>
+               > (0,0,0,0,5) list item paragraph
+                 (0,0,0,0,2) body
+            MixedStyledText('Search Page')
+              AnnotatedText('Search Page', style='internal link')   None:None <reference>
+                   > (0,0,1,0,1) internal hyperlink
+                MixedStyledText('Search Page')
+                  MixedStyledText('Search Page')   None:None <inline>
+                    SingleStyledText('Search Page')
+#### DownExpandingContainer('footer')
+  Footer('		1')
+       > (0,0,0,0,2) footer
+         (0,0,0,0,1) body
+    MixedStyledText('		1')
+      Tab('	')
+      Tab('	')
+      Field('1')
+        SingleStyledText('1')
+---------------------------------- page 3 ----------------------------------
+#### ChainedContainer('column1')
+  StaticGroupedFlowables()
+#### DownExpandingContainer('footer')
+  Footer('		3')
+       > (0,0,0,0,2) footer
+         (0,0,0,0,1) body
+    MixedStyledText('		3')
+      Tab('	')
+      Tab('	')
+      Field('3')
+        SingleStyledText('3')

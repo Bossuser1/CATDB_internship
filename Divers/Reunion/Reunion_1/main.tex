@@ -1,0 +1,97 @@
+% --------------------------------------------------------------
+% This is all preamble stuff that you don't have to worry about.
+% Head down to where it says "Start here"
+% --------------------------------------------------------------
+ 
+\documentclass[12pt]{article}
+ 
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb}
+ 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+ 
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{lemma}[2][Lemma]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{exercise}[2][Exercise]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{question}[2][Question]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{corollary}[2][Corollary]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\newenvironment{solution}{\begin{proof}[Solution]}{\end{proof}}
+\usepackage{pgfgantt}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{verbatim} 
+
+
+\ganttset{group/.append style={orange},
+milestone/.append style={red},
+progress label node anchor/.append style={text=red}}
+\begin{document}
+ 
+% --------------------------------------------------------------
+%                         Start here
+% --------------------------------------------------------------
+ 
+\title{Project CATDB}
+\author{Bassiro Traore\\ %replace with your name
+}
+
+\maketitle
+
+R\'{e}union sur la prise en main du projet CATDB.
+Pr\'{e}sents: Bassiro , Jean Phillipe , Veronique
+ 
+% --------------------------------------------------------------
+%     You don't have to mess with anything below this line.
+% --------------------------------------------------------------
+
+\section{Todo}
+Faire des modules pour afficher les éléments
+
+\begin{itemize}
+\item faire un tableau \\
+Project Title organism organ/tissus technology , experiment name, experiment type number of samples /number of comparaison \\
+
+
+
+\item pour le menu prevoir  les onglets  Donwload
+                    \\
+					Info \\
+				      Browse \\
+					projet \\
+				      oragnism (ensemble d'esp\`{e}ces) \\
+				      \\
+
+\item Recherche par mot clé  \\
+
+\item Proposer un carrousel pour les histogrammes \\
+\item Pour les histogrammes options clikables  \\
+\item Comparaison vue vs requ\^{e}tes en temps par rapport a la requête  (lieu de sauvegarde chips\_tmp option construction de vue) \\
+
+\item choix du la biblioth\`{e}ques (D3js) base sur le tableau des forces et faibles des biblioth\`{e}ques graphiques 
+\end{itemize}
+
+\section{Divers}
+prochaine r\'{e}union les jeudi 21 11 après le lab meeting
+pr\'{e}voir une pr\'{e}sentation avec les items suivant ( But du stage et pr\'{e}sentation du stage)
+
+\section{R\'{e}marque importante}
+les colonnes multiples (answers) exemples oragn ont des valeurs s\'{e}pares par des virgules
+
+\section{Requ\^{e}te utile}
+
+\begin{verbatim}
+select distinct experiment_type from chips.experiment;
+\end{verbatim}
+
+
+\newpage
+\include{gante}

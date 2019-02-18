@@ -1,0 +1,4 @@
+Jacob_TMP/bioinfo/GEM2NET/
+
+# pour les documents perl
+/export/home/gnet/jtamby/WWW_DEV/cgi-bin/projects/CATdb

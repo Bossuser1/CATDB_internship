@@ -1,0 +1,41 @@
+{% load staticfiles %}
+<html>
+
+    <head>
+        <title>CATDB_Acceuil</title>
+		<!-- <img src="https://drive.google.com/file/d/1ErAqxn7JSYTHXiCMjGOUZvIa5NOGTqfg"/> -->
+		  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		  <!-- police roboto pour le css -->
+          <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" type="text/css" href="{% static "css/base.css" %}">
+        
+    </head>
+
+    <body >
+		<div id="main">
+		<div id="header">
+		<img src="{% static "img/ips2.jpg" %}" style="width: 150px;height: 80px;"/>  <!-- Images -->
+		
+		
+		<img src="{% static "img/catdb_logo.png" %}" style="width: 45%;height: 50%;"/>  <!-- Images -->
+		<img src="{% static "img/GEM2NET_logo5_transpa.png" %}" style="width: 10%;height: 50%;"/>  <!-- Images -->
+		
+		
+		</div>
+		<div id="contener">
+		
+		
+		
+		</div>	
+		<div id="foot">
+         <img src="{% static "img/logoInra3.png" %}" alt="Picture of Test" />  <!-- Images -->
+         <img src="{% static "img/logoCnrs3.gif" %}" />  <!-- Images CNRS -->
+         <img src="{% static "img/logoInapg3.gif" %}" />  <!-- Images AGROP -->
+         <img src="{% static "img/logoEvry3.gif" %}" />  <!-- Images AGROP -->         
+         
+        </div>
+         <div id='copyright' style='display:flex;justify-content: space-between;background: #cbcbcb;padding: 2px 2px 2px 2px;margin-top: 5px;'> <p>Copyright  © INRA 2007-2018 	<p>Contact us</p> 	<p>Credits & Legal notice 	Terms of use</p></div>
+        </div>
+    </body>
+	<script src="{% static "js/acueil.js" %}"/></script>
+</html>

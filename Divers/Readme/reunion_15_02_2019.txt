@@ -1,0 +1,34 @@
+
+Point:
+
+Projet : CATDB
+
+Faire des modules pour affichier les éléments
+=> faire un tableau 
+Project Title organism organ/tissus technology , experiment name, experiment type number of samples /number of comparaison
+=> pour le menu prevoir  les onglets  Donwload
+					=> Info
+				      Browse
+					=> projet
+				      oragnism (ensemble d'especes)
+=>recherche par mot clé **
+=> proposer un carrosel pour les histogrammes
+=>pour les histogrammes options clickables
+=> comparaison vue vs requetes en temps par rapport a la réquete  (lieu de sauvegarde chips.TMP option construction de vue)
+
+choix du la bibliothèques (D3js) base sur le tableau des forces et faibles des bibliothèques graphiques 
+
+Divers
+==
+
+prochaine reunion les jeudi 21
+prevoir une presentation avec les items suivant ( But du stage et présentation du stage)
+
+Remarque importante
+==
+les colonnes multiples (answers) exemples oragn ont des valeurs separés par des virgules
+
+Requete utils
+==
+select distinct experiment_type from chips.experiment;
+

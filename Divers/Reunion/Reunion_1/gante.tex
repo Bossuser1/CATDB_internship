@@ -1,0 +1,47 @@
+
+\begin{verbatim}
+finir le gant sur la base des tâches
+\end{verbatim}
+
+     \begin{ganttchart}[%Specs
+     y unit title=0.5cm,
+     y unit chart=0.7cm,
+     vgrid,hgrid,
+     title height=1,
+%     title/.style={fill=none},
+     title label font=\bfseries\footnotesize,
+     bar/.style={fill=blue},
+     bar height=0.7,
+%   progress label text={},
+     group right shift=0,
+     group top shift=0.7,
+     group height=.3,
+     group peaks width={0.2},
+     inline]{1}{24}
+    %labels
+    \gantttitle{Semaine 2 18-20 fevrier}{24}\\  % title 1
+    \gantttitle[]{2019}{12}  \\                % title 2
+    \gantttitle{J1}{3}                      % title 3
+    \gantttitle{J2}{3}
+    \gantttitle{J3}{3}
+    \gantttitle{J4}{3}\\
+    % Setting group if any
+    \ganttgroup[inline=false]{Tableau}{1}{5}\\ 
+    \ganttbar[progress=10,inline=false]{Planning}{1}{4}\\
+    \ganttmilestone[inline=false]{Milestone 1}{9} \\
+
+    \ganttgroup[inline=false]{Histograme}{5}{12} \\ 
+    \ganttbar[progress=2,inline=false]{Data}{10}{19} \\
+    \ganttmilestone[inline=false]{preparation images}{17} \\
+    \ganttbar[progress=5,inline=false]{Affichage}{11}{20} \\
+    \ganttmilestone[inline=false]{Milestone 3}{22} \\       
+
+    \ganttgroup[inline=false]{Group 3}{13}{24} \\ 
+    \ganttbar[progress=90,inline=false]{Task A}{13}{15} \\ 
+    \ganttbar[progress=50,inline=false, bar progress label node/.append style={below left= 10pt and 7pt}]{Task B}{13}{24} \\ \\
+    \ganttbar[progress=30,inline=false]{Task C}{15}{16}\\ 
+    \ganttbar[progress=70,inline=false]{Task D}{18}{20} \\ 
+\end{ganttchart}
+http://jacob.ips2.u-psud.fr/~jtamby.loc/htdocs/Cahiers/Tamby/documents/CATdb/catdb_mcd.jpg
+ 
+\end{document}

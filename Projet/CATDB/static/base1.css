@@ -1,0 +1,36 @@
+
+body{
+    background-color: #ccc;
+    
+}
+
+
+#main{
+      margin-left: auto;
+      margin-right: auto;
+    width: 80%;
+    height: 100%;
+    box-shadow: 1px 1px 12px #555;
+    background-color: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+
+#header{
+    width: 100%;
+    height: 15%;
+    background-color: #E0E0E0;
+}
+
+#contener{
+    width: 100%;
+    height: 100%;
+    background-color: #00S;
+}
+#foot{
+    width: 100%;
+    height: 10%;
+    background-color: #E0E0E0;
+}
