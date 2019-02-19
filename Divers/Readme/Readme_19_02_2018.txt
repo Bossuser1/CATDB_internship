@@ -1,0 +1,111 @@
+https://blog-postgresql.verite.pro/2017/06/06/global-search.html
+
+pour la requete avancer de recherce
+
+psql -p 1521 -U uselect -d CATDB
+
+CREATE OR REPLACE FUNCTION global_search_element(
+    search_term text,
+    param_tables text[] default '{}',
+    param_schemas text[] default '{public}',
+    progress text default null -- 'tables','hits','all'
+)
+RETURNS table(schemaname text, tablename text, columnname text, rowctid tid)
+AS $$
+declare
+  query text;
+  hit boolean;
+begin
+  FOR schemaname,tablename IN
+      SELECT table_schema, table_name
+      FROM information_schema.tables t
+      WHERE (t.table_name=ANY(param_tables) OR param_tables='{}')
+        AND t.table_schema=ANY(param_schemas)
+        AND t.table_type='BASE TABLE'
+  LOOP
+    IF (progress in ('tables','all')) THEN
+      raise info '%', format('Searching globally in table: %I.%I',
+         schemaname, tablename);
+    END IF;
+
+    query := format('SELECT ctid FROM %I.%I AS t WHERE strpos(cast(t.* as text), %L) > 0',
+	    schemaname,
+	    tablename,
+	    search_term);
+    FOR rowctid IN EXECUTE query
+    LOOP
+      FOR columnname IN
+	  SELECT column_name
+	  FROM information_schema.columns
+	  WHERE table_name=tablename
+	    AND table_schema=schemaname
+      LOOP
+	query := format('SELECT true FROM %I.%I WHERE cast(%I as text)=%L AND ctid=%L',
+	  schemaname, tablename, columnname, search_term, rowctid);
+        EXECUTE query INTO hit;
+	IF hit THEN
+	  IF (progress in ('hits', 'all')) THEN
+	    raise info '%', format('Found in %I.%I.%I at ctid %s',
+		   schemaname, tablename, columnname, rowctid);
+	  END IF;
+	  RETURN NEXT;
+	END IF;
+      END LOOP; -- for columnname
+    END LOOP; -- for rowctid
+  END LOOP; -- for table
+END;
+$$ language plpgsql;
+
+SELECT * FROM global_search_element('Alopecurus myosuroides');
+
+SELECT * FROM global_search_element('Alope', param_schemas:=array['CHIPS']);
+
+SELECT * FROM global_search_element('Arabidopsis',param_schemas:=array['chips'],param_tables:=array(
+    select table_name::text from information_schema.tables where table_name='organism_name')
+ );
+
+
+ chips      | array_type | common_name | (0,7)
+ chips      | array_type | common_name | (0,8)
+ chips      | array_type | common_name | (0,10)
+ chips      | array_type | common_name | (0,11)
+ chips      | array_type | common_name | (0,12)
+ chips      | array_type | common_name | (0,14)
+ chips      | array_type | common_name | (0,15)
+ chips      | array_type | common_name | (0,16)
+ chips      | array_type | common_name | (0,17)
+ chips      | array_type | common_name | (0,18)
+ chips      | array_type | common_name | (0,19)
+ chips      | array_type | common_name | (0,20)
+ chips      | array_type | common_name | (0,21)
+ chips      | array_type | common_name | (0,22)
+ chips      | array_type | common_name | (0,23)
+ chips      | array_type | common_name | (1,1)
+ chips      | array_type | common_name | (1,2)
+ chips      | array_type | common_name | (1,3)
+ chips      | array_type | common_name | (1,4)
+ chips      | array_type | common_name | (1,5)
+
+
+select * from chips.organism
+16 | Vitis vinifera 
+           1 | Arabidopsis thaliana
+           9 | T.urartu x ae. tauschii
+           3 | Brassica napus
+           4 | Triticum aestivum
+           5 | Triticum monococcum
+           6 | Triticum turgidum
+           7 | Triticum turgidum sbsp. durum
+           8 | Aegilops tauschii
+           2 | Triticum urartu
+          10 | Zea mays, maize, corn
+          11 | Oriza sativa
+          12 | Zea mays
+          13 | Medicago
+          15 | Gallus gallus
+          19 | Solanum lycopersic
+          17 | Homo sapiens
+          18 | Helianthus
+          20 | Populus nigra
+
+

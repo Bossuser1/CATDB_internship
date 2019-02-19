@@ -37,7 +37,11 @@ padding: 12px;
     width: 50%;
     text-align:center;
 
-    }    
+    }
+    .row_element1{
+    height: 500px;
+    }
+        
     #svg1{    
     
     /*height: 75px;*/
@@ -228,11 +232,25 @@ background-color: white;
     padding: 12px;
     margin: 12px;
     /*height: 40px;*/
+
+}
+        #headmain_banner{
 display: flex;
 flex-direction: row;
 justify-content: space-between;
-}
-        
+        }
+#headmain_schear{        
+height: 33px;
+border-top: 3px solid yellowgreen;
+display: flex;
+justify-content: space-between;        
+}  
+
+#headmain_schear input {
+width:100%;
+line-height: 10px;
+} 
+    
         .hedclean{
         height: 50px;
         }
@@ -274,7 +292,25 @@ position: fixed;
     max-width: 300px;
 }
 
+.informask1{
+position: absolute;/*! height: 100%; *//*! background-color: #0c1b0a; *//*! opacity: 0.5; *//*! width: 100%; *//*! filter: alpha(opacity=50); *//*! z-index: -1; *//*! border-radius: 20px; */top: -100px;"
+}
+.informask2{
+position: absolute;
+height: 100%;
+background-color: #0c1b0a;
+opacity: 0.5;width: 100%;
+filter: alpha(opacity=50);
+z-index: 1;border-radius: 20px;top: 0px;"
+}
 
+.affichage_informask1{
+z-index: -1;background-color: aliceblue;width: 300px;height: 300px;position: fixed;top: 10000px;left: 35%;/box-shadow: 10px 10px grey;
+}
+
+.affichage_informask2{
+z-index: 1;
+}
      
     </style>
 
@@ -282,6 +318,7 @@ position: fixed;
     </head>
     <body>
     <div id='headmain'>
+    <div id='headmain_banner'>
     <div class='hedclean'>
     <img src="{% static "img/ips2.jpg" %}" />  <!-- Images -->
     </div>
@@ -290,6 +327,10 @@ position: fixed;
     </div>
     <div class='hedclean'>
     <img src="{% static "img/GEM2NET_logo5_transpa.png" %}" />  <!-- Images -->
+    </div>
+    
+    </div>
+    <div id='headmain_schear'>
     </div>
     </div>
     <nav class="navbar">
@@ -309,10 +350,11 @@ position: fixed;
     <div>
 </div></div></nav>
     <div id='contener'>
+    
     <div class='row_element'> <div class="table" id="results"> </div> </div>
     <div class='row_element'> <div id="svg1"></div> </div>
     </div>
-    
+    </div>
 		<div id="foot">
          <img src="{% static "img/logoInra3.png" %}" alt="Picture of Test" />  <!-- Images -->
          <img src="{% static "img/logoCnrs3.gif" %}" />  <!-- Images CNRS -->
@@ -328,6 +370,34 @@ position: fixed;
     <script>
     
 
+    $('#headmain_schear').append("<div>information </div><div style='display: flex;flex-direction: row;margin-top: 8px;'><div id='database' style='height: 22px;cursor:pointer; display: inline-block;padding: 5px 10px 6px;color: #211515;text-decoration: none;transition: all 40ms linear;box-shadow: 0 0 0 1px #ebebeb inset, 0 0 0 1px rgba(255, 255, 255, 0.15) inset, 0 1px 3px 1px rgba(108, 99, 99, 0.1);background-color: #337ab7;'></div><div style='background: #fff;display: flex;border-radius: 2px;border: none;box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16),0 0 0 1px rgba(0,0,0,0.08);z-index: 1;width: 320px;'> <input type='text' id='recherche_text'>  </div> <div id='recherche_val' style='display: inline-block;height: 22px;padding: 5px 10px 6px;color: #211515;text-decoration: none;transition: all 40ms linear;box-shadow: 0 0 0 1px #ebebeb inset, 0 0 0 1px rgba(255, 255, 255, 0.15) inset, 0 1px 3px 1px rgba(108, 99, 99, 0.1);background-color: #337ab7;'>Buton Reach </div> </div>");
+   
+    //$('#database').append('<h5>All Databases</h5><ul><li>one</li><li>two</li><li>three</li><li>four</li></ul>');
+    
+
+	$('#recherche_val').on( "click", function() {
+		var messag=$('#recherche_text').val();
+		var colname='chips.project';
+		$.ajax({
+            type:"GET",
+            data:{'data_requete_element':'my_req_recherche_av','value_search':messag,'colname_search':colname},
+            dataType: "json",
+            async: true,
+            url:"/CATdb/ajax/chekEmail",
+            success: function(data) {
+            	$.each(data, function(index, value){console.log(value);});
+      		
+            }
+            });
+		
+		
+		
+		console.log(messag);
+	});
+	
+	
+    
+    function affichage1(){  
     function afficher_table(data){
     	//permet d'afficher le resultat sous forme de tableau
         afficheur='';  
@@ -411,7 +481,8 @@ position: fixed;
             .attr("width", x.bandwidth())
             .attr("element_name", function(d) { return d.Xvar; })
             .attr("y", function(d) { return y(d.Yvar); })
-            .attr("height", function(d) { return height - y(d.Yvar); })					
+            .attr("height", function(d) { return height - y(d.Yvar); })
+            .on("click",function(d) { declenche(d.Xvar,'Organism Name');})
             .on("mouseover", function(d) {
                 div.transition()        
                     .duration(200)      
@@ -426,18 +497,48 @@ position: fixed;
                     .style("opacity", 0);
             });
       }
+ 
+    function clean_function(){
+    	$('#informa').css("z-index",-1);
+    	$('#informa').css("top",'10000px');
+    	$('#informask').toggleClass("informask2" );
+    };
+    
+    $('#contener').append("<div id='informask' class='informask1'></div>");
+	$('#contener').append("<div id='informa' class='affichage_informask1'> <div style='border-color: white;width: 100%;height: 10%;margin-left: auto;margin-right: auto;width: 90%;height: 8%;border-radius: 12%;border: 2px solid;margin-left: auto;margin-right: auto;box-shadow: 2px 2px grey;border-color: white;'> header</div> <div style='border-color: white;width: 90%;height: 80%;border: 2px solid;margin-left: auto;margin-right: auto;box-shadow: 2px 3px grey;border-color: white;'> conteneur</div> <div style='border-color: white;width: 90%;height: 8%;border-radius: 12%;border: 2px solid;margin-left: auto;margin-right: auto;box-shadow: 2px 2px grey;border-color: white;'> footer</div> </div>");	
+ 	$("#informa").children()[0].innerHTML='<div style="width: 100%;height:100%; display:flex; justify-content:space-between;"><div id="entete_informa" style="font-weight: bold;"> </div><img src="https://img.icons8.com/color/48/000000/close-window.png" style="width: 10%;height: 100%;" onclick="clean_function();"></div>';
+	
+	$("#informa").children()[2].innerHTML=' ';
+ 	
+
+	
+	
+    function declenche(elemnt,elemnt1) {
+    	  $('#informask').toggleClass("informask2");
+    	  $('#informa').css("z-index",2);
+    	  $('#informa').css("top",'20%');
+    	  var res = elemnt.split("x");
+    	  var message='';
+    	  $.each(res, function(index, value) {
+    		message=message+'<p>'+value+'</p>'+'<a href="https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?name='+value+'"> Lien NCBI de description </a>';  
+    	  });
+    	  
+    	  $("#informa").children()[1].innerHTML=message;
+    	  $("#entete_informa").html(elemnt1);
+    };
+    
     
     
 
+	var data_send ='my_req_special';
     $.ajax({
-      type:"GET",
+        type:"GET",
+        data:{'data_requete_element': data_send},
       dataType: "json",
       async: true,
       url:"/CATdb/ajax/chekEmail",
       success: function(data) {
         afficher_table(data);
-        
-        
 		var x1="organism_name"
 		var y1="count"
 		var show_data=[]
@@ -447,24 +548,43 @@ position: fixed;
            //     console.log("index :"+index1+" value:"+resp1);
     	//});
         });
-        
 		show_data.sort(function (a, b) {
 		    	   return  b.Yvar-a.Yvar;
 		});
-		show_data.forEach(function(v) {
-		    console.log(v.Xvar+" avec "+v.Yvar+" ");   
-		});
 		var show_data_final=[]
 		$.each(show_data, function(index, value) {
-			show_data_final.push({"position": parseInt(index, 10)+1,"Xvalue":value.Xvar,"Yvalue":parseInt(value.Yvar,10)});
+			show_data_final.push({"position": parseInt(index, 10)+1,"Xvar":value.Xvar,"Yvar":parseInt(value.Yvar,10)});
         });
-		
 		// affichage histogramme
 		histograme(show_data_final);
-		
-    }       
+    }
+    
     });
-
-
+    }
+	
+    //affichage1();
+    
+    
+    function affichage2(){  
+    	var data_send ='my_querySpecies';//#my_querySpecies####my_req_recherche
+        $.ajax({
+            type:"GET",
+            data:{'data_requete_element': data_send},
+            dataType: "json",
+            async: true,
+            url:"/CATdb/ajax/chekEmail",
+            success: function(data) {
+            	$.each(data, function(index, value){console.log(value);});
+      		
+            }
+            });
+      	
+    $('.row_element').toggleClass("row_element1");
+    	
+    };
+    affichage2();
+    
+    
+    
     
     </script>

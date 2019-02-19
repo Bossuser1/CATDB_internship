@@ -21,7 +21,10 @@ def index(request):
 
 
 def ajax_check_email_fields(request):
-    memory=execution_requete('my_req_special')
+    answer_send=request.GET.get('data_requete_element', None)
+    value_send=request.GET.get('value_search',None)
+    colname_send=request.GET.get('colname_search',None)
+    memory=execution_requete(answer_send,value_send,colname_send)
     return HttpResponse(json.dumps(memory), content_type="application/json") 
 
 def view_data(request):

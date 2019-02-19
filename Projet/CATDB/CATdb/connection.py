@@ -70,7 +70,7 @@ def read_data_sql(requete):
     
     return data
 
-def execution_requete(element):
+def execution_requete(element,value_send,colname_send):
     ### parametres
     my_ppty="CHIPS"
     #my_stylepath="CHIPS::STYLECSS";
@@ -108,6 +108,9 @@ def execution_requete(element):
     
     my_req_special="select o.organism_name,count(distinct ss.project_id) from chips.sample_source ss,chips.organism o where ss.project_id in( select project_id from chips.project where is_public='yes') and ss.organism_id=o.organism_id group by o.organism_name;"
     
+    my_req_recherche="SELECT * FROM global_search_element('Arabidopsis',param_schemas:=array['chips']);"
+    
+    my_req_recherche_av="select * from "+colname_send+" where (is_public='yes' and project_name like '%"+value_send+"%');"
     if element=='my_reqinfo':
         requete=my_reqinfo
     elif element=='my_querySpecies':
@@ -115,8 +118,11 @@ def execution_requete(element):
     elif element=='my_reqstat':
         requete=my_reqstat    
     elif element=='my_req_special':
-        requete=my_req_special        
-            
+        requete=my_req_special    
+    elif element=='my_req_recherche':
+        requete=my_req_recherche        
+    elif element=='my_req_recherche_av' and colname_send!=None and value_send!=None:
+        requete=my_req_recherche_av        
     else:
         requete=None
     if requete!=None:
