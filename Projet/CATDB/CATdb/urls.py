@@ -14,6 +14,10 @@ urlpatterns = [
     path('', views.index,name='index'),
     url('^ajax/chekEmail$',views.ajax_check_email_fields),
     url('^index$',views.view_data),
+    
+    url('^index$',views.view_data),
+    url('^explore.html$',views.view_table),
+    
 ]+static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 

@@ -5,3 +5,9 @@ Jacob_TMP/bioinfo/GEM2NET/
 
 /home/IPS2/btraore/Bureau/Stage/
 git push -u origin master
+
+
+Select info_code, info_value, info_name from chips.info_catdbindex order by info_code;
+
+
+-H genere du HTML
