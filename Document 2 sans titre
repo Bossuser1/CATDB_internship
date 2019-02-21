@@ -1,0 +1,173 @@
+#########Projetc#####
+create table Project (
+ Project_id  integer NULL,
+ Project_idname VARCHAR(50) NULL,
+ Project_name VARCHAR(100) NULL,
+ Title VARCHAR(255) NULL,
+ Is_public VARCHAR(3) NULL,
+ Source VARCHAR(100) NULL,
+ Project_code VARCHAR(20) NULL,
+ Biological_Interest VARCHAR(4000) NULL,
+ User_id integer NULL,
+ Submission_date Date ,
+Public_date Date ,
+comments VARCHAR(2000)
+);
+
+##########################Orangism #######################
+create table Organism (
+ Organism_id  integer NULL,
+ Organism_name VARCHAR(50) NULL
+);
+
+#######################table pivot #######################
+create table Organism_Ecotype (
+ Organism_id  integer NULL,
+ Ecotype_id integer NULL,
+ Array_type_id integer NULL
+);
+
+#########################Ecotype#####################
+
+create table Ecotype (
+ Ecotype_id integer NULL,
+ Ecotype_name VARCHAR(50) NULL
+);
+
+#########################Sample source####
+
+create table Sample_Source (
+ Sample_Source_id integer NULL,
+ Sample_Source_idname VARCHAR(50) NULL,
+ Sample_Source_name VARCHAR(100) NULL,
+ Organism_id VARCHAR(100) NULL,
+ Ecotype_id VARCHAR(50) NULL,
+ Genotype VARCHAR(50) NULL,
+ Mutant VARCHAR(50) NULL,
+ Planting_date Date,
+ Growth_conditions VARCHAR(4000)
+ Opertor_id integer,
+ Book_ref VARCHAR(10),
+ Project_id integer,
+ Experiment_id integer,
+ User_id integer NULL,
+ Submission_date Date ,
+Mutant_type VARCHAR(300),
+Mutant_loci VARCHAR(100)
+);
+
+#################################Experimence
+##############Experiment_type
+
+create table Experiment (
+ Experiment_id  integer NULL,
+ Experiement_idname VARCHAR(50) NULL,
+ Experiment_name VARCHAR(100) NULL,
+ Experiment_type VARCHAR(100) NULL,
+ Note VARCHAR(2000) NULL,
+ Array_type Varchar(20) NULL,
+ Protocol_id integer NULL,
+ Project_id integer NULL,
+ User_id integer NULL,
+ Submission_date Date ,
+Repository_db VARCHAR(30) NULL,
+Repository_access VARCHAR(30) NULL,
+Analysis_type VARCHAR(20) NULL
+);
+
+
+##########Traitemenent ######
+
+create table Treatment (
+ Treatment_id  integer NULL,
+ Treatment_idname  VARCHAR(50) NULL,
+ Treatment_name  VARCHAR(100) NULL,
+ Treatment_type  NUMBER(300) NULL,
+ Treatment_factor  NUMBER(300) NULL,
+ factor_name  VARCHAR(300) NULL,
+Treatment_condition  VARCHAR(4000) NULL,
+Time_elapsed_value  FLOAT(126) NULL,
+Time_elapsed_unit  VARCHAR(10) NULL,
+Time_elapsed_db  FLOAT(126) NULL,
+Measure_value  FLOAT(126) NULL,
+Measure_unit  VARCHAR(10) NULL,
+Measure_db  FLOAT(126) NULL,
+Note  VARCHAR(4000) NULL,
+ Project_id integer NULL,
+ Protocol_id integer NULL,
+ Experiment_id integer NULL,
+ User_id integer NULL,
+ Submission_date Date ,
+);
+
+#####Sample
+
+create table Sample (
+ Sample_id integer NULL,
+ Sample_idname VARCHAR(50) NULL,
+  Sample_name VARCHAR(100) NULL,
+  Haverst_date date NULL,
+ Age_value FLOAT(126),
+ Age_unit VARCHAR(10),
+ Age_db VARCHAR(100),
+ Dev_stage VARCHAR(100),
+ Organ VARCHAR(100),
+ Haverst_plantnb NUMBER(4),
+ Note VARCHAR(40000),
+Sample_source_id integer,
+ Project_id integer NULL,
+ Experiment_id integer NULL,
+ User_id integer NULL,
+ Submission_date Date ,
+);
+
+
+#### hybridization
+
+
+
+###array_type
+
+
+
+####biblio_list
+create table biblio_list (
+Publmed_id integer NULL,
+Authors VARCHAR(1000) NULL,
+Title VARCHAR(2000) NULL,
+Book_ref integer NULL,
+Type_ref VARCHAR(1000) NULL);
+
+###Projet Biblio
+
+create table Project_Biblio (
+Publmed_id integer NULL,
+Project_id integer NULL
+);
+
+
+#### info_catdbindex
+create table info_catdbindex (
+ info_id integer NULL,
+ info_name VARCHAR(200) NULL,
+ info_value integer NULL,
+ info_code VARCHAR(9) NULL
+);
+
+#############Compter ############################################
+/******* Requete pour selectionner chaque organism *********/
+select o.organism_name,count(distinct ss.project_id) from chips.sample_source ss,chips.organism o where ss.project_id in( select project_id from chips.project where is_public='yes') and ss.organism_id=o.organism_id group by o.organism_name;
+
+##################pour un organisme vs project =======> requete speciale
+
+select o.organism_id,o.organism_name,distinct ss.project_id, pp.Project_name from chips.sample_source ss,chips.organism o chips.project pp where ss.project_id in( select project_id from chips.project where is_public='yes') and ss.organism_id=o.organism_id and ss.organism_id=pp.organism_id and o.organism_id='key';
+
+
+
+/******     ***/
+
+psql
+
+grant usage on schema chips to uselect2;
+
+	GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO uselect2;

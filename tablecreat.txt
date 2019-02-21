@@ -1,0 +1,159 @@
+#########Projetc#####
+create table Project (
+ Project_id  NUMBER(5) NULL,
+ Project_idname Varchar2(50) NULL,
+ Project_name Varchar2(100) NULL,
+ Title Varchar2(255) NULL,
+ Is_public Varchar2(3) NULL,
+ Source Varchar2(100) NULL,
+ Project_code Varchar2(20) NULL,
+ Biological_Interest Varchar2(4000) NULL,
+ User_id NUMBER(3) NULL,
+ Submission_date Date ,
+Public_date Date ,
+comments VARCHAR(2000)
+);
+
+##########################Orangism #######################
+create table Organism (
+ Organism_id  NUMBER(5) NULL,
+ Organism_name Varchar2(50) NULL
+);
+
+#######################table pivot #######################
+create table Organism_Ecotype (
+ Organism_id  NUMBER(5) NULL,
+ Ecotype_id NUMBER(5) NULL,
+ Array_type_id NUMBER(5) NULL,
+);
+
+#########################Ecotype#####################
+
+create table Ecotype (
+ Ecotype_id NUMBER(5) NULL,
+ Ecotype_name Varchar2(50) NULL,
+);
+
+#########################Sample source####
+
+create table Sample_Source (
+ Sample_Source_id NUMBER(5) NULL,
+ Sample_Source_idname VARCHAR2(50) NULL,
+ Sample_Source_name VARCHAR2(100) NULL,
+ Organism_id VARCHAR2(100) NULL,
+ Ecotype_id VARCHAR2(50) NULL,
+ Genotype VARCHAR2(50) NULL,
+ Mutant VARCHAR2(50) NULL,
+ Planting_date Date,
+ Growth_conditions VARCHAR(4000)
+ Opertor_id NUMBER(5),
+ Book_ref VARCHAR2(10),
+ Project_id NUMBER(5),
+ Experiment_id NUMBER(5),
+ User_id NUMBER(5) NULL,
+ Submission_date Date ,
+Mutant_type VARCHAR2(300),
+Mutant_loci VARCHAR2(100)
+);
+
+#################################Experimence
+##############Experiment_type
+
+create table Experiment (
+ Experiment_id  NUMBER(5) NULL,
+ Experiement_idname VARCHAR2(50) NULL,
+ Experiment_name VARCHAR2(100) NULL,
+ Experiment_type VARCHAR2(100) NULL,
+ Note VARCHAR2(2000) NULL,
+ Array_type Varchar(20) NULL,
+ Protocol_id NUMBER(5) NULL,
+ Project_id NUMBER(5) NULL,
+ User_id NUMBER(5) NULL,
+ Submission_date Date ,
+Repository_db VARCHAR2(30) NULL,
+Repository_access VARCHAR2(30) NULL,
+Analysis_type VARCHAR2(20) NULL
+);
+
+
+##########Traitemenent ######
+
+create table Treatment (
+ Treatment_id  NUMBER(5) NULL,
+ Treatment_idname  VARCHAR2(50) NULL,
+ Treatment_name  VARCHAR(100) NULL,
+ Treatment_type  NUMBER(300) NULL,
+ Treatment_factor  NUMBER(300) NULL,
+ factor_name  VARCHAR(300) NULL,
+Treatment_condition  VARCHAR(4000) NULL,
+Time_elapsed_value  FLOAT(126) NULL,
+Time_elapsed_unit  VARCHAR(10) NULL,
+Time_elapsed_db  FLOAT(126) NULL,
+Measure_value  FLOAT(126) NULL,
+Measure_unit  VARCHAR(10) NULL,
+Measure_db  FLOAT(126) NULL,
+Note  VARCHAR(4000) NULL,
+ Project_id NUMBER(5) NULL,
+ Protocol_id NUMBER(5) NULL,
+ Experiment_id NUMBER(5) NULL,
+ User_id NUMBER(5) NULL,
+ Submission_date Date ,
+);
+
+#####Sample
+
+create table Sample (
+ Sample_id NUMBER(5) NULL,
+ Sample_idname VARCHAR2(50) NULL,
+  Sample_name VARCHAR2(100) NULL,
+  Haverst_date date NULL,
+ Age_value FLOAT(126),
+ Age_unit VARCHAR(10),
+ Age_db VARCHAR(100),
+ Dev_stage VARCHAR(100),
+ Organ VARCHAR(100),
+ Haverst_plantnb NUMBER(4),
+ Note VARCHAR2(40000),
+Sample_source_id NUMBER(5),
+ Project_id NUMBER(5) NULL,
+ Experiment_id NUMBER(5) NULL,
+ User_id NUMBER(5) NULL,
+ Submission_date Date ,
+);
+
+
+
+#############Compter ############################################
+/******* Requete pour selectionner chaque organism *********/
+select o.organism_name,count(distinct ss.project_id) from chips.sample_source ss,chips.organism o where ss.project_id in( select project_id from chips.project where is_public='yes') and ss.organism_id=o.organism_id group by o.organism_name;
+
+##################pour un organisme vs project =======> requete speciale
+
+select o.organism_id,o.organism_name,distinct ss.project_id, pp.Project_name from chips.sample_source ss,chips.organism o chips.project pp where ss.project_id in( select project_id from chips.project where is_public='yes') and ss.organism_id=o.organism_id and ss.organism_id=pp.organism_id and o.organism_id='key';
+
+
+
+/******     ***/
+
+psql
+
+INSERT INTO  Sample VALUES( 1,'test','A','2012-05-06', 3,'CM', 1,'sqdsd','leaf',2,'ze', 1,2,2,3,'2012-05-06');
+INSERT INTO  Sample VALUES( 2,'A','X','2012-05-06', 4,'DM', 1,'sdsdsd','text',3,'sd', 2,3,1,1,'2012-05-06');
+INSERT INTO  Sample VALUES( 3,'B','XWQ','2012-05-06', 5,'MT', 1,'fdsfds','bposds',1,'sdf', 3,1,4,1,'2012-05-06');
+INSERT INTO  Sample VALUES( 4,'D','w<x<w','2012-05-06', 3,'QD', 2,'dsfdfs','sdsdqs',2,'dsf', 1,2,1,2,'2012-05-06');
+INSERT INTO  Sample VALUES( 5,'C','wxsdssd','2012-05-06', 5,'sqqs', 1,'fddsf','qsdssd',3,'dfs', 1,3,1,3,'2012-05-06');
+INSERT INTO  Sample VALUES( 6,'D','sdsdsdf','2012-05-06', 4,'qsqs', 1,'fdsfds','ssd',4,'dfs', 2,1,1,1,'2012-05-06');
+INSERT INTO  Sample VALUES( 7,'F','dfsx','2012-05-06', 5,'sqqs', 1,'fsdsf','Argan',2,'dfs', 1,1,1,1,'2012-05-06');
+
+
+INNER JOIN villes ON (temps.ville = villes.nom);
+
+
+
+Todo:
+
+1-finir la recherche suggestif (30 min)
+2-ajouter le lien a la place et ajouter le trie selectif (30 min)
+3-ajouter les graphes (30 min)
+4-Test select vs vue (30 min)
+5-rapport (30 min)

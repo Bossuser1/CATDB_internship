@@ -1,0 +1,6 @@
+INSERT INTO  info_catdbindex VALUES( 1 ,'Abidjan', 1 ,' A');
+INSERT INTO  info_catdbindex VALUES( 2 ,'Kogb', 2 ,' B');
+INSERT INTO  info_catdbindex VALUES( 3 ,'QSQS', 3 ,' C');
+INSERT INTO  info_catdbindex VALUES( 4 ,'SQDSDQ', 4 ,' D');
+
+Select count(*) from chips.biblio_list;

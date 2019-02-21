@@ -1,0 +1,9 @@
+psql -p 5432 -U uselect -d CATDB
+
+
+CREATE DATABASE CATDB;
+ \connect CATDB;
+ CREATE SCHEMA chips;
+
+#modification de la table
+ALTER TABLE Project ALTER COLUMN comments TYPE VARCHAR(2000);

@@ -109,3 +109,156 @@ select * from chips.organism
           20 | Populus nigra
 
 
+INSERT INTO Project  VALUES(1,'ADT03-02_Leaf_Flower-Bud ','ADT03-02_Leaf_Flower-Bud ','Genes expressed in flowers and leaves ','yes','Test','jsdqjsd','ZSJGSJS',1,'1909-09-20','2012-06-07','Testons');
+INSERT INTO Project  VALUES(2,'RS11-07_Opine2 ','RS11-07_Opine2 ','Septante2 ','no','Test','testi','QJHQSH',2,'1909-09-20','2012-06-07','Testons');
+INSERT INTO Project  VALUES(3,'RS11-11_Myb52 ','RS11-11_Myb52 ','Transcriptome analysis of atmyb52 mutant vs wild-type ','yes','Test','ZDFDF','dshjsdjkds',3,'1909-09-20','2012-06-07','Testjjsdsdhj');
+INSERT INTO Project  VALUES(4,'RS14-01_Mitomanip2 ','RS14-01_Mitomanip2 ','ANR MITOMANIP ','yes','Test','SSSFDFS','qjds',1,'1909-09-20','2012-06-07','sdyttyhdsgds');
+INSERT INTO Project  VALUES(5,'RS13_01_LAO ','RS13_01_LAO ','Down/up regulation of NAD biosynthesis in Arabidopsis : role of L-Aspartate oxidase ','yes','Test','FFSFS','dsqjjhds',1,'1909-09-20','2012-06-07','dsghghhgsd');
+INSERT INTO Project  VALUES(6,'testtest','tests','','yes','Test','SJ','qdsjhj',1,'1909-09-20','2012-06-07','sdhgh');
+
+
+INSERT INTO  organism VALUES( 1 ,'Arabidopsis thaliana');
+INSERT INTO  organism VALUES( 9 ,'T.urartu x ae. tauschii');
+INSERT INTO  organism VALUES( 3 ,'Brassica napus');
+INSERT INTO  organism VALUES( 4 ,'Triticum aestivum');
+INSERT INTO  organism VALUES( 5 ,'Triticum monococcum');
+INSERT INTO  organism VALUES( 6 ,'Triticum turgidum');
+INSERT INTO  organism VALUES( 7 ,'Triticum turgidum sbsp. durum');
+INSERT INTO  organism VALUES( 8 ,'Aegilops tauschii');
+INSERT INTO  organism VALUES( 2 ,'Triticum urartu');
+INSERT INTO  organism VALUES( 10 ,'Zea mays, maize, corn');
+INSERT INTO  organism VALUES( 11 ,'Oriza sativa');
+INSERT INTO  organism VALUES( 12 ,'Zea mays');
+INSERT INTO  organism VALUES( 13 ,'Medicago');
+INSERT INTO  organism VALUES( 15 ,'Gallus gallus');
+INSERT INTO  organism VALUES( 19 ,'Solanum lycopersic');
+INSERT INTO  organism VALUES( 17 ,'Homo sapiens');
+INSERT INTO  organism VALUES( 18 ,'Helianthus');
+INSERT INTO  organism VALUES( 20 ,'Populus nigra');
+
+INSERT INTO  Organism_Ecotype VALUES( 1,1,2);
+INSERT INTO  Organism_Ecotype VALUES( 9,2,1);
+INSERT INTO  Organism_Ecotype VALUES( 3,3,3);
+INSERT INTO  Organism_Ecotype VALUES( 4,1,4);
+INSERT INTO  Organism_Ecotype VALUES( 5,2,1);
+INSERT INTO  Organism_Ecotype VALUES( 6,3,3);
+INSERT INTO  Organism_Ecotype VALUES( 7,1,1);
+INSERT INTO  Organism_Ecotype VALUES( 8,2,3);
+INSERT INTO  Organism_Ecotype VALUES( 2,3,2);
+INSERT INTO  Organism_Ecotype VALUES( 10,1,1);
+INSERT INTO  Organism_Ecotype VALUES( 11,2,3);
+INSERT INTO  Organism_Ecotype VALUES( 12,3,1);
+INSERT INTO  Organism_Ecotype VALUES( 13,1,3);
+INSERT INTO  Organism_Ecotype VALUES( 15,1,4);
+INSERT INTO  Organism_Ecotype VALUES( 19,2,1);
+INSERT INTO  Organism_Ecotype VALUES( 17,3,3);
+INSERT INTO  Organism_Ecotype VALUES( 18,1,2);
+INSERT INTO  Organism_Ecotype VALUES( 20,3,1);
+
+
+INSERT INTO Ecotype VALUES(1,'Test2');
+INSERT INTO Ecotype VALUES(2,'TestAD');
+INSERT INTO Ecotype VALUES(3,'TestAC');
+
+
+create table Sample_Source (
+ Sample_Source_id integer NULL,
+ Sample_Source_idname VARCHAR(50) NULL,
+ Sample_Source_name VARCHAR(100) NULL,
+ Organism_id VARCHAR(100) NULL,
+ Ecotype_id VARCHAR(50) NULL,
+ Genotype VARCHAR(50) NULL,
+ Mutant VARCHAR(50) NULL,
+ Planting_date Date,
+ Growth_conditions VARCHAR(4000),
+ Opertor_id integer,
+ Book_ref VARCHAR(10),
+ Project_id integer,
+ Experiment_id integer,
+ User_id integer NULL,
+ Submission_date Date ,
+Mutant_type VARCHAR(300),
+Mutant_loci VARCHAR(100)
+);
+
+
+create table Experiment (
+ Experiment_id  integer NULL,
+ Experiement_idname VARCHAR(50) NULL,
+ Experiment_name VARCHAR(100) NULL,
+ Experiment_type VARCHAR(100) NULL,
+ Note VARCHAR(2000) NULL,
+ Array_type Varchar(20) NULL,
+ Protocol_id integer NULL,
+ Project_id integer NULL,
+ User_id integer NULL,
+ Submission_date Date ,
+Repository_db VARCHAR(30) NULL,
+Repository_access VARCHAR(30) NULL,
+Analysis_type VARCHAR(20) NULL
+);
+
+create table Treatment (
+ Treatment_id  integer NULL,
+ Treatment_idname  VARCHAR(50) NULL,
+ Treatment_name  VARCHAR(100) NULL,
+ Treatment_type  VARCHAR(300) NULL,
+ Treatment_factor  VARCHAR(300) NULL,
+ factor_name  VARCHAR(300) NULL,
+Treatment_condition  VARCHAR(4000) NULL,
+Time_elapsed_value  FLOAT  NULL,
+Time_elapsed_unit  VARCHAR(10) NULL,
+Time_elapsed_db  FLOAT  NULL,
+Measure_value  FLOAT  NULL,
+Measure_unit  VARCHAR(10) NULL,
+Measure_db  FLOAT  NULL,
+Note  VARCHAR(4000) NULL,
+ Project_id integer NULL,
+ Protocol_id integer NULL,
+ Experiment_id integer NULL,
+ User_id integer NULL,
+ Submission_date Date
+);
+
+create table Sample (
+ Sample_id integer NULL,
+ Sample_idname VARCHAR(50) NULL,
+  Sample_name VARCHAR(100) NULL,
+  Haverst_date date NULL,
+ Age_value FLOAT ,
+ Age_unit VARCHAR(10),
+ Age_db VARCHAR(100),
+ Dev_stage VARCHAR(100),
+ Organ VARCHAR(100),
+ Haverst_plantnb integer,
+ Note VARCHAR(40000),
+Sample_source_id integer,
+ Project_id integer NULL,
+ Experiment_id integer NULL,
+ User_id integer NULL,
+ Submission_date Date
+);
+
+INSERT INTO  Sample_Source VALUES( 2 ,'Test1','Test1', 2 , 1 ,'Humain','Animal','2013-02-01','QSSSQS', 1 ,'sdssd', 2 , 3 , 1, '2013-02-01','Sauvage','Sauvage ');
+INSERT INTO  Sample_Source VALUES( 1 ,'Test2','Test2', 3 , 1 ,'Humain','Plant','2013-02-01','dqsdsds', 1 ,'dsdfsfd', 1 , 1 , 1, '2013-02-01','Sauvage','Sauvage ');
+INSERT INTO  Sample_Source VALUES( 1 ,'Test3','Test3', 1 , 2 ,'Humain','Plant','2013-02-01','sdqdsdsvvf', 2 ,'dsfdffd', 2 , 2 , 1, '2013-02-01','Sauvage','Sauvage ');
+INSERT INTO  Sample_Source VALUES( 2 ,'Test4','Test4', 2 , 2 ,'Humain','Plant','2013-02-01','qdsdcsds', 1 ,'dsffdfd', 3 , 3 , 1, '2013-02-01','Sauvage','Sauvage ');
+
+
+INSERT INTO  biblio_list VALUES( 2, ' Testeyer ', ' A ', 1,' C ');
+INSERT INTO  biblio_list VALUES( 1, ' Testeyer ', ' B ', 2,' SD ');
+INSERT INTO  biblio_list VALUES( 2, ' Testeyer ', ' C ', 1,' AQQS ');
+INSERT INTO  biblio_list VALUES( 1, ' Testeyer ', ' D ', 2,' QQSDQS ');
+INSERT INTO  biblio_list VALUES( 2, ' Testeyer ', ' E ', 1,' QQJHJ ');
+
+
+INSERT INTO Project_Biblio VALUES(1,4);
+INSERT INTO Project_Biblio VALUES(2,1);
+
+INSERT INTO  info_catdbindex VALUES( 1 ,'Abidjan', 1 ,' A');
+INSERT INTO  info_catdbindex VALUES( 2 ,'Kogb', 2 ,' B');
+INSERT INTO  info_catdbindex VALUES( 3 ,'QSQS', 3 ,' C');
+INSERT INTO  info_catdbindex VALUES( 4 ,'SQDSDQ', 4 ,' D');
+
+CREATE USER uselect1 WITH PASSWORD 'seloct06';
+psql -d catdb -U uselect2

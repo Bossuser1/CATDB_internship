@@ -1,0 +1,79 @@
+
+create table Sample_Source (
+ Sample_Source_id integer NULL,
+ Sample_Source_idname VARCHAR(50) NULL,
+ Sample_Source_name VARCHAR(100) NULL,
+ Organism_id VARCHAR(100) NULL,
+ Ecotype_id VARCHAR(50) NULL,
+ Genotype VARCHAR(50) NULL,
+ Mutant VARCHAR(50) NULL,
+ Planting_date Date,
+ Growth_conditions VARCHAR(4000),
+ Opertor_id integer,
+ Book_ref VARCHAR(10),
+ Project_id integer,
+ Experiment_id integer,
+ User_id integer NULL,
+ Submission_date Date ,
+Mutant_type VARCHAR(300),
+Mutant_loci VARCHAR(100)
+);
+
+
+create table Experiment (
+ Experiment_id  integer NULL,
+ Experiement_idname VARCHAR(50) NULL,
+ Experiment_name VARCHAR(100) NULL,
+ Experiment_type VARCHAR(100) NULL,
+ Note VARCHAR(2000) NULL,
+ Array_type Varchar(20) NULL,
+ Protocol_id integer NULL,
+ Project_id integer NULL,
+ User_id integer NULL,
+ Submission_date Date ,
+Repository_db VARCHAR(30) NULL,
+Repository_access VARCHAR(30) NULL,
+Analysis_type VARCHAR(20) NULL
+);
+
+create table Treatment (
+ Treatment_id  integer NULL,
+ Treatment_idname  VARCHAR(50) NULL,
+ Treatment_name  VARCHAR(100) NULL,
+ Treatment_type  VARCHAR(300) NULL,
+ Treatment_factor  VARCHAR(300) NULL,
+ factor_name  VARCHAR(300) NULL,
+Treatment_condition  VARCHAR(4000) NULL,
+Time_elapsed_value  FLOAT  NULL,
+Time_elapsed_unit  VARCHAR(10) NULL,
+Time_elapsed_db  FLOAT  NULL,
+Measure_value  FLOAT  NULL,
+Measure_unit  VARCHAR(10) NULL,
+Measure_db  FLOAT  NULL,
+Note  VARCHAR(4000) NULL,
+ Project_id integer NULL,
+ Protocol_id integer NULL,
+ Experiment_id integer NULL,
+ User_id integer NULL,
+ Submission_date Date
+);
+
+create table Sample (
+ Sample_id integer NULL,
+ Sample_idname VARCHAR(50) NULL,
+  Sample_name VARCHAR(100) NULL,
+  Haverst_date date NULL,
+ Age_value FLOAT ,
+ Age_unit VARCHAR(10),
+ Age_db VARCHAR(100),
+ Dev_stage VARCHAR(100),
+ Organ VARCHAR(100),
+ Haverst_plantnb integer,
+ Note VARCHAR(40000),
+Sample_source_id integer,
+ Project_id integer NULL,
+ Experiment_id integer NULL,
+ User_id integer NULL,
+ Submission_date Date
+);
+

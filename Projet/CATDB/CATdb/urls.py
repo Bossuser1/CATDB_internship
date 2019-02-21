@@ -17,6 +17,9 @@ urlpatterns = [
     
     url('^index$',views.view_data),
     url('^explore.html$',views.view_table),
+    url('^ajax/special$',views.ajax_check_email_fields1),
+    url('^table.html$',views.prise_main),
+
     
 ]+static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
