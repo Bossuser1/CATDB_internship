@@ -3,316 +3,18 @@
     <meta charset="utf-8">
     <head>
     <link rel="stylesheet" type="text/css" href="http://www.knowstack.com/webtech/d3jsData/css/barchart.css">
-    
-    <style>
-body {
-    background-color: #f1f1f1;
-    margin-left: auto;
-    margin-right: auto;
-    width: 950px;
-    box-shadow: 1px 1px 12px #555;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    position: relative;
-}
+    <link rel="stylesheet" type="text/css" href="{% static "css/table_index1.css" %}"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
-    #contener{
-    display: flex;
-    flex-direction: row;
-    }
-    .row_element {
-    box-shadow: 1px 0px 1px rgba(0, 0, 0, 0.25);
-background-color: white;
-padding: 12px;
-        padding-top: 12px;
-        padding-right: 12px;
-        padding-bottom: 12px;
-        padding-left: 12px;
-    margin: 0px 13px 12px;
-        margin-top: 0px;
-        margin-right: 13px;
-        margin-bottom: 12px;
-        margin-left: 13px;
-    width: 50%;
-    text-align:center;
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-134934175-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
-    }
-    .row_element1{
-    height: 500px;
-    }
-        
-    #svg1{    
-    
-    /*height: 75px;*/
-    padding: 12px;
-        padding-top: 12px;
-        padding-right: 12px;
-        padding-bottom: 12px;
-        padding-left: 12px;
-    margin: 0px 13px 12px;
-        margin-top: 0px;
-        margin-right: 13px;
-        margin-bottom: 12px;
-        margin-left: 13px;
-
-        }
-
-        
-        
-    .table {
-    box-shadow: 1px 0px 1px rgba(0, 0, 0, 0.25);
-background-color: white;
-    display: table;
-    text-align: center;
-    width: 100%;
-    /*margin: 10% auto 0;*/
-    border-collapse: separate;
-    font-family: 'Roboto', sans-serif;
-    font-weight: 400;
-        margin-left: auto;
-    margin-right: auto;
-    font-size: 9px;
-  }
-  
-  .table_row {
-    display: table-row;
-  }
-  
-  .theader {
-    display: table-row;
-  }
-  
-  .table_header {
-    display: table-cell;
-    border-bottom: #ccc 1px solid;
-    border-top: #ccc 1px solid;
-    background: #bdbdbd;
-    color: #e5e5e5;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    font-weight: 700;
-  }
-  
-  .table_header:first-child {
-    border-left: #ccc 1px solid;
-    border-top-left-radius: 5px;
-  }
-  
-  .table_header:last-child {
-    border-right: #ccc 1px solid;
-    border-top-right-radius: 5px;
-  }
-  
-  .table_small {
-    display: table-cell;
-  }
-  
-  .table_row > .table_small > .table_cell:nth-child(odd) {
-    display: none;
-    background: #bdbdbd;
-    color: #e5e5e5;
-    padding-top: 10px;
-    padding-bottom: 10px;
-  }
-  
-  .table_row > .table_small > .table_cell {
-    padding-top: 3px;
-    padding-bottom: 3px;
-    color: #5b5b5b;
-    border-bottom: #ccc 1px solid;
-  }
-  
-  .table_row > .table_small:first-child > .table_cell {
-    border-left: #ccc 1px solid;
-  }
-  
-  .table_row > .table_small:last-child > .table_cell {
-    border-right: #ccc 1px solid;
-  }
-  
-  .table_row:last-child > .table_small:last-child > .table_cell:last-child {
-    border-bottom-right-radius: 5px;
-  }
-  
-  .table_row:last-child > .table_small:first-child > .table_cell:last-child {
-    border-bottom-left-radius: 5px;
-  }
-  
-  .table_row:nth-child(2n+3) {
-    background: #e9e9e9;
-  }
-  
-  @media screen and (max-width: 900px) {
-    .table {
-      width: 90%
-    }
-  }
-  
-  @media screen and (max-width: 650px) {
-    .table {
-      display: block;
-    }
-    .table_row:nth-child(2n+3) {
-      background: none;
-    }
-    .theader {
-      display: none;
-    }
-    .table_row > .table_small > .table_cell:nth-child(odd) {
-      display: table-cell;
-      width: 50%;
-    }
-    .table_cell {
-      display: table-cell;
-      width: 50%;
-    }
-    .table_row {
-      display: table;
-      width: 100%;
-      border-collapse: separate;
-      padding-bottom: 20px;
-      margin: 5% auto 0;
-      text-align: center;
-    }
-    .table_small {
-      display: table-row;
-    }
-    .table_row > .table_small:first-child > .table_cell:last-child {
-      border-left: none;
-    }
-    .table_row > .table_small > .table_cell:first-child {
-      border-left: #ccc 1px solid;
-    }
-    .table_row > .table_small:first-child > .table_cell:first-child {
-      border-top-left-radius: 5px;
-      border-top: #ccc 1px solid;
-    }
-    .table_row > .table_small:first-child > .table_cell:last-child {
-      border-top-right-radius: 5px;
-      border-top: #ccc 1px solid;
-    }
-    .table_row > .table_small:last-child > .table_cell:first-child {
-      border-right: none;
-    }
-    .table_row > .table_small > .table_cell:last-child {
-      border-right: #ccc 1px solid;
-    }
-    .table_row > .table_small:last-child > .table_cell:first-child {
-      border-bottom-left-radius: 5px;
-    }
-    .table_row > .table_small:last-child > .table_cell:last-child {
-      border-bottom-right-radius: 5px;
-    }
-  }
-    
-    .navbar{
-    border-color: transparent;
-    background-color: #64DD17;
-    color: #FFFFFF;
-    padding: 12px;
-    margin: 12px;
-        }
-    
-    .nav-link {
-    color: #f1fff6;
-    text-transform: uppercase;
-    padding-right: .5rem;
-    padding-left: .5rem;
-    font-family: robot;
-    font-weight: bold;
-    }    
-        
-    
-        #headmain{
-
-    border-color: transparent;
-    background-color: #FFF;
-    color: #FFFFFF;
-    padding: 12px;
-    margin: 12px;
-    /*height: 40px;*/
-
-}
-        #headmain_banner{
-display: flex;
-flex-direction: row;
-justify-content: space-between;
-        }
-#headmain_schear{        
-height: 33px;
-border-top: 3px solid yellowgreen;
-display: flex;
-justify-content: space-between;        
-}  
-
-#headmain_schear input {
-width:100%;
-line-height: 10px;
-} 
-    
-        .hedclean{
-        height: 50px;
-        }
-
-.hedclean img{
-        /*width: 100%;*/
-height: 100%;
-        }
-
-#foot {
-    width: 100%;
-    /*! height: 10%; */
-    background-color: #FFF;
-    border-top: 4px solid #8BAD50;
-    display: flex;
-    flex-direction: unset;
-    justify-content: space-around;
-}
-
-#copyright p {
-    margin: 1px;
-    font-size: 12px;
-    font-family: robot;
-}   
-
-
-.tooltip{
-position: fixed;
-    opacity: 0.8;
-    z-index: 1000;
-    text-align: left;
-    border-radius: 4px;
-    -moz-border-radius: 4px;
-    -webkit-border-radius: 4px;
-    padding: 8px;
-    color: #fff;
-    background-color: #000;
-    font: 12px sans-serif;
-    max-width: 300px;
-}
-
-.informask1{
-position: absolute;/*! height: 100%; *//*! background-color: #0c1b0a; *//*! opacity: 0.5; *//*! width: 100%; *//*! filter: alpha(opacity=50); *//*! z-index: -1; *//*! border-radius: 20px; */top: -100px;"
-}
-.informask2{
-position: absolute;
-height: 100%;
-background-color: #0c1b0a;
-opacity: 0.5;width: 100%;
-filter: alpha(opacity=50);
-z-index: 1;border-radius: 20px;top: 0px;"
-}
-
-.affichage_informask1{
-z-index: -1;background-color: aliceblue;width: 300px;height: 300px;position: fixed;top: 10000px;left: 35%;/box-shadow: 10px 10px grey;
-}
-
-.affichage_informask2{
-z-index: 1;
-}
-     
-    </style>
+  gtag('config', 'UA-134934175-1');
+</script>
 
 
     </head>
@@ -340,11 +42,11 @@ z-index: 1;
     <div class="element">
         <div class="row">
             <div class="col navbar-nav">
-                <a class="nav-item nav-link active" href=" ">1</a>
-                <a class="nav-item nav-link" href=" ">2</a>
-                <a class="nav-item nav-link" href=" ">3</a>
-                <a class="nav-item nav-link" href=" ">4</a>
-                <a class="nav-item nav-link" href=" ">5</a>
+                <a class="nav-item nav-link active" href="http://jacob.ips2.u-psud.fr:8080/CATdb/index?1">1</a>
+                <a class="nav-item nav-link" href="http://jacob.ips2.u-psud.fr:8080/CATdb/index?2">2</a>
+                <a class="nav-item nav-link" href="http://jacob.ips2.u-psud.fr:8080/CATdb/index?3">3</a>
+                <a class="nav-item nav-link" href="http://jacob.ips2.u-psud.fr:8080/CATdb/index?4">4</a>
+                <a class="nav-item nav-link" href="http://jacob.ips2.u-psud.fr:8080/CATdb/index?5">5</a>
             </div>
         </div>
     <div>
@@ -353,6 +55,13 @@ z-index: 1;
     
     <div class='row_element'> <div class="table" id="results"> </div> </div>
     <div class='row_element'> <div id="svg1"></div> </div>
+    <div class='row_element'> <div class="table" id="results2"> </div> </div>
+    <div class='row_element'> <div id="svg2"></div> </div>
+
+    </div>
+    <div id='contener2'>
+    <div class='row_element'> <div class="table" id="results3"> </div> </div>
+    <div class='row_element'> <div id="svg3"></div> </div>
     </div>
     </div>
 		<div id="foot">
@@ -367,245 +76,77 @@ z-index: 1;
     <div>    
       <script src="https://d3js.org/d3.v5.js"></script>    
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-    <script>
     
-   function clean_function(){
-    	$('#informa').css("z-index",-1);
-    	$('#informa').css("top",'10000px');
-    	$('#informask').toggleClass("informask2" );
-    };
-
-    $('#headmain_schear').append("<div>information </div><div style='display: flex;flex-direction: row;margin-top: 8px;'><div id='database' style='width: 100px;height: 15px;cursor:pointer; display: inline-block;padding: 5px 10px 6px;color: #fdf8f8;text-decoration: none;transition: all 40ms linear;box-shadow: 0 0 0 1px #ebebeb inset, 0 0 0 1px rgba(255, 255, 255, 0.15) inset, 0 1px 3px 1px rgba(108, 99, 99, 0.1);background-color: #337ab7;'></div><div style='background: #fff;display: flex;border-radius: 2px;border: none;box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16),0 0 0 1px rgba(0,0,0,0.08);z-index: 1;width: 320px;'> <input type='text' id='recherche_text' value='Search...' onblur='if(this.value==\"\") this.value=\"Search...\";' onfocus='if(this.value==\"Search...\") this.value=\"\";' >  </div> <div id='recherche_val' style='display: inline-block;height: 15px;padding: 5px 10px 6px;color: #ffffff;text-decoration: none;transition: all 40ms linear;box-shadow: 0 0 0 1px #ebebeb inset, 0 0 0 1px rgba(255, 255, 255, 0.15) inset, 0 1px 3px 1px rgba(108, 99, 99, 0.1);background-color: #337ab7;'>Validate </div> </div>");
-   //if(this.value=='\''\')this.value='Search...''
-	
-    //$('#database').append('<h5>All Databases</h5><ul><li>one</li><li>two</li><li>three</li><li>four</li></ul>');
+    <!--  <script src="{% static "js/script_requete.js" %}"/></script>-->
+    <script src="{% static "js/tableau_query.js" %}"/></script>
+    <script src="{% static "js/bar_search.js" %}"/></script>
+    <script src="{% static "js/histograme.js" %}"/></script>  
+    <script type="text/javascript">
     
-
-
-	$('#recherche_val').on( "click", function() {
-		var messag=$('#recherche_text').val();
-		var colname='chips.project';
-		$.ajax({
-            type:"GET",
-            data:{'data_requete_element':'my_req_recherche_av','value_search':messag,'colname_search':colname},
-            dataType: "json",
-            async: true,
-            url:"/CATdb/ajax/chekEmail",
-            success: function(data) {
-            	$.each(data, function(index, value){console.log(value);});
-      		
-            }
-            });
-		
-		
-		
-		console.log(messag);
-	});
-	
-	
-    
-    function affichage1(){  
-    function afficher_table(data){
-    	//permet d'afficher le resultat sous forme de tableau
-        afficheur='';  
-        $.each(data, function(index, value) {
-        if (index == 1){
-        afficheur=afficheur+"<div class='theader'>"; 
-        $.each(value._value,function(index,resp1) {
-        afficheur=afficheur+"<div class='table_header'>"+index+"</div>";
-        });
-        afficheur=afficheur+"</div>";
-        }
-        afficheur=afficheur+"<div class='table_row'>";
-        $.each(value._value,function(index,resp) {
-        afficheur=afficheur+"<div class='table_small'><div class='table_cell'>"+index+"</div><div class='table_cell'>"+resp+"</div></div>";        
-        });
-        afficheur=afficheur+"</div>";
-        });
-        $('#results').append(afficheur);
-          
-        }
-
-    function histograme(data_test){  
-        const margin = {top: 20, right: 20, bottom: 120, left: 100},
-    	width = 450 - margin.left - margin.right,
-    	height =500 - margin.top - margin.bottom;
-
-    	const x = d3.scaleBand()
-    	.range([0, width])
-    	.padding(0.1);
-    	
-    	const y = d3.scaleLinear()
-    		.range([height, 0]);
-
-        
-        const svg = d3.select("#svg1").append("svg")
-        .attr("id", "svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-        .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");    
-        
-    	const div = d3.select("body").append("div")
-    	.attr("class", "tooltip")         
-    	.style("opacity", 0);
-        
-       data_test.forEach(function(d) {
-            d.Yvar = +d.Yvar;
-        });
-
-        // Mise en relation du scale avec les données de notre fichier
-        // Pour l'axe X, c'est la liste des pays
-        // Pour l'axe Y, c'est le max des Yvars
-        x.domain(data_test.map(function(d) { return d.Xvar; }));
-        y.domain([0, d3.max(data_test, function(d) { return d.Yvar; })]);
-        
-        // Ajout de l'axe X au SVG
-        // Déplacement de l'axe horizontal et du futur texte (via la fonction translate) au bas du SVG
-        // Selection des noeuds text, positionnement puis rotation
-        svg.append("g")
-            .attr("transform", "translate(0," + height + ")")
-            .call(d3.axisBottom(x).tickSize(0))
-            .selectAll("text")	
-                .style("text-anchor", "end")
-                .attr("dx", "-.8em")
-                .attr("dy", ".15em")
-                .attr("transform", "rotate(-65)");
-        
-        // Ajout de l'axe Y au SVG avec 6 éléments de légende en utilisant la fonction ticks (sinon D3JS en place autant qu'il peut).
-        svg.append("g")
-            .call(d3.axisLeft(y).ticks(6));
-
-        // Ajout des bars en utilisant les données de notre fichier data.tsv
-        // La largeur de la barre est déterminée par la fonction x
-        // La hauteur par la fonction y en tenant compte de la Yvar
-        // La gestion des events de la souris pour le popup
-        svg.selectAll(".bar")
-            .data(data_test)
-        .enter().append("rect")
-            .attr("class", "bar")
-            .attr("x", function(d) { return x(d.Xvar); })
-            .attr("width", x.bandwidth())
-            .attr("element_name", function(d) { return d.Xvar; })
-            .attr("y", function(d) { return y(d.Yvar); })
-            .attr("height", function(d) { return height - y(d.Yvar); })
-            .on("click",function(d) { declenche(d.Xvar,'Organism Name');})
-            .on("mouseover", function(d) {
-                div.transition()        
-                    .duration(200)      
-                    .style("opacity", .9);
-                div.html("count:" + d.Yvar)
-                    .style("left", (d3.event.pageX + 15) + "px")     
-                    .style("top", (d3.event.pageY -30) + "px");
-            })
-            .on("mouseout", function(d) {
-                div.transition()
-                    .duration(500)
-                    .style("opacity", 0);
-            });
-      }
- 
- 
-    
-    $('#contener').append("<div id='informask' class='informask1'></div>");
-	$('#contener').append("<div id='informa' class='affichage_informask1'> <div style='border-color: white;width: 100%;height: 10%;margin-left: auto;margin-right: auto;width: 90%;height: 8%;border-radius: 12%;border: 2px solid;margin-left: auto;margin-right: auto;box-shadow: 2px 2px grey;border-color: white;'> header</div> <div style='border-color: white;width: 90%;height: 80%;border: 2px solid;margin-left: auto;margin-right: auto;box-shadow: 2px 3px grey;border-color: white;'> conteneur</div> <div style='border-color: white;width: 90%;height: 8%;border-radius: 12%;border: 2px solid;margin-left: auto;margin-right: auto;box-shadow: 2px 2px grey;border-color: white;'> footer</div> </div>");	
- 	$("#informa").children()[0].innerHTML='<div style="width: 100%;height:100%; display:flex; justify-content:space-between;"><div id="entete_informa" style="font-weight: bold;"> </div><img src="https://img.icons8.com/color/48/000000/close-window.png" style="width: 10%;height: 100%;" onclick="clean_function();"></div>';
-	
-	$("#informa").children()[2].innerHTML=' ';
- 	
-
-	
-	
-    function declenche(elemnt,elemnt1) {
-    	  $('#informask').toggleClass("informask2");
-    	  $('#informa').css("z-index",2);
-    	  $('#informa').css("top",'20%');
-    	  var res = elemnt.split("x");
-    	  var message='';
-    	  $.each(res, function(index, value) {
-    		message=message+'<p>'+value+'</p>'+'<a href="https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?name='+value+'"> Lien NCBI de description </a>';  
-    	  });
-    	  
-    	  $("#informa").children()[1].innerHTML=message;
-    	  $("#entete_informa").html(elemnt1);
-    };
-    
-    
-    
-
-	var data_send ='my_req_special';
-    $.ajax({
-        type:"GET",
-        data:{'data_requete_element': data_send},
-      dataType: "json",
-      async: true,
-      url:"/CATdb/ajax/chekEmail",
-      success: function(data) {
-        afficher_table(data);
-		var x1="organism_name"
-		var y1="count"
-		var show_data=[]
-        $.each(data, function(index, value) {
-        	show_data.push({"Xvar":eval('value._value.'+x1),"Yvar":eval('value._value.'+y1)});
-        	//$.each(value._value,function(index1,resp1) {
-           //     console.log("index :"+index1+" value:"+resp1);
-    	//});
-        });
-		show_data.sort(function (a, b) {
-		    	   return  b.Yvar-a.Yvar;
-		});
-		var show_data_final=[]
-		$.each(show_data, function(index, value) {
-			show_data_final.push({"position": parseInt(index, 10)+1,"Xvar":value.Xvar,"Yvar":parseInt(value.Yvar,10)});
-        });
-		// affichage histogramme
-		histograme(show_data_final);
+    var currentLocation = window.location;
+    try {
+    var i=String(window.location).split('?')[1];
+    if (typeof(i) == 'undefined') {
+    	 var i=1;
+    	};
     }
+    catch(error) {
+      	var i=1;
+    	console.error(error);
+    };  
+    var i=parseInt(i,10)-1;
+    var choixe=[['my_req_special','organism_name','organism name'],['my_querySpecies','array_type_name','array type name'],['my_req_recherche1','array_type_name','array type name']];
     
+    $('#results').ready(function() {
+        var query=choixe[0][0];//'my_req_recherche1';//'my_req_special' 'organism name','organism_name';  #my_querySpecies,array_type_name,array type name
+        var x_val=choixe[0][1];//'array_type_name';
+        var name_x_val=choixe[0][2];//'array type name';
+		
+   $.ajax({     type:"GET",
+                data:{'data_requete_element':query},
+                dataType: "json",
+                async: true,
+                url:"/CATdb/ajax/chekEmail",
+                success: function(data) {
+                	//$.each(data, function(index, value){console.log(value);});
+                	afficher_table(data,'results',query);
+                }
+                });
+        
+   
+    if (query!='my_req_recherche1'){
+    execucte_affichage('svg1',name_x_val,x_val,query);
+    }else{$('#svg1').css('display','None');
+    $('#svg1').parent().css('display','None');
+    $('.row_element').css('width','100%');
+    };   
     });
-    }
-	
-    //affichage1();
-    
-    
-    function affichage2(){  
-    	var data_send ='my_querySpecies';//#my_querySpecies####my_req_recherche
-        $.ajax({
-            type:"GET",
-            data:{'data_requete_element': data_send},
-            dataType: "json",
-            async: true,
-            url:"/CATdb/ajax/chekEmail",
-            success: function(data) {
-            	$.each(data, function(index, value){console.log(value);});
-      		
-            }
-            });
-      	
-    $('.row_element').toggleClass("row_element1");
-    	
-    };
-    affichage1();
-
-     //***************//
-
-	$("#recherche_text").keyup(function() {
-	 $('#suggestion_area').empty();
-	  var res=$("#recherche_text").val();
-	  var putsuggestion='<div id="suggestion_area"> '+res+' </div>';
-	  console.log(putsuggestion);	
-	});
-    
-    var list_object={'All Databases': {'_key': 1, '_value':['Organism','Experiment']},'Organism': {'_key': 1, '_value':['B','A','More']},'Experiment': {'_key':1, '_value':['C','A','More']}};	
-    var message='';
-    // add for All DataBases
-    var i=0 
-     var message=message+'<div>'+Object.keys(list_object)[i];
-	for (var j in list_object[Object.keys(list_object)[i]]._value){
-		var message=message+'<div>'+list_object[Object.keys(list_object)[i]]._value[j]+'</div>';	
-	};
-	var message=message+'</div>';
-    $('#database').append(message);
-    console.log(message);
+    $('#results2').ready(function() {
+        var query=choixe[1][0];//'my_req_recherche1';//'my_req_special' 'organism name','organism_name';  #my_querySpecies,array_type_name,array type name
+        var x_val=choixe[1][1];//'array_type_name';
+        var name_x_val=choixe[1][2];//'array type name';
+		
+   $.ajax({     type:"GET",
+                data:{'data_requete_element':query},
+                dataType: "json",
+                async: true,
+                url:"/CATdb/ajax/chekEmail",
+                success: function(data) {
+                	//$.each(data, function(index, value){console.log(value);});
+                	afficher_table(data,'results2',query);
+                }
+                });
+        
+   
+    if (query!='my_req_recherche1'){
+    execucte_affichage('svg2',name_x_val,x_val,query);
+    }else{$('#svg2').css('display','None');
+    $('#svg2').parent().css('display','None');
+    $('.row_element').css('width','100%');
+    };   
+    });   
     
     </script>
+   
+    
+    

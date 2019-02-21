@@ -17,7 +17,7 @@ urlpatterns = [
     
     url('^index$',views.view_data),
     url('^explore.html$',views.view_table),
-    url('^ajax/special$',views.ajax_check_email_fields1),
+    #url('^ajax/special$',views.ajax_check_email_fields1),
     url('^table.html$',views.prise_main),
 
     

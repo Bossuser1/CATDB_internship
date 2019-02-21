@@ -58,3 +58,10 @@ Not Found: /favicon.ico
 [14/Feb/2019 10:09:36] "GET /static/css/base.css HTTP/1.1" 304 0
 Not Found: /
 [14/Feb/2019 10:09:41] "GET / HTTP/1.1" 404 2420
+[21/Feb/2019 17:36:18] "GET /CATdb/index HTTP/1.1" 200 5993
+[21/Feb/2019 17:36:18] "GET /static/css/table_index1.css HTTP/1.1" 304 0
+[21/Feb/2019 17:36:18] "GET /static/js/histograme.js HTTP/1.1" 304 0
+[21/Feb/2019 17:36:19] "GET /CATdb/ajax/chekEmail?data_requete_element=my_req_special HTTP/1.1" 200 2208
+[21/Feb/2019 17:36:19] "GET /CATdb/ajax/chekEmail?data_requete_element=my_querySpecies HTTP/1.1" 200 1783
+[21/Feb/2019 17:36:19] "GET /CATdb/ajax/chekEmail?data_requete_element=my_req_special HTTP/1.1" 200 2208
+[21/Feb/2019 17:36:19] "GET /CATdb/ajax/chekEmail?data_requete_element=my_querySpecies HTTP/1.1" 200 1783

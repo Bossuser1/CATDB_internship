@@ -30,8 +30,10 @@ def ajax_check_email_fields(request):
     colname_send=request.GET.get('colname_search',None)
     
     order_element=request.GET.get('order_by',None)
+    #memory=execution_requete_new(answer_send,value_send,colname_send,order_element)
     if order_element!=None:
-        memory=execution_requete_new(answer_send,value_send,colname_send,order_element)
+       memory=execution_requete(answer_send,value_send,colname_send,order_element) 
+       #memory=execution_requete_new(answer_send,value_send,colname_send,order_element)
     else: 
         memory=execution_requete(answer_send,value_send,colname_send)
 

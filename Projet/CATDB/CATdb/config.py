@@ -7,8 +7,8 @@ Created on Fri Feb 15 07:19:48 2019
 """
 from configparser import ConfigParser
  
-#/export/home/gnet/btraore/WWW_DEV/cgi-bin/projects/CATDB/CATdb/database2.ini 
-def config(filename='/home/traore/Bureau/Dossier_Stage/CATDB_internship/Projet/CATDB/CATdb/database2.ini', section='postgresql'):
+#/export/home/gnet/btraore/WWW_DEV/cgi-bin/projects/CATDB/CATdb/database2.ini /home/traore/Bureau/Dossier_Stage/CATDB_internship/Projet/CATDB/CATdb/database2.ini 
+def config(filename='/export/home/gnet/btraore/WWW_DEV/cgi-bin/projects/CATDB/CATdb/database.ini', section='postgresql'):
     # create a parser
     parser = ConfigParser()
     # read config file
