@@ -1,0 +1,15 @@
+CREATE TABLE raw_value (
+raw_value_id integer NULL,
+label VARCHAR (10) NOT NULL,
+foreground_mean numeric NOT NULL,
+foreground_median numeric NULL,
+foreground_sd numeric NOT NULL,
+background_mean numeric NOT NULL,
+background_median numeric NOT NULL,
+background_sd numeric NOT NULL,
+signal_quality numeric NOT NULL,
+percent_sat numeric NOT NULL,
+hybridization_id integer NOT NULL,
+spot_id integer NOT NULL,
+stat_analysis_id integer NOT NULL,
+control_type VARCHAR (10) NOT NULL );

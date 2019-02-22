@@ -1,0 +1,18 @@
+CREATE TABLE sample_source (
+sample_source_id integer NULL,
+sample_source_idname VARCHAR (50) NULL,
+sample_source_name VARCHAR (100) NULL,
+organism_id integer NULL,
+ecotype_id integer NOT NULL,
+genotype VARCHAR (100) NOT NULL,
+mutant VARCHAR (10) NOT NULL,
+planting_date date NOT NULL,
+growth_conditions VARCHAR (4000) NOT NULL,
+operator_id integer NULL,
+book_ref VARCHAR (10) NOT NULL,
+project_id integer NOT NULL,
+experiment_id integer NOT NULL,
+user_id integer NOT NULL,
+submission_date date NOT NULL,
+mutant_type VARCHAR (300) NOT NULL,
+mutant_loci VARCHAR (100) NOT NULL );
