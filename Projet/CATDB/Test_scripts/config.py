@@ -8,7 +8,7 @@ Created on Fri Feb 15 07:19:48 2019
 from configparser import ConfigParser
  
  
-def config(filename='database.ini', section='postgresql'):
+def config(filename='/home/traore/Bureau/Dossier_Stage/CATDB_internship/Projet/CATDB/Test_scripts/database2.ini', section='postgresql'):
     # create a parser
     parser = ConfigParser()
     # read config file

@@ -76,7 +76,7 @@ def read_data_sql(requete,element):
 
 def execution_requete(element,value_send,colname_send,order_ele=None):
     ### parametres
-    my_ppty="chips" #CHIPS
+    my_ppty="public" #CHIPS
 
     # requete sur la nouvelle table info_catdbindex
     my_reqinfo ="Select info_code, info_value, info_name from "+my_ppty+".info_catdbindex order by info_code;"
@@ -103,7 +103,7 @@ def execution_requete(element,value_send,colname_send,order_ele=None):
     
     
     #my_req_special="select o.organism_name,count(distinct ss.project_id) from "+my_ppty+".sample_source ss,"+my_ppty+".organism o where ss.project_id in( select project_id from "+my_ppty+".project where is_public='yes')  group by o.organism_name;"
-    my_req_special="select o.organism_name,count(distinct ss.project_id) from "+my_ppty+".sample_source ss,"+my_ppty+".organism o where ss.project_id in( select project_id from "+my_ppty+".project where is_public='yes') and ss.organism_id=o.organism_id group by o.organism_name;"
+    my_req_special="select o.organism_name,count(distinct ss.project_id) from "+my_ppty+".sample_source ss,"+my_ppty+".organism o where ss.project_id in( select project_id from "+my_ppty+".project ) and ss.organism_id=o.organism_id group by o.organism_name;" #where is_public='yes'
     
     my_req_recherche="SELECT * FROM global_search_element('Arabidopsis',param_schemas:=array['chips']);"
     
