@@ -19,7 +19,7 @@ urlpatterns = [
     url('^explore.html$',views.view_table),
     #url('^ajax/special$',views.ajax_check_email_fields1),
     url('^table.html$',views.prise_main),
-
+    url('^project.html$',views.project),
     
 ]+static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

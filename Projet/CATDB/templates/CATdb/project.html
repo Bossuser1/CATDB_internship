@@ -1,0 +1,588 @@
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+   <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css?family=Karla:400,700|Montserrat:300,400,500,600');
+
+@import url('https://fonts.googleapis.com/css?family=Vollkorn:400,600');
+
+
+* { box-sizing: border-box; }
+input[name="radio"] { display: none; }
+
+body {
+  font-family: 'Karla', sans-serif;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+
+}
+
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+  box-shadow: 0 2px 4px rgba(0,0,0,.1);
+}
+
+.logo {
+  width: 70px;
+  text-align: center;
+  padding: 12px 0;
+  background: linear-gradient(to right, rgb(24, 214, 4) 0%,rgb(31, 172, 3) 100%);
+  color: #fff;
+}
+
+.logo > svg { height: 28px; }
+
+.slider {
+  width: 220px;
+  background-color: #5a6266;
+  overflow: hidden;
+}
+
+.slider-track {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  transition: .3s;
+  color: #fff;
+}
+
+.slider-item {
+  width: 100%;
+  flex-shrink: 0;
+  padding: 0 20px;
+  transform: scale(.5);
+  transition: .3s .05s;
+  font-size: 15px;
+  text-align: center;
+  color: #fff;
+  font-weight: 500;
+  letter-spacing: .2px;
+  text-decoration: none;
+}
+
+.nav {
+  flex: 1;
+  display: flex;
+}
+
+.nav > label {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 0 26px;
+  border-right: 1px solid #ddd;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  color: #7b7b87;
+  transition: .3s;
+  user-select: none;
+}
+
+.main {
+  flex: 1;
+  background-color: #f5f5f5;
+  overflow: hidden;
+}
+
+.section-track {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  height: 100%;
+  transition: .3s;
+}
+
+.section {
+  flex-shrink: 0;
+  height: 100%;
+  padding: 40px;
+  display: flex;
+  flex-wrap: wrap;
+  opacity: 0;
+  visibility: hidden;
+  overflow: hidden;
+  transition: .3s;
+}
+
+.section.works {
+  align-items: center;
+  flex-wrap: nowrap;
+  overflow: auto;
+}
+
+.about-left {
+  width: 35%;
+  height: 100%;
+}
+
+.about-left > img {
+  width: 100%;
+  /*height: 100%;*/
+  object-fit: cover;
+}
+
+.about-right {
+  flex: 1;
+  height: 100%;
+  overflow: auto;
+  background-color: #fff;
+}
+
+.bio { padding: 40px; }
+.bio p { line-height: 1.4; font-size: 15px; }
+.bio p + p { margin: 20px 0 0; }
+
+.bio-title {
+  font-size: 32px;
+  margin: 0 0 6px 0;
+  font-weight: 500;
+  font-family: 'Montserrat', sans-serif;
+  color: #0073b0;
+}
+
+.bio-subtitle {
+  margin: 0 0 15px 0;
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 2.5px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #f4f4f4;
+  color: #757f83;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.social-media-link {
+  display: inline-block;
+  width: 17px;
+  height: 17px;
+  color: #fff;
+}
+
+.social-media-link + .social-media-link { margin-left: 10px; }
+
+.skill + .skill { margin-top: 10px; }
+
+.skill-title {
+  font-size: 14px;
+  font-family: 'Montserrat', sans-serif;
+  margin-bottom: 5px;
+  text-indent: 5px;
+}
+
+.progress {
+  width: 80%;
+  border: 1px solid #ddd;
+  height: 16px;
+  border-radius: 30px;
+  padding: 4px;
+}
+
+.progress-bar {
+  background: linear-gradient(to right, #aeb9bf 0%, #5f7179 100%);
+  height: 100%;
+  width: 100%;
+  border-radius: 30px;
+}
+
+.work {
+  position: relative;
+  height: 60%;
+  width: 30%;
+  flex-shrink: 0;
+  background-color: #000;
+  text-decoration: none;
+  transition: .3s;
+  flex-shrink: 0;
+  margin-right: 30px;
+  transition: .3s;
+  will-change: height;
+}
+
+.work:last-child:after {
+  content: "";
+  position: absolute;
+  width: 40px;
+  right: -40px;
+  height: 100%;
+  top: 0;
+  pointer-events: none;
+}
+
+.work-img {
+  width: 100%;
+  height: 100%;
+  transition: .3s;
+}
+
+.work-img > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.work-content {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0;
+  width: 100%;
+  text-align: center;
+  color: #fff;
+  padding: 0 30px;
+  transition: .3s;
+}
+
+.work-title {
+  margin: 0 0 16px 0;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 20px;
+}
+
+.work-desc { margin: 0; }
+.work:hover > .work-img { opacity: 0.5; }
+
+.work:hover {
+  height: 80%;
+  box-shadow: 0 10px 30px rgba(0,0,0,.35);
+}
+
+.section.services {
+  align-items: center;
+}
+
+.service {
+  width: 25%;
+  text-align: center;
+  padding: 0 40px;
+  text-align: center;
+  border-radius: 4px;
+}
+
+.service > svg {
+  height: 15vh;
+  fill: #058ed5;
+}
+
+.service-title {
+  font-size: 18px;
+  font-family: 'Montserrat', sans-serif;
+  margin: 20px 0 10px 0;
+}
+
+.service-desc {
+  color: rgba(0,0,0,0.5);
+  margin: 0;
+  line-height: 1.3;
+}
+
+.section.contact {
+  align-items: center;
+}
+
+.map-responsive {
+  overflow: hidden;
+  width: 50%;
+  height: 100%;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0,0,0,.1);
+  position: relative;
+}
+
+.map-responsive iframe {
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+}
+
+.contact-content {
+  width: 50%;
+  text-align: center;
+}
+
+.avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: inline-block;
+  margin-bottom: 20px;
+}
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.contact-email {
+  padding: 10px 20px;
+  font-size: 15px;
+  font-family: 'Montserrat', sans-serif;
+  letter-spacing: .4px;
+  font-weight: 500;
+  border: 2px solid #ddd;
+  cursor: pointer;
+  color: rgba(0,0,0,.3);
+}
+
+#about:checked ~ .main .section.about,
+#works:checked ~ .main .section.works,
+#services:checked ~ .main .section.services,
+#contact:checked ~ .main .section.contact {
+  opacity: 1;
+  visibility: visible;
+  overflow: auto;
+}
+
+
+#about:checked ~ .header label[for="about"],
+#works:checked ~ .header label[for="works"],
+#services:checked ~ .header label[for="services"],
+#contact:checked ~ .header label[for="contact"] {
+  box-shadow: 0 -2px 0 #5a6266 inset;
+  color: #333;
+}
+
+#works:checked ~ .header .slider-track { transform: translateX(-100%); }
+#services:checked ~ .header .slider-track { transform: translateX(-200%); }
+#contact:checked ~ .header .slider-track { transform: translateX(-300%); }
+
+
+#works:checked ~ .main .section-track { transform: translateY(-100%); }
+#services:checked ~ .main .section-track { transform: translateY(-200%); }
+#contact:checked ~ .main .section-track { transform: translateY(-300%); }
+
+
+#about:checked ~ .header .slider-track .slider-item.about,
+#works:checked ~ .header .slider-track .slider-item.works,
+#services:checked ~ .header .slider-track .slider-item.services,
+#contact:checked ~ .header .slider-track .slider-item.contact { transform: scale(1); }
+
+@media (max-width: 820px) {
+  .logo { width: 40px; }
+  .logo > svg { height: 20px; }
+  .nav { justify-content: flex-end; }
+  .slider { display: none; }
+  .work { width: 70%; }
+  .about { flex-direction: column; }
+  .map-responsive { display: none; }
+  .contact-content { width: 100%; }
+ 
+  .nav > label {
+    font-size: 10px;
+    padding: 0 10px;
+  }
+  .about-left {
+    width: 100%;
+    height: 30%;
+  }
+  
+  .service {
+    width: 100%;
+    margin-bottom: 50px;
+  }
+}
+
+.description_project span{
+font-weight: bold;
+text-decoration:underline #1cbf03;
+}
+
+.description_project div{
+margin: 2%;
+font-
+}
+
+#coordinateur_project{
+display:flex;
+}
+
+.coordinateur_project_ele{
+/*border: 0.0625rem solid #555;
+box-shadow: 0 0 0.625rem 0.25rem #555;*/
+width: 100%;
+border-radius: 20px;
+border-color: cornsilk;
+text-align: center;
+-webkit-box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16), 0px 3px 6px rgba(0, 0, 0, 0.23);
+}
+</style>
+
+
+  <div>
+    
+  </div>  
+<input type="radio" name="radio" id="about" checked>
+<input type="radio" name="radio" id="works">
+<input type="radio" name="radio" id="services">
+<input type="radio" name="radio" id="contact">
+
+<header class="header">
+  <span class="logo">
+    <div style="width: 100%;height:100%;"><img src="http://ips2.u-psud.fr/skins/ips2/resources/img/xlogo-ips2.jpg.pagespeed.ic.5M7r3ydBzs.jpg" style="width: 100%;height:100%;" > </div>
+    
+  </span>
+  <div class="nav">
+    <label for="about">Project</label>
+    <label for="works">Experiment</label>
+    <label for="services">Treatment</label>
+    <label for="contact">Sample Source</label>
+  </div>
+  <div class="slider">
+    <div class="slider-track">
+      <a href="#" class="slider-item about"> </a>
+      <a href="#" class="slider-item works">LET'S WORK TOGETHER</a>
+      <a href="#" class="slider-item services">CONTACT ME</a>
+      <div class="slider-item contact">
+        <a href="#" class="social-media-link">
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512">
+            <path fill="currentColor" d="M288 176v-64c0-17.664 14.336-32 32-32h32V0h-64c-53.024 0-96 42.976-96 96v80h-64v80h64v256h96V256h64l32-80h-96z"/>
+          </svg>
+        </a>
+        <a href="#" class="social-media-link">
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512">
+            <path fill="currentColor" d="M512 97.248c-19.04 8.352-39.328 13.888-60.48 16.576 21.76-12.992 38.368-33.408 46.176-58.016-20.288 12.096-42.688 20.64-66.56 25.408C411.872 60.704 384.416 48 354.464 48c-58.112 0-104.896 47.168-104.896 104.992 0 8.32.704 16.32 2.432 23.936-87.264-4.256-164.48-46.08-216.352-109.792-9.056 15.712-14.368 33.696-14.368 53.056 0 36.352 18.72 68.576 46.624 87.232-16.864-.32-33.408-5.216-47.424-12.928v1.152c0 51.008 36.384 93.376 84.096 103.136-8.544 2.336-17.856 3.456-27.52 3.456-6.72 0-13.504-.384-19.872-1.792 13.6 41.568 52.192 72.128 98.08 73.12-35.712 27.936-81.056 44.768-130.144 44.768-8.608 0-16.864-.384-25.12-1.44C46.496 446.88 101.6 464 161.024 464c193.152 0 298.752-160 298.752-298.688 0-4.64-.16-9.12-.384-13.568 20.832-14.784 38.336-33.248 52.608-54.496z"/>
+          </svg>
+        </a>
+        <a href="#" class="social-media-link">
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512">
+  <path fill="currentColor" d="M352 0H160C71.648 0 0 71.648 0 160v192c0 88.352 71.648 160 160 160h192c88.352 0 160-71.648 160-160V160C512 71.648 440.352 0 352 0zm112 352c0 61.76-50.24 112-112 112H160c-61.76 0-112-50.24-112-112V160C48 98.24 98.24 48 160 48h192c61.76 0 112 50.24 112 112v192z"/>
+  <path fill="currentColor" d="M256 128c-70.688 0-128 57.312-128 128s57.312 128 128 128 128-57.312 128-128-57.312-128-128-128zm0 208c-44.096 0-80-35.904-80-80 0-44.128 35.904-80 80-80s80 35.872 80 80c0 44.096-35.904 80-80 80z"/>
+  <circle fill="currentColor" cx="393.6" cy="118.4" r="17.056"/>
+</svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
+<main class="main">
+  <div class="section-track">
+    <section class="section about">
+      <div class="about-left">
+        <img id="pict" src="http://acces.ens-lyon.fr/acces/thematiques/dyna/dossiers-thematiques/morphogenese-vegetale/images-1/fleurWt1%20copie.jpg/image_preview"/>
+      	<div id="complement_pict">
+      	</div>
+      </div>
+      <div class="about-right">
+        <div class="bio">
+          <h2 class="bio-title" id="info_text_b"> </h2>
+          <h3 class="bio-subtitle" >Project Name</h3>
+          <div id="project_contenu" class="skill">
+          </div>
+          <div id="coordinateur_project">
+ 
+          </div>
+            
+          <!--<div class="skill">
+            <h3 class="skill-title">HTML</h3>
+            <div class="progress">
+              <div class="progress-bar" style="width: 80%"></div>
+            </div>
+          </div>
+          <div class="skill">
+            <h3 class="skill-title">CSS</h3>
+            <div class="progress">
+              <div class="progress-bar" style="width: 85%"></div>
+            </div>
+          </div>
+          <div class="skill">
+            <h3 class="skill-title">JAVASCRIPT</h3>
+            <div class="progress">
+              <div class="progress-bar" style="width: 74%"></div>
+            </div>
+          </div>
+          <div class="skill">
+            <h3 class="skill-title">PHP</h3>
+            <div class="progress">
+              <div class="progress-bar" style="width: 44%"></div>
+            </div>
+          </div>-->
+        </div>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<script type="text/javascript">
+
+//identifiant projet
+
+//variable Global
+
+function remplissage(data,key){
+//remplissage de info projet data is dictionnary and key is div where you put visualisation
+//  exemple 
+var project_name=data['name'];
+var title=data['title'];
+var bioinfo=data['bioinfo'];
+var source_info=data['source_info'];
+var date_info=data['data_info'];
+var gemnet=data['gem2net_id'];
+var text='';
+$('#info_text_b').append('<div class="name_project">'+project_name+'</div>');
+var text=text+'<div class="description_project">'; 
+var text=text+'<div class="title_project"><span>Project Title:</span> <div class="title_big_info">'+title+'</div></div>'
+var text=text+'<div class="Bio_interest"><span>Biological Interest:</span><div class="title_big_info">'+bioinfo+'</div></div>';
+var text=text+'<div class="source_pro"> <span>Source:</span><div> '+source_info+'</div></div>';
+var text=text+'<div class="date_project"><span>Date:</span><div>'+date_info+'</div><div class="date_project"><span>Coordinator(s):</span></div>';
+//var text=text+'</div>'; 
+$('#'+key).append(text);
+};
+
+var var_project_key=47;
+$.ajax({
+    type:"GET",
+    data:{'data_requete_element':'get_project','value_search':var_project_key},
+    dataType: "json",
+    async: true,
+    url:"/CATdb/ajax/chekEmail",
+    success: function(data) {
+    	//$.each(data, function(index, value){console.log(value);});
+    //console.log(data[1]._value);	
+	var data={name:data[1]._value.project_name,'title':data[1]._value.title,bioinfo:data[1]._value.biological_interest,
+	       source_info:data[1]._value.source,
+	       data_info:data[1]._value.public_date,
+	       gem2net_id:'' 
+	       };
+    	remplissage(data,'project_contenu');
+
+    
+    	var sizean=$('.about-right').height();
+    	var sizean=sizean-$('#pict').height();
+    	$('#complement_pict').css("height",sizean);
+    	$('#complement_pict').css("background-color","white");
+    
+    }
+});  
+
+$.ajax({
+    type:"GET",
+    data:{'data_requete_element':'get_contact','value_search':var_project_key},
+    dataType: "json",
+    async: true,
+    url:"/CATdb/ajax/chekEmail",
+    success: function(data) {
+    	//console.log(data);
+    	$.each(data, function(index, value){
+    		var text='<div class="coordinateur_project_ele"><div><i class="far fa-user"></i><span>Last Name</span>:'+value._value.last_name+'</div><div><i class="fas fa-user-tie"></i><span>First Name:</span>'+value._value.first_name+'</div>';
+    		var text=text+'<div><i class="fas fa-mobile-alt"></i>Phone:'+value._value.phone+'</div><div><i class="fas fa-envelope"></i><span>Email</span>:'+value._value.email+'</div><div><i class="fas fa-university"></i><span>Insitution:</span>'+value._value.institution+'</div>';
+    		var text=text+'<div><i class="far fa-building"></i><span>Laboratory:</span>'+value._value.laboratory+'</div><div><i class="fas fa-map-marked"></i><span>Address:</span>'+value._value.address+'</div></div>';
+    		//$.each(value._value, function(element,set_element){	
+    		$('#coordinateur_project').append(text);
+    		//console.log(element);
+    	//});
+    	});
+    }
+    
+});
+</script>

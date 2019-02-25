@@ -16,22 +16,17 @@ def connect():
     try:
         # read connection parameters
         params = config()
- 
         # connect to the PostgreSQL server
         print('Connecting to the PostgreSQL database...')
         conn = psycopg2.connect(**params)
- 
         # create a cursor
         cur = conn.cursor()
-        
         # execute a statement
         print('PostgreSQL database version:')
         cur.execute('SELECT version()')
- 
         # display the PostgreSQL database server version
         db_version = cur.fetchone()
         print(db_version)
-       
      # close the communication with the PostgreSQL
         cur.close()
     except (Exception, psycopg2.DatabaseError) as error:
@@ -55,10 +50,6 @@ def read_data_sql(requete,element):
     colnames = [desc[0] for desc in cursor.description]
     memory = cursor.fetchall()
     conn.close()
-    #else:
-    #    memory=requete
-    #    print("Merci de verifier")
-
     cpt=0
     data=dict()
     for ele in range(len(memory)):
@@ -69,14 +60,11 @@ def read_data_sql(requete,element):
         dictionary ={'_key':cpt,"_value":dict(zip(colnames,col))}
         data[cpt]=dictionary
     name=element+'.csv'     
-    #with open("/export/home/gnet/btraore/WWW_DEV/cgi-bin/projects/CATDB/Test_scripts/"+name,"w") as ecr:
-    #    ecr.write(str(data))
-    #    ecr.close()
     return data
 
 def execution_requete(element,value_send,colname_send,order_ele=None):
     ### parametres
-    my_ppty="public" #CHIPS
+    my_ppty="chips" #CHIPS
 
     # requete sur la nouvelle table info_catdbindex
     my_reqinfo ="Select info_code, info_value, info_name from "+my_ppty+".info_catdbindex order by info_code;"
@@ -113,7 +101,9 @@ def execution_requete(element,value_send,colname_send,order_ele=None):
     
     experiement="select * from (select S.project_name,O.project_id,O.experiment_name,O.experiment_type from "+my_ppty+".experiment O,"+my_ppty+".project S where O.project_id in (select project_id from "+my_ppty+".project where is_public='yes')) df limit 100;"
     
+    get_project="select * from  "+my_ppty+".project where project.project_id="+value_send+";"
     
+    get_contact="select contact.contact_id,contact.first_name,contact.last_name,contact.phone,contact.email,contact.institution,contact.laboratory,contact.address from "+my_ppty+".project_coordinator,"+my_ppty+".contact,"+my_ppty+".project where project.project_id=project_coordinator.project_id and contact.contact_id=project_coordinator.contact_id and project.project_id="+value_send+";"
     
     try:
         my_req_recherche_av="select * from "+colname_send+" where (is_public='yes' and project_name like '%"+value_send+"%');"
@@ -134,7 +124,11 @@ def execution_requete(element,value_send,colname_send,order_ele=None):
     elif element=='my_req_recherche1':
         requete=my_req_recherche1
     elif element=='experiement':
-        requete=experiement           
+        requete=experiement  
+    elif element=='get_project' and value_send!=None:
+        requete=get_project 
+    elif element=='get_contact' and value_send!=None:
+        requete=get_contact
     else:
         try:
             requete=eval(element)
@@ -143,6 +137,8 @@ def execution_requete(element,value_send,colname_send,order_ele=None):
             pass
     
     my_req_special="select o.organism_name,count(distinct ss.project_id) from "+my_ppty+".sample_source ss,"+my_ppty+".organism o where ss.project_id in( select project_id from "+my_ppty+".project where is_public='yes') and ss.organism_id=o.organism_id group by o.organism_name;"
+    
+    
     
     if  element=='my_req_special' and order_ele==None:
          requete=my_req_special  

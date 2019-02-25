@@ -69,7 +69,8 @@ def ajax_check_email_fields1(request):
 def prise_main(request):
     return render(request,'CATdb/table_prise_main.html',{})
 
-
+def project(request):
+    return render(request,'CATdb/project.html',{})
 # def index(request):
 #     _answer="""    
 #     <div id="header"><div>
