@@ -15,7 +15,40 @@ Et ceux des données collectés par le même processs .\\
 les processus energistrées dans la base CATDB vont de collecté d'echantillons primaires à la collecte de resultats finaux de traitements aussi bien staistiques , que chimiques en vue de rendre ces resultats reproductibles pour tous utilisateurs.
 \end{}
 
+\begin{les differentes types de bases}
+Ainsi les Banques et bases de données en Biologie specialisées dans le domaine sont nombreuses , mais on peux compte un certains nombreux d'entre elles specialisées par grands domaines tels que celle specialisées dans :
 
+\ennumerate{}
+\item{les ressources pour les procaryotes}
 
+\item{les ressources pour les plantes}
+
+\item{les ressources pour les animaux}
+
+\end{} 
+
+\end{} 
 \end{}
 
+
+
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+#lecture de requete
+
+def lecture_query_tage(file_query):
+    """
+    function sert a lire les requetes prédefinir seulement
+    """
+    query_tag=dict()
+    with open(file_query,"r") as fiche:
+        data=fiche.readlines()
+        for line in data:
+            if line[0]!="#":
+                if line[0:9]=="Tag_query":
+                    _key=line[11:].replace('\n','').replace('"','')
+                elif line[0:5]=="query":
+                    query_tag[_key]=(line[6:].replace('\n','').replace('"',''))            
+    return query_tag
+lecture_query_tage("query_tag.ini")

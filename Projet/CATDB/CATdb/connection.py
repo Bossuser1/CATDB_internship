@@ -7,6 +7,7 @@ from django.db import models
 import psycopg2
 from CATdb.config import config
 from django.test.html import Element
+import os
 #from config import config
 #import psycopg2.extras 
 
@@ -64,7 +65,10 @@ def read_data_sql(requete,element):
 
 def execution_requete(element,value_send,colname_send,order_ele=None):
     ### parametres
-    my_ppty="chips" #CHIPS
+    if os.getcwd()[0:12]!="/home/traore":
+    	my_ppty="chips"
+    else:
+    	my_ppty="public" #CHIPS
 
     # requete sur la nouvelle table info_catdbindex
     my_reqinfo ="Select info_code, info_value, info_name from "+my_ppty+".info_catdbindex order by info_code;"

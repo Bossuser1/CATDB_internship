@@ -6,14 +6,15 @@ Created on Fri Feb 15 07:19:48 2019
 @author: traore
 """
 import os
-os.getcwd()
 
 from configparser import ConfigParser
 
 
 def config(section='postgresql'):
-    
-    filename=os.getcwd()+'/CATdb/database.ini'
+    if os.getcwd()[0:12]!="/home/traore":
+    	filename=os.getcwd()+'/CATdb/database.ini'
+    else:
+    	filename=os.getcwd()+'/CATdb/database2.ini'
     # create a parser
     parser = ConfigParser()
     # read config file
