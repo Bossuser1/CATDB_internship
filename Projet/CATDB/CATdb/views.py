@@ -71,16 +71,5 @@ def prise_main(request):
 
 def project(request):
     return render(request,'CATdb/project.html',{})
-# def index(request):
-#     _answer="""    
-#     <div id="header"><div>
-#     <div id="contener">
-#     {% load static %}
-#     <img src="{%static'/CATdb/img/logo-ips2-trans.png' %}" alt="My image">
-#     testons    
-#     <div>
-#     <div id="foot"><div>
-#     """    
-#     return HttpResponse(_answer)
 
 

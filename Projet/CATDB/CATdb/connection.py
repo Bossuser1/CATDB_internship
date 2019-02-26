@@ -1,15 +1,13 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 from django.db import models
-
 # Create your models here.
 
 import psycopg2
 from CATdb.config import config
 from django.test.html import Element
 import os
-#from config import config
-#import psycopg2.extras 
+
 
 def connect():
     """ Connect to the PostgreSQL database server """
@@ -36,9 +34,11 @@ def connect():
         if conn is not None:
             conn.close()
             print('Database connection closed.')
+
+
 def read_data_sql(requete,element):
-    "input requete outupt data"
     """
+    input requete outupt data
     requete='select * from chips.experiment;'
     """
     conn = None
@@ -61,6 +61,24 @@ def read_data_sql(requete,element):
     name=element+'.csv'     
     return data
 
+def lecture_query_tage(file_query):
+    """
+    function sert a lire les requetes prédefinir seulement
+    """
+    query_tag=dict()
+    with open(file_query,"r") as fiche:
+        data=fiche.readlines()
+        for line in data:
+            if line[0]!="#":
+                if line[0:9]=="Tag_query":
+                    _key=line[11:].replace('\n','').replace('"','')
+                elif line[0:5]=="query":
+                    query_tag[_key]=(line[6:].replace('\n','').replace('"',''))            
+    return query_tag
+
+
+repertoire_requete=lecture_query_tage(os.getcwd()+'/CATdb/query_tag.ini')
+
 def execution_requete(element,value_send,colname_send,order_ele=None):
     ### parametres
     if os.getcwd()[0:12]!="/home/traore":
@@ -68,10 +86,7 @@ def execution_requete(element,value_send,colname_send,order_ele=None):
     else:
     	my_ppty="public" #CHIPS
 
-    # requete sur la nouvelle table info_catdbindex
-    my_reqinfo ="Select info_code, info_value, info_name from "+my_ppty+".info_catdbindex order by info_code;"
-    
-    
+   
     # creation/tri des infos :(creation de structures de données)
     ###Todo
     
@@ -103,9 +118,6 @@ def execution_requete(element,value_send,colname_send,order_ele=None):
     
     experiement="select * from (select S.project_name,O.project_id,O.experiment_name,O.experiment_type from "+my_ppty+".experiment O,"+my_ppty+".project S where O.project_id in (select project_id from "+my_ppty+".project where is_public='yes')) df limit 100;"
     
-    get_project="select * from  "+my_ppty+".project where project.project_id="+value_send+";"
-    
-    get_contact="select contact.contact_id,contact.first_name,contact.last_name,contact.phone,contact.email,contact.institution,contact.laboratory,contact.address from "+my_ppty+".project_coordinator,"+my_ppty+".contact,"+my_ppty+".project where project.project_id=project_coordinator.project_id and contact.contact_id=project_coordinator.contact_id and project.project_id="+value_send+";"
     
     try:
         my_req_recherche_av="select * from "+colname_send+" where (is_public='yes' and project_name like '%"+value_send+"%');"
@@ -127,10 +139,13 @@ def execution_requete(element,value_send,colname_send,order_ele=None):
         requete=my_req_recherche1
     elif element=='experiement':
         requete=experiement  
-    elif element=='get_project' and value_send!=None:
-        requete=get_project 
-    elif element=='get_contact' and value_send!=None:
-        requete=get_contact
+    elif (element=='get_project' or element=='get_contact' or element=='my_experience' or 'my_treatment' or 'list_project'):
+        requete=repertoire_requete[element].replace('schema.',my_ppty+'.')
+        if value_send!=None:
+            requete=requete.replace('value_send',value_send)
+        else:
+            requete=requete
+        print(requete)
     else:
         try:
             requete=eval(element)
@@ -154,44 +169,38 @@ def execution_requete(element,value_send,colname_send,order_ele=None):
          requete=my_req_recherche1  
     elif element=='my_req_recherche1' and order_ele!=None:    
         requete="select * from ("+requete.replace(";",')')+' dfg order by dfg.'+order_ele+";"
-    
-    
-    
-        
     if requete!=None:
         return read_data_sql(requete,element)    
     else:
         print("error") 
 
-def execution_requete_new(element,value_send,colname_send,order_by):
-    """
-    fonction faite pour envoyer des orders by
-    """
-    my_ppty="CHIPS"
-    
-    my_querySpecies="select * from (select array_type_name, count(hybridization_id) "+\
-    "from "+my_ppty+".hybridization "+\
-    "where project_id in (select project_id from "+my_ppty+".project where is_public='yes') "+\
-    "and experiment_id in (select experiment_id from "+my_ppty+".experiment "+\
-    "where analysis_type='Arrays') "+\
-    "and array_type_name in "+\
-    "(select a.array_type_name from "+my_ppty+".array_type a where a.common_name<>'Arabidopsis')"+\
-    "group by array_type_name order by array_type_name) pf order by pf."+order_by+";"
-    
-    
-    #my_req_recherche1="select project_id,Experiment_type,Experiment_name from chips.experiment where project_id in (select project_id from chips.project where is_public='yes');"
-    return read_data_sql(my_querySpecies,'text')    
-    
-
-def execution_requete_main_A(element,value_send,colname_send):
-    my_ppty='CHIPS'
-    my_reqstat ="Select count(*) from "+my_ppty+".biblio_list;"
-    
-    my_sample="SELECT sample.sample_name, sample.organ, sample.age_value, sample.age_unit, sample.age_db FROM "+my_ppty+".sample, "+my_ppty+".project WHERE project.project_id = sample.project_id AND project.is_public = 'yes';"
-    
-    my_sample_source="SELECT sample_source.project_id,sample_source.sample_source_name,organism.organism_name,sample_source.genotype,sample_source.mutant, sample_source.planting_date FROM "+my_ppty+".sample_source, "+my_ppty+".project , "+my_ppty+".organism, "+my_ppty+".Ecotype WHERE project.project_id=sample_source.project_id and project.is_public = 'yes' and Ecotype.ecotype_id=CAST(nullif(sample_source.ecotype_id, '') AS integer);"
-
-    requete=my_sample_source
-    if colname_send!=None:
-    	requete="select * from ("+requete.replace(';','')+") df order by "+colname_send+";" 
-    return read_data_sql(requete,element)	
+# def execution_requete_new(element,value_send,colname_send,order_by):
+#     """
+#     fonction faite pour envoyer des orders by
+#     """
+#     my_ppty="CHIPS"
+#     
+#     my_querySpecies="select * from (select array_type_name, count(hybridization_id) "+\
+#     "from "+my_ppty+".hybridization "+\
+#     "where project_id in (select project_id from "+my_ppty+".project where is_public='yes') "+\
+#     "and experiment_id in (select experiment_id from "+my_ppty+".experiment "+\
+#     "where analysis_type='Arrays') "+\
+#     "and array_type_name in "+\
+#     "(select a.array_type_name from "+my_ppty+".array_type a where a.common_name<>'Arabidopsis')"+\
+#     "group by array_type_name order by array_type_name) pf order by pf."+order_by+";"
+#     #my_req_recherche1="select project_id,Experiment_type,Experiment_name from chips.experiment where project_id in (select project_id from chips.project where is_public='yes');"
+#     return read_data_sql(my_querySpecies,'text')    
+#     
+# 
+# def execution_requete_main_A(element,value_send,colname_send):
+#     my_ppty='CHIPS'
+#     my_reqstat ="Select count(*) from "+my_ppty+".biblio_list;"
+# #    
+#    my_sample="SELECT sample.sample_name, sample.organ, sample.age_value, sample.age_unit, sample.age_db FROM "+my_ppty+".sample, "+my_ppty+".project WHERE project.project_id = sample.project_id AND project.is_public = 'yes';"
+#    
+#    my_sample_source="SELECT sample_source.project_id,sample_source.sample_source_name,organism.organism_name,sample_source.genotype,sample_source.mutant, sample_source.planting_date FROM "+my_ppty+".sample_source, "+my_ppty+".project , "+my_ppty+".organism, "+my_ppty+".Ecotype WHERE project.project_id=sample_source.project_id and project.is_public = 'yes' and Ecotype.ecotype_id=CAST(nullif(sample_source.ecotype_id, '') AS integer);"
+#
+#    requete=my_sample_source
+#    if colname_send!=None:
+#    	requete="select * from ("+requete.replace(';','')+") df order by "+colname_send+";" 
+#    return read_data_sql(requete,element)	
