@@ -41,8 +41,6 @@ def read_data_sql(requete,element):
     """
     requete='select * from chips.experiment;'
     """
-    #data=requete.replace("'","").replace(";","").split()
-    #if data[0]=='select' and requete[-1]==';':
     conn = None
     params = config()
     conn = psycopg2.connect(**params)
