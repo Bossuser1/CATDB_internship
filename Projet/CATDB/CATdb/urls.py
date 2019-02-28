@@ -9,6 +9,7 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from . import views
 from django.urls import re_path
 from django.conf.urls import url
+from django.conf.urls import handler404, handler500
 
 urlpatterns = [
     path('', views.index,name='index'),
@@ -20,10 +21,12 @@ urlpatterns = [
     #url('^ajax/special$',views.ajax_check_email_fields1),
     url('^table.html$',views.prise_main),
     url('^project.html$',views.project),
+    url('^technologies.html$',views.technologies),
     
 ]+static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 
 urlpatterns += staticfiles_urlpatterns()
 
-
+handler404 = views.error_404
+handler500 = views.error_500

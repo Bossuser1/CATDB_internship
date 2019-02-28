@@ -139,7 +139,7 @@ def execution_requete(element,value_send,colname_send,order_ele=None):
         requete=my_req_recherche1
     elif element=='experiement':
         requete=experiement  
-    elif (element=='get_project' or element=='get_contact' or element=='my_experience' or 'my_treatment' or 'list_project'):
+    elif (element=='get_project' or element=='get_contact' or element=='my_experience' or 'my_treatment' or 'list_project' or 'type_analysis' or 'type_arrays'):
         requete=repertoire_requete[element].replace('schema.',my_ppty+'.')
         if value_send!=None:
             requete=requete.replace('value_send',value_send)

@@ -1,0 +1,495 @@
+<html>
+
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
+<style>
+body{
+ background color:#cfcfcf;
+}
+
+
+nav {
+  padding: 0;
+  margin: 0;
+  display:flex;
+  flex-direction: column;
+}
+
+.sticky {
+  position: relative;
+  top: -10vh;
+  margin-bottom: -6vh;
+  transition: all .5s ease
+}
+
+.fixed {
+  position: fixed;
+  top:0; left:0;
+  width: 100%;
+  transition: all .5s ease
+}
+
+section {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: 100vh ;
+}
+
+#welcome{
+    display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 100vh ;
+  /*background-image: url("https://previews.123rf.com/images/heitipaves/heitipaves1509/heitipaves150900002/45351956-arabette-des-dames-arabidopsis-thaliana-plantes-poussant-sur-une-bo%C3%AEte-de-petri-.jpg");
+background-position: center top;
+background-repeat: repeat-x;*/
+/*background-size: contain;*/
+/*min-height: 100%;*/
+text-align: center;
+width: 100%;
+  background: linear-gradient;
+}
+
+#welcome p {
+    color: #1f8dd6;
+    margin-bottom: 50px;
+    font-size: 30px;
+    font-weight: 400;
+    letter-spacing: 3px;
+    margin-left: 15px;
+}
+
+#header{
+width: 99%;
+  background-color: #FFF;
+color: #FFFFFF;
+padding: 1%;
+}
+#work {
+  display: flex;
+  flex-direction: column;
+}
+
+
+#projects,#header-list {
+  display: flex;
+  list-style-type: none;
+  padding: 0;
+  justify-content: space-around;
+  align-items: center;
+}
+
+li {
+  margin: 10px;
+}
+
+#header-list > li {
+   font-weight: bold;
+}
+
+
+.hedclean {
+    height: 50px;
+}
+
+#headmain_banner {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+/*width:12px;*/
+/*height: 5px;*/  
+}
+
+.hedclean img {
+    width: 100%;
+    height: 100%;
+}
+
+.hedclean{
+height: 50px;
+  }
+
+.contenuheadr{
+  background-color:white;
+}
+
+
+#about{
+  background-color:#f0f0f0;
+    display: flex;
+    align-items: initial;
+    /*justify-content: space-around;*/
+    height: 100vh;
+}
+
+.section-track {
+
+    display: flex;
+    
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    transition: .3s;
+
+}
+
+.conteneur-section{
+
+    flex-shrink: 0;
+   /* height: 100%;*/
+    padding: 40px;
+    display: flex;
+    /*flex-wrap: wrap;
+    opacity: 0;*/
+    /*visibility: hidden;
+    overflow: hidden;*/
+    transition: .3s;
+
+}
+
+.about-left {
+   /*width: 35%;*/
+    height: 100%;
+
+}
+
+.conteneur-section div {
+  background-color:#ffffff;
+}
+
+.showcard{
+width: 25%;
+/*height: 200px;*/
+padding: 30px;
+background-color: white;
+margin: 3px;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  }
+
+.showcard:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+
+.section-track{
+background-color:  #f0f0f0;
+  }
+
+.showcard .tile {
+    /*width: 615px;
+    width: 47.666%;
+    height: 600px;*/
+}
+
+.main_show_card{
+/*  display: grid;
+	grid-gap: 2%;
+	grid-template-columns: 3fr 3fr 2fr;	
+	grid-template-rows: repeat(2, min-content);
+*/
+}
+
+.row1_main_show_card{
+  display:flex;
+  flex-direction:columns;
+  justify-content: space-around;
+  padding:12px;
+  margin:14px;
+  
+}
+
+.imag_card{
+width: 70%;
+height: 50%;
+}
+
+.imag_card img{
+    width: 100%;
+  height: 100%;
+}
+
+.tile_card{
+font-family: robotoregular, Arial, Helvetica, sans-serif;
+font-size: 100%;
+line-height: 100%;
+color: #80b827;
+margin-bottom: -5px;
+word-wrap: break-word;
+margin: 2ex 0 3ex;
+font-weight: bolder;
+font-style: oblique;
+text-decoration: underline;
+}
+
+.card_button{
+     margin: 30px 0px 0px;
+    background-color: #0085D5;
+    border-radius: 0;
+    /*height: 37px;*/
+    display: inline-block;
+    font-family: robotomedium, Arial, Helvetica, sans-serif;
+    border: none;
+    font-size: 14px;
+    color: #ffffff;
+    padding: 8px 20px; 
+}
+
+.description_card{
+font-size: 70%;
+background: #f0f0f0;
+padding: 1%;
+}
+
+</style>
+
+
+  <body>
+    <section id="welcome">
+      <h2><img src="http://tools.ips2.u-psud.fr/projects/transcriptome/CATdb_style/catdb_logo.png"></h2>
+      <p>Complete Arabidopsis Transcriptome database</p>
+      <span class="fa fa-chevron-circle-down fa-5x" aria-hidden="true" id="go"></span>
+    </section>
+    <nav classname="sticky" id="header">
+<div>
+      <div id="headmain_banner">
+          <div class="hedclean">
+              <img src="http://tools.ips2.u-psud.fr/logos/logo-ips2-trans.png"> <!-- Images -->
+          </div>
+          <div class="hedclean">
+              <img src="http://tools.ips2.u-psud.fr/projects/transcriptome/CATdb_style/catdb_logo.png" id="catdb_img">
+              <!-- Images -->
+          </div>
+          <div class="hedclean">
+              <img src="http://tools.ips2.u-psud.fr/projects/GEM2NET/logos/GEM2NET_logo5_transpa.png"> <!-- Images -->
+          </div>
+
+      </div>
+
+  </div>
+    </nav>
+    <section id="about">
+    <div class="main_about">
+        <div>
+			<!--  
+            <div class="section-track">
+                <div class="conteneur-section">
+                    <div class="about-left">
+                        <img id="pict" src="http://acces.ens-lyon.fr/acces/thematiques/dyna/dossiers-thematiques/morphogenese-vegetale/images-1/fleurWt1%20copie.jpg">
+                        <div id="complement_pict" style="height: 210px; background-color: white;">
+                        </div>
+                    </div </div> 
+                <div id="information">
+                    You can access to the data by three different ways:
+               </div>
+
+            </div>
+			-->
+            <div class="main_show_card">
+              <div class="row1_main_show_card">  
+              <div class="showcard"> 
+                <div class="imag_card">
+                  <img src="https://dr282zn36sxxg.cloudfront.net/datastreams/f-d%3A81d6b4382e04dd4eac4367df9d3535b185c3707f83bce31b073c106e%2BIMAGE%2BIMAGE.1">
+                </div>  
+                <div class="tile_card">
+                  Projects 
+                 </div>
+                <div class="description_card">
+                  CATdb provides access to a large collection of trancriptomic data for Arabidopsis thaliana, mainly hybridized with the 2-colors CATMA (Complete Arabidopsis Transcriptome Micro-Array, Crow et al. NAR 2003). The CATMA design has been updated to include almost all the annotated genes in Arabidopsis (TAIR + EuGene predictions)
+                </div>
+                <a href="/CATdb/project.html">
+                <div class="card_button">
+                LEARN MORE
+                </div>
+                </a> 
+             </div>
+              <!-- Show -->
+             <div class="showcard"> 
+                <div class="imag_card">
+                  <img src="https://inra-dam-front-resources-cdn.brainsonic.com/ressources/afile/455335-0d05f-picture_client_format_2-ciseaux-moleculaires.jpg">
+                  <!-- https://fens.sabanciuniv.edu/sites/fens.sabanciuniv.edu/files/genometechnologies_lab_0.jpg-->
+                </div>  
+                <div class="tile_card">
+                  Technologies 
+                 </div>
+                <div class="description_card">
+                  CATdb stores data of 22 array types to study trancriptome of various species (mainly Plants). These array designs are produced with different technologies (Affymetrix, NimbleGen, Agilent)
+                </div>
+                <a href="/CATdb/technologies.html">
+                <div class="card_button">
+                LEARN MORE
+                </div>
+                </a> 
+             </div>             
+              
+              
+              <div class="showcard"> 
+                <div class="imag_card">
+                  <img src="https://www.agilent.com/cs/publishingimages/miRNA-522x294-agilent.jpg">
+                </div>  
+                <div class="tile_card">
+                  Experiments 
+                 </div>
+                <div class="description_card">
+                  CATdb stores data of 22 array types to study trancriptome of various species (mainly Plants). These array designs are produced with different technologies (Affymetrix, NimbleGen, Agilent)
+                </div>
+                <a href="/CATdb/Experiments.html">
+                <div class="card_button">
+                LEARN MORE
+                </div>
+                </a> 
+             </div>    
+
+              </div>
+              <div class="row1_main_show_card">  
+              
+            
+              <div class="showcard"> 
+                <div class="imag_card">
+                  <img src="https://thenypost.files.wordpress.com/2018/09/180925-minority-business-owner-after-dna-test-feature.jpg?quality=90&strip=all&w=618&h=410&crop=1">
+                </div>  
+                <div class="tile_card">
+                  Protocol(s) 
+                 </div>
+                <div class="description_card">
+                  ..
+                </div>
+                <a href="/CATdb/protocols.html">
+                <div class="card_button">
+                LEARN MORE
+                </div>
+                </a> 
+             </div>
+
+             <div class="showcard"> 
+                <div class="imag_card">
+                  <img src="https://www.nightsea.com/wp-content/uploads/2014/07/Arabidopsis_green_filter_test-12.jpg">
+                </div>  
+                <div class="tile_card">
+                  Organism(s) 
+                 </div>
+                <div class="description_card">
+                  ..
+                </div>
+                <a href="/CATdb/organism.html">
+                <div class="card_button">
+                LEARN MORE
+                </div>
+                </a> 
+             </div>
+                          <div class="showcard"> 
+                <div class="imag_card">
+                  <img src="https://res.mdpi.com/genes/genes-10-00015/article_deploy/html/images/genes-10-00015-g001.png">
+                </div>
+                
+                <div class="tile_card">
+                  Treatment(s)
+                 </div>
+                
+                <div class="description_card">
+                  ..
+                </div>
+                <a href="/CATdb/treatments.html">  
+                <div class="card_button">
+                LEARN MORE
+                </div>
+                </a> 
+             </div>
+            
+              </div>
+                
+            
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+</section>
+    <!--<section id="work">
+      <h2>Here is my work</h2>
+      <ul id="projects">
+        <li>Project 1</li>
+        <li>Project 2</li>
+        <li>Project 3</li>
+      </ul>
+    </section> -->
+
+<div id="conteneur_feeds">    
+<div id="feedback" style="color: white;font-weight: bold;">
+	Feedback
+</div>    
+</div>    
+  </body>
+  
+  <script type="text/javascript">
+
+  var body = $('html, body');
+
+  $('#go').click(function(e){
+      e.preventDefault();
+      body.animate({scrollTop:850}, 1000, 'swing');
+
+	}); 
+  
+  var about = "#ffffff",
+	work = "#ffffff"
+
+var init_header_position = $('#header').offset().top
+
+$(window).on("scroll touchmove", function() {
+var header = $('#header')
+scroll = $(window).scrollTop()+300;
+      //console.log(init_header_position)
+    //console.log(scroll)
+if (scroll >= init_header_position){
+  header.removeClass('sticky');
+  header.addClass('fixed');
+  
+$('#catdb_img').show();
+} else {
+  header.removeClass('fixed');
+  header.addClass('sticky');
+  $('#header').css('background-color',      "#FFF") ;
+$('#catdb_img').hide();
+}
+
+if (scroll >= $("#welcome").position().top) {
+$('#header').css('background-color', welcome)
+} 
+if (scroll > $("#about").position().top) {
+$('#header').css('background-color', about)
+} 
+//if (scroll > $("#work").position().top) {
+//$('#header').css('background-color', work)
+//};
+});
+
+
+//###########################****
+  
+//$('.main_show_card:eq(0)').width($(window).width(););
+var h=$(window).width();
+$('.main_show_card:eq(0)').css("width", h+"px");
+
+$('.description_card:eq(1)').css("height", $('.description_card:eq(0)').height()+"px");
+$('.description_card:eq(2)').css("height", $('.description_card:eq(0)').height()+"px");
+$('.description_card:eq(3)').css("height", $('.description_card:eq(0)').height()+"px");
+$('.description_card:eq(4)').css("height", $('.description_card:eq(0)').height()+"px");
+$('.description_card:eq(5)').css("height", $('.description_card:eq(0)').height()+"px");
+
+$(window).on("scroll touchmove", function() {
+	position=$(window).scrollTop()+($(window).height())/5;
+	$("#conteneur_feeds").attr('style',"right: -1.6%;top: "+position+"px;cursor: pointer;position: absolute;z-index: 2100000000;background: #747272;transform: rotateZ(-90deg);border-style: inset;");
+});
+
+//$('.main_show_card .showcard')
+
+  </script>
+  
+  
+</html>

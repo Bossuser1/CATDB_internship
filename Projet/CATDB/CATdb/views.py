@@ -5,7 +5,8 @@ from decimal import Decimal
 from django.shortcuts import render
 import decimal
 # Create your views here.
-
+from django.shortcuts import redirect
+from django.http import Http404
 from django.http import HttpResponse
 from django.template.context_processors import request
 import json
@@ -17,7 +18,7 @@ def index(request):
 
     context_dict = {'boldmessage': "I am bold font from the context"}
 
-    return render(request, 'CATdb/index.html', context_dict)
+    return render(request, 'CATdb/main.html', context_dict)
 
 
 def ajax_check_email_fields(request):
@@ -72,4 +73,25 @@ def prise_main(request):
 def project(request):
     return render(request,'CATdb/project.html',{})
 
+def technologies(request):
+    return render(request,'CATdb/technologies.html',{})
+
+def redirect_view(request):
+    response = redirect('/redirect-success/')
+    return response
+
+  
+  
+def myView(request, param):  
+  if not param:  
+    raise Http404  
+  return render_to_response('CATdb/index.html') 
+  
+def error_404(request):
+        data = {}
+        return render(request,'CATdb/main.html', data)
+
+def error_500(request):
+        data = {}
+        return render(request,'CATdb/main.html', data)  
 

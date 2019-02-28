@@ -20,9 +20,14 @@ from django.conf.urls.static import static
 from django.contrib.staticfiles import views
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.urls import re_path
+from CATdb import views as myapp_views
+
+from django.conf.urls import handler404, handler500
 
 urlpatterns = [
+    url(r'^/$', myapp_views),
     path('admin/', admin.site.urls),
+    path('/', myapp_views.site.urls),
     path('CATdb/', include('CATdb.urls')),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += staticfiles_urlpatterns()
@@ -30,6 +35,8 @@ urlpatterns += [
         re_path(r'^static/(?P<path>.*)$', views.serve),
     ]
 
+handler404 = myapp_views.error_404
+handler500 = myapp_views.error_500
 
 #urlpatterns += re_path('',
 # (r'^static/(.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT}),
