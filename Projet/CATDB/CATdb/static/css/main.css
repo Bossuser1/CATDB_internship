@@ -1,0 +1,239 @@
+body{
+ background color:#cfcfcf;
+}
+
+
+nav {
+  padding: 0;
+  margin: 0;
+  display:flex;
+  flex-direction: column;
+}
+
+.sticky {
+  position: relative;
+  top: -10vh;
+  margin-bottom: -6vh;
+  transition: all .5s ease
+}
+
+.fixed {
+  position: fixed;
+  top:0; left:0;
+  width: 100%;
+  transition: all .5s ease
+}
+
+section {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: 100vh ;
+}
+
+#welcome{
+    display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 100vh ;
+  /*background-image: url("https://previews.123rf.com/images/heitipaves/heitipaves1509/heitipaves150900002/45351956-arabette-des-dames-arabidopsis-thaliana-plantes-poussant-sur-une-bo%C3%AEte-de-petri-.jpg");
+background-position: center top;
+background-repeat: repeat-x;*/
+/*background-size: contain;*/
+/*min-height: 100%;*/
+text-align: center;
+width: 100%;
+  background: linear-gradient;
+}
+
+#welcome p {
+    color: #1f8dd6;
+    margin-bottom: 50px;
+    font-size: 30px;
+    font-weight: 400;
+    letter-spacing: 3px;
+    margin-left: 15px;
+}
+
+#header{
+width: 99%;
+  background-color: #FFF;
+color: #FFFFFF;
+padding: 1%;
+}
+#work {
+  display: flex;
+  flex-direction: column;
+}
+
+
+#projects,#header-list {
+  display: flex;
+  list-style-type: none;
+  padding: 0;
+  justify-content: space-around;
+  align-items: center;
+}
+
+li {
+  margin: 10px;
+}
+
+#header-list > li {
+   font-weight: bold;
+}
+
+
+.hedclean {
+    height: 50px;
+}
+
+#headmain_banner {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+/*width:12px;*/
+/*height: 5px;*/  
+}
+
+.hedclean img {
+    width: 100%;
+    height: 100%;
+}
+
+.hedclean{
+height: 50px;
+  }
+
+.contenuheadr{
+  background-color:white;
+}
+
+
+#about{
+  background-color:#f0f0f0;
+    display: flex;
+    align-items: initial;
+    /*justify-content: space-around;*/
+    height: 100vh;
+}
+
+.section-track {
+
+    display: flex;
+    
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    transition: .3s;
+
+}
+
+.conteneur-section{
+
+    flex-shrink: 0;
+   /* height: 100%;*/
+    padding: 40px;
+    display: flex;
+    /*flex-wrap: wrap;
+    opacity: 0;*/
+    /*visibility: hidden;
+    overflow: hidden;*/
+    transition: .3s;
+
+}
+
+.about-left {
+   /*width: 35%;*/
+    height: 100%;
+
+}
+
+.conteneur-section div {
+  background-color:#ffffff;
+}
+
+.showcard{
+width: 25%;
+/*height: 200px;*/
+padding: 30px;
+background-color: white;
+margin: 3px;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  }
+
+.showcard:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+
+.section-track{
+background-color:  #f0f0f0;
+  }
+
+.showcard .tile {
+    /*width: 615px;
+    width: 47.666%;
+    height: 600px;*/
+}
+
+.main_show_card{
+/*  display: grid;
+	grid-gap: 2%;
+	grid-template-columns: 3fr 3fr 2fr;	
+	grid-template-rows: repeat(2, min-content);
+*/
+}
+
+.row1_main_show_card{
+  display:flex;
+  flex-direction:columns;
+  justify-content: space-around;
+  padding:12px;
+  margin:14px;
+  
+}
+
+.imag_card{
+width: 70%;
+height: 50%;
+}
+
+.imag_card img{
+    width: 100%;
+  height: 100%;
+}
+
+.tile_card{
+font-family: robotoregular, Arial, Helvetica, sans-serif;
+font-size: 100%;
+line-height: 100%;
+color: #80b827;
+margin-bottom: -5px;
+word-wrap: break-word;
+margin: 2ex 0 3ex;
+font-weight: bolder;
+font-style: oblique;
+text-decoration: underline;
+}
+
+.card_button{
+     margin: 30px 0px 0px;
+    background-color: #0085D5;
+    border-radius: 0;
+    /*height: 37px;*/
+    display: inline-block;
+    font-family: robotomedium, Arial, Helvetica, sans-serif;
+    border: none;
+    font-size: 14px;
+    color: #ffffff;
+    padding: 8px 20px; 
+}
+
+.description_card{
+font-size: 70%;
+background: #f0f0f0;
+padding: 1%;
+}
+
