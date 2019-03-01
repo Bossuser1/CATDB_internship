@@ -45,6 +45,17 @@ pg_dump -U postgres -O <dbname> > <dbname>.sql
 pg_dump -p 1521 -U uselect -d CATDB -h dayhoff.ips2.u-psud.fr
 
 pg_dump -p 1521 -U uselect -d CATDB -h dayhoff.ips2.u-psud.fr  -N chips.extract_replicats -T spatial_ref_sys > dbexport.pgsql
+pg_dump -Fd CATDB -f CATDB.sql
 
 copy (select * from (select S.project_name,O.project_id,O.experiment_name,O.experiment_type from chips.experiment O,chips.project S where O.project_id in (select project_id chips.project where is_public='yes')) df limit 10;) to '/export/home/gnet/btraore/WWW_DEV/cgi-bin/projects/CATDB/Test_scripts/chips_experiment.csv' csv header;
 
+
+pg_dump -Fp -U db_superuser db_name > db.backup
+
+
+git remote set-url origin git@github.com:Bossuser1/CATDB_internship.git
+git clone https://github.com/Bossuser1/CATDB_internship.git
+
+pg_dump -Fd CATDB -p 1521 -U uselect -h jacob.ips2.u-psud.fr -f /export/home/gnet/btraore/CATDB.sql
+
+cp -r /export/home/gnet/btraore/CATDB_internship/Projet/CATDB/ /export/home/gnet/btraore/WWW_DEV/cgi-bin/projects/

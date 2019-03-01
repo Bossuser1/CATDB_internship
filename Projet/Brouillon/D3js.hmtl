@@ -1,0 +1,148 @@
+
+
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="https://d3js.org/d3.v3.js"></script>
+
+<style>
+ 
+.chart rect {
+   stroke: white;
+   fill: steelblue;
+ }
+
+ 
+ 
+</style>
+
+<div id="contenu">
+
+
+</div>
+
+
+<script type="text/javascript">
+
+var colorbule=['#2979FF','#448AFF','#82B1FF','#0D47A1','#1565C0','#1976D2','#1E88E5','#2196F3','#42A5F5','#64B5F6','#90CAF9','#BBDEFB','#E3F2FD'];
+var colorvert=['#A5D6A7','#C8E6C9','#E8F5E9'];
+var anayses=[];
+var data_data=[];
+
+
+function get_type(data_data,schear){
+	//var schear='RNA-Seq';
+	$.ajax({
+	    type:"GET",
+	    data:{'data_requete_element':'type_arrays','value_search':schear},
+	    dataType: "json",
+	    async: false,
+	    url:"/CATdb/ajax/chekEmail",
+	    success: function(data) {
+	    		data_data.push(data);	
+	    }
+	    
+	});
+	return data_data;
+	}
+
+$.ajax({
+    type:"GET",
+    data:{'data_requete_element':'type_analysis'},
+    dataType: "json",
+    async: false,
+    url:"/CATdb/ajax/chekEmail",
+    success: function(data) {
+    	$.each(data, function(index, value){
+     		anayses.push(value._value.analysis_type);
+        	data_data=get_type(data_data,value._value.analysis_type)
+
+    	});
+    	//console.log(data);
+    	
+    }
+});
+var data =[];
+var cpt=0;
+for (var i in Object.keys(data_data)){
+	
+	console.log(anayses[i]);
+	for (var j in Object.keys(data_data[i])){
+		var cpt=cpt+1;
+		try{
+			data.push({ "Name": data_data[i][j]['_value']['array_type'],
+			     "Salary": data_data[i][j]['_value']['count'],
+			     "Color":colorbule[cpt]
+			 });
+		}catch(error) {
+		
+		}
+	};
+}; 
+
+
+
+var valueLabelWidth = 60; // space reserved for value labels (right)  
+var barHeight = 20; // height of one bar  
+var barLabelWidth = 120; // space reserved for bar labels  
+var barLabelPadding = 5; // padding between bar and bar labels (left)  
+var gridLabelHeight = 18; // space reserved for gridline labels  
+var gridChartOffset = 3; // space between start of grid and first bar  
+var maxBarWidth = 420; // width of the bar with the max value  
+
+// Accessor functions   
+var barLabel = function (d) { return d['Name']; };  
+var barValue = function (d) { return parseFloat(d['Salary']); };  
+var barColor = function (d) { return d['Color']; };  
+// Scales  
+var yScale = d3.scale.ordinal().domain(d3.range(0, data.length)).rangeBands([0, data.length * barHeight]);  
+var y = function (d, i) { return yScale(i); };  
+var yText = function (d, i) { return y(d, i) + yScale.rangeBand() / 2; };  
+var x = d3.scale.linear().domain([0, d3.max(data, barValue)]).range([0, maxBarWidth]);  
+
+// Svg container element  
+var chart = d3.select('#contenu').append("svg")  
+.attr('width', maxBarWidth + barLabelWidth + valueLabelWidth)  
+.attr('height', gridLabelHeight + gridChartOffset + data.length * barHeight);  
+
+// Bar labels  
+var labelsContainer = chart.append('g')  
+.attr('transform', 'translate(' + (barLabelWidth - barLabelPadding) + ',' + (gridLabelHeight + gridChartOffset) + ')');  
+labelsContainer.selectAll('text').data(data).enter().append('text')  
+.attr('y', yText)  
+.attr('stroke', 'none')  
+.attr('fill', 'black')  
+.attr("dy", ".35em")  
+
+// Vertical-align: middle  
+.attr('text-anchor', 'end')  
+.text(barLabel);  
+
+// Bars  
+var barsContainer = chart.append('g')  
+.attr('transform', 'translate(' + barLabelWidth + ',' + (gridLabelHeight + gridChartOffset) + ')');  
+barsContainer.selectAll("rect").data(data).enter().append("rect")  
+.attr('y', y)  
+.attr('height', yScale.rangeBand())  
+.attr('width', function (d) { return x(barValue(d)); })  
+.attr('stroke', function (d) { return barColor(d);})
+.attr('fill',function (d) { return barColor(d);});
+
+// Bar value labels  
+barsContainer.selectAll("text").data(data).enter().append("text")  
+.attr("x", function (d) { return x(barValue(d)); })  
+.attr("y", yText)  
+.attr("dx", 3)   
+.attr("dy", ".35em")   
+.attr("text-anchor", "start")   
+.attr("fill", "black")  
+.attr("stroke", "none")  
+.text(function (d) { return d3.round(barValue(d), 2); });  
+
+// Start line  
+barsContainer.append("line")  
+.attr("y1", -gridChartOffset)  
+.attr("y2", yScale.rangeExtent()[1] + gridChartOffset)  
+.style("stroke", "#000");   
+
+
+</script>
+
