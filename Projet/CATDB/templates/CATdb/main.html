@@ -1,7 +1,19 @@
+{% load staticfiles %}
 <html>
 
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static "css/barchart.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "css/table_index1.css" %}"/>
+    <link rel="stylesheet" href="{% static "/all.css" %"} integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+	<!-- add boostrap for testing -->	
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+
 
 <style>
 body{
@@ -117,7 +129,7 @@ height: 50px;
 
 
 #about{
-  background-color:#f0f0f0;
+  background-color:#fff;
     display: flex;
     align-items: initial;
     /*justify-content: space-around;*/
@@ -248,8 +260,8 @@ padding: 1%;
 
   <body>
     <section id="welcome">
-      <h2><img src="http://tools.ips2.u-psud.fr/projects/transcriptome/CATdb_style/catdb_logo.png"></h2>
-      <p>Complete Arabidopsis Transcriptome database</p>
+      <h2><img src="http://tools.ips2.u-psud.fr/GEM2Net/logos/catdb_icon122x68.jpg"></h2>
+      <p> welcome to CATDB	</p>
       <span class="fa fa-chevron-circle-down fa-5x" aria-hidden="true" id="go"></span>
     </section>
     <nav classname="sticky" id="header">
@@ -259,7 +271,7 @@ padding: 1%;
               <img src="http://tools.ips2.u-psud.fr/logos/logo-ips2-trans.png"> <!-- Images -->
           </div>
           <div class="hedclean">
-              <img src="http://tools.ips2.u-psud.fr/projects/transcriptome/CATdb_style/catdb_logo.png" id="catdb_img">
+              <img src="http://tools.ips2.u-psud.fr/GEM2Net/logos/catdb_icon122x68.jpg" id="catdb_img">
               <!-- Images -->
           </div>
           <div class="hedclean">
@@ -273,21 +285,70 @@ padding: 1%;
     <section id="about">
     <div class="main_about">
         <div>
-			<!--  
-            <div class="section-track">
-                <div class="conteneur-section">
-                    <div class="about-left">
-                        <img id="pict" src="http://acces.ens-lyon.fr/acces/thematiques/dyna/dossiers-thematiques/morphogenese-vegetale/images-1/fleurWt1%20copie.jpg">
-                        <div id="complement_pict" style="height: 210px; background-color: white;">
-                        </div>
-                    </div </div> 
-                <div id="information">
-                    You can access to the data by three different ways:
-               </div>
 
-            </div>
-			-->
             <div class="main_show_card">
+             <div class="row1_main_show_card" >  
+              <div class="showcard" style="display: inline-table;">
+              	<div id="svg2">  </div> 
+                <div class="imag_card">
+                
+                </div>  
+                <!--  <div class="tile_card">
+                  Arabidopsis 
+                 </div> 
+                <div class="description_card" style="height: 50px;">
+                  
+                </div>
+                <a href="/CATdb/project.html">
+                <div class="card_button">
+                LEARN MORE
+                </div>
+                </a> -->
+             </div>
+              <!-- Show -->
+             <div class="showcard"> 
+                <div class="imag_card1">
+                  <img src="http://urgv.evry.inra.fr/GEM2NET/logos/GEM2NET_logo5_transpa.png">
+                </div>  
+                <div class="tile_card">
+                   
+                 </div>
+                <div class="description_card">
+                  
+                </div>
+                <a href="/CATdb/technologies.html">
+                <div class="card_button">
+                LEARN MORE
+                </div>
+                </a> 
+             </div>             
+              
+              
+              <div class="showcard"> 
+                <div  id="type_array_show"> <!--class="imag_card"-->
+                  <!--  <img src="https://www.agilent.com/cs/publishingimages/miRNA-522x294-agilent.jpg">-->
+                  <!--  Array: <div class="progress"><div class="progress-bar" style="width:70%">70%</div></div> 
+                  RNA Seq: <div class="progress"><div class="progress-bar" style="width:20%">20%</div></div>
+                  -->
+                </div>  
+                <div class="tile_card">
+                  Analysis Type 
+                 </div>
+                <div class="description_card">
+     
+                  </div>
+                <a href="/CATdb/Experiments.html">
+                <div class="card_button">
+                LEARN MORE
+                </div>
+                </a> 
+             </div>    
+
+              </div>
+              
+            
+            
+            
               <div class="row1_main_show_card">  
               <div class="showcard"> 
                 <div class="imag_card">
@@ -409,15 +470,8 @@ padding: 1%;
 
     </div>
 
-</section>
-    <!--<section id="work">
-      <h2>Here is my work</h2>
-      <ul id="projects">
-        <li>Project 1</li>
-        <li>Project 2</li>
-        <li>Project 3</li>
-      </ul>
-    </section> -->
+	</section>
+
 
 <div id="conteneur_feeds">    
 <div id="feedback" style="color: white;font-weight: bold;">
@@ -425,6 +479,14 @@ padding: 1%;
 </div>    
 </div>    
   </body>
+
+      <script src="https://d3js.org/d3.v5.js"></script>    
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    
+    <!--  <script src="{% static "js/script_requete.js" %}"/></script>-->
+    <script src="{% static "js/tableau_query.js" %}"/></script>
+    <script src="{% static "js/bar_search.js" %}"/></script>
+    <script src="{% static "js/histograme.js" %}"/></script>  
   
   <script type="text/javascript">
 
@@ -488,6 +550,35 @@ $(window).on("scroll touchmove", function() {
 });
 
 //$('.main_show_card .showcard')
+
+var query='Tag2';//'my_req_special' 'organism name','organism_name';  #my_querySpecies,array_type_name,array type name
+var x_val='organism_name';
+var name_x_val='organism name';
+
+execucte_affichage('svg2',name_x_val,x_val,query);
+
+$.ajax({
+    type:"GET",
+    data:{'data_requete_element':'TagRNas_vs_analys'},
+    dataType: "json",
+    async: true,
+    url:"/CATdb/ajax/chekEmail",
+    success: function(data) {
+    	//console.log("sample_source");
+    	console.log(data);
+    	
+    	$.each(data, function(index, value){
+    		var text="";
+    		var current=value._value.analysis_type+' <div class="progress"><div class="progress-bar" style="width:'+Number(value._value.percentage).toFixed(2)+'%">'+value._value.count+' / '+value._value.percentage+'%</div></div>' 
+    		//console.log(value._value.percentage);
+    		$('#type_array_show').append(current);   		
+    		//console.log(text);
+    	//});
+    	});
+    }
+    
+});
+
 
   </script>
   
