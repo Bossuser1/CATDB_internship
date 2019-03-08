@@ -22,6 +22,8 @@ urlpatterns = [
     url('^table.html$',views.prise_main),
     url('^project.html$',views.project),
     url('^technologies.html$',views.technologies),
+    url('^listproject.html$',views.list_project),
+    url('^graph/treatment_1.html$',views.graph),
     
 ]+static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

@@ -73,6 +73,16 @@ def prise_main(request):
 def project(request):
     return render(request,'CATdb/project.html',{})
 
+def list_project(request):
+    " sert a visualiser la liste des projets dans la base de données ainsi que celle recement passer en publics"
+    return render(request,'CATdb/list_project.html',{})
+
+def graph(request):
+    " sert a visualiser les graphs D3js"
+    return render(request,'CATdb/graph/treatment_1.html',{})
+
+
+
 def technologies(request):
     return render(request,'CATdb/technologies.html',{})
 

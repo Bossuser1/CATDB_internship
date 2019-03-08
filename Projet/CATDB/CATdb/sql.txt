@@ -1,0 +1,317 @@
+SELECT COLUMN_NAME,table_name
+FROM INFORMATION_SCHEMA.COLUMNS where table_name='rnaseqlibrary';
+
+column_name   | table_name 
+-----------------+------------
+ rnaseqdata_id   | rnaseqdata
+ rnaseqdata_name | rnaseqdata
+ project_file    | rnaseqdata
+ mapping_type    | rnaseqdata
+ stranded        | rnaseqdata
+ seq_type        | rnaseqdata
+ multihits       | rnaseqdata
+ log_file        | rnaseqdata
+ resume_file     | rnaseqdata
+ project_id      | rnaseqdata
+ experiment_id   | rnaseqdata
+ user_id         | rnaseqdata
+ submission_date | rnaseqdata
+ bankref_desc    | rnaseqdata
+
+select rnaseqlibrary_id,rnaseqlibrary_name,library_strategy form chip.rnaseqlibrary;
+ column_name     |  table_name   
+ --------------------+---------------
+  rnaseqlibrary_id   | rnaseqlibrary
+  rnaseqlibrary_name | rnaseqlibrary
+  library_strategy   | rnaseqlibrary
+  rna_selection      | rnaseqlibrary
+  sizing             | rnaseqlibrary
+  stranded           | rnaseqlibrary
+  seq_type           | rnaseqlibrary
+  seq_length         | rnaseqlibrary
+  multiplexing       | rnaseqlibrary
+  sequencer          | rnaseqlibrary
+  protocol_id        | rnaseqlibrary
+  operator_id        | rnaseqlibrary
+  book_ref           | rnaseqlibrary
+  experiment_date    | rnaseqlibrary
+  project_id         | rnaseqlibrary
+  experiment_id      | rnaseqlibrary
+  user_id            | rnaseqlibrary
+  submission_date    | rnaseqlibrary
+
+
+CATDB=> select rnaseqdata_id from chips.rnaseqdata ;
+ rnaseqdata_id 
+---------------
+             1
+             2
+             4
+             6
+             3
+             5
+             7
+             9
+            10
+            12
+             8
+            11
+            13
+            14
+            15
+            16
+            17
+            18
+            19
+            20
+            21
+CATDB=> select rnaseqdata_name from chips.rnaseqdata ;
+             rnaseqdata_name              
+------------------------------------------
+ CAT-seq_exp592
+ NGS2016_08_DYW2_exp600
+ NGS2014_01_MicroD_exp602
+ NGS2014_07_Hevea_exp604
+ NGS2012_02_MicroD_exp601
+ NGS2015_05_HIGH_TEMPERATURE_ROOT_exp586
+ NGS2014_21_SeedCom_exp598
+ NGS2016_16_PATHO_exp611
+ NGS2017_09_MOSS1_exp606
+ NGS2015_12_ZeaWall2_exp612
+ NGS2015_01_Transition_exp607
+ AAP_BAP_NitroPath_2014_exp615
+ NGS2018_05_TOR_exp617
+ JC2013_SYBIOPOP_2014_exp591
+ JC2013_SYBIOPOP_2014_exp623
+ NGS2015_06_ASCO_exp622
+ NGS2016_10_Dormancy_exp616
+ NGS2017_03_AAP-Starter_BAP_EK-XYL_exp614
+ NGS2017_11_ROSEX2_exp619
+ NGS2017_08_Brasilice_exp634
+ JC2013_SYBIOPOP_2014_exp640
+(21 rows)
+
+CATDB=> select project_file from chips.rnaseqdata ;
+                 project_file                 
+----------------------------------------------
+ CAT-seq_exp592.txt
+ NGS2016_08_DYW2_exp600.txt
+ NGS2014_01_MicroD_exp602.txt
+ NGS2014_07_Hevea_exp604.txt
+ NGS2012_02_MicroD_exp601.txt
+ NGS2015_05_HIGH_TEMPERATURE_ROOT_exp586.txt
+ NGS2014_21_SeedCom_exp598.txt
+ NGS2016_16_PATHO_exp611.txt
+ NGS2017_09_MOSS1_exp606.txt
+ NGS2015_12_ZeaWall2_exp612.txt
+ NGS2015_01_Transition_exp607.txt
+ AAP_BAP_NitroPath_2014_exp615.txt
+ NGS2018_05_TOR_exp617.txt
+ JC2013_SYBIOPOP_2014_exp591.txt
+ JC2013_SYBIOPOP_2014_exp623.txt
+ NGS2015_06_ASCO_exp622.txt
+ NGS2016_10_Dormancy_exp616.txt
+ NGS2017_03_AAP-Starter_BAP_EK-XYL_exp614.txt
+ NGS2017_11_ROSEX2_exp619.txt
+ NGS2017_08_Brasilice_exp634.txt
+ JC2013_SYBIOPOP_2014_exp640.txt
+
+CATDB=> select mapping_type from chips.rnaseqdata ;
+ mapping_type  
+---------------
+ transcriptome
+ transcriptome
+ transcriptome
+ transcriptome
+ transcriptome
+ transcriptome
+ genome
+ transcriptome
+ transcriptome
+ transcriptome
+ transcriptome
+ transcriptome
+ transcriptome
+ transcriptome
+ transcriptome
+ transcriptome
+ transcriptome
+ genome
+ genome
+ transcriptome
+ transcriptome
+(21 rows)
+
+CATDB=> select stranded from chips.rnaseqdata ;
+ stranded 
+----------
+ no
+ yes
+ no
+ yes
+ no
+ yes
+ no
+ yes
+ yes
+ yes
+ yes
+ yes
+ yes
+ yes
+ yes
+ yes
+ yes
+ no
+ yes
+ yes
+ yes
+(21 rows)
+CATDB=> select seq_type from chips.rnaseqdata ;
+     seq_type     
+------------------
+ paired-end reads
+ single reads
+ paired-end reads
+ paired-end reads
+ single reads
+ paired-end reads
+ paired-end reads
+ single reads
+ paired-end reads
+ paired-end reads
+ paired-end reads
+ paired-end reads
+ single reads
+ paired-end reads
+ single reads
+ paired-end reads
+ paired-end reads
+ paired-end reads
+ paired-end reads
+ paired-end reads
+ single reads
+
+CATDB=> select multihits from chips.rnaseqdata ;
+ multihits 
+-----------
+ no
+ no
+ no
+ no
+ no
+ no
+ no
+ no
+ no
+ no
+ no
+ no
+ no
+ no
+ no
+ no
+ no
+ no
+ no
+ no
+ no
+(21 rows)
+
+CATDB=> select log_file from chips.rnaseqdata ;
+                               log_file                                
+-----------------------------------------------------------------------
+ CAT-seq_exp592_mapping2_nor_16315.log
+ NGS2016_08_DYW2_exp600_MappingCount_31196.log
+ NGS2014_01_MicroD_exp602_MappingCount_32288.log
+ NGS2014_07_Hevea_exp604_MappingCount_NGS2014-07_Hevea.log
+ NGS2012_02_MicroD_exp601_MappingCount_16765.log
+ NGS2015_05_HIGH_TEMPERATURE_ROOT_exp586_MappingCount_12383.log
+ NGS2014_21_SeedCom_exp598_MappingCountGenome_3765.log
+ NGS2016_16_PATHO_exp611_MappingCount_5992.log
+ NGS2017_09_MOSS1_exp606_MappingCount_8075.log
+ NGS2015_12_ZeaWall2_exp612_command_panH.txt
+ NGS2015_01_Transition_exp607_MappingCount_21750.log
+ AAP_BAP_NitroPath_2014_exp615_MappingCount2_10551.log
+ NGS2018_05_TOR_exp617_MappingCount_18713.log
+ JC2013_SYBIOPOP_2014_exp591_MappingCount_24ech_premanip.log
+ JC2013_SYBIOPOP_2014_exp623_MappingCount_13167_24samples.log
+ NGS2015_06_ASCO_exp622_MappingCount_16867.log
+ NGS2016_10_Dormancy_exp616_MappingCount_21992.log
+ NGS2017_03_AAP-Starter_BAP_EK-XYL_exp614_MappingCountGenome_23458.log
+ NGS2017_11_ROSEX2_exp619_MappingCountGenome_21306.log
+ NGS2017_08_Brasilice_exp634_MappingCountGenome_30940.log
+ JC2013_SYBIOPOP_2014_exp640_MappingCount_13167.log
+(21 rows)
+
+
+
+CATDB=> select resume_file,project_id,experiment_id,bankref_desc from chips.rnaseqdata ;
+                                 resume_file                                  | project_id | experiment_id |                                                                 bank
+ref_desc                                                                 
+------------------------------------------------------------------------------+------------+---------------+---------------------------------------------------------------------
+-------------------------------------------------------------------------
+ CAT-seq_exp592_mapping2_nor_16315_resume.txt                                 |        295 |           592 | TAIRv10 One isoform by gene
+ NGS2016_08_DYW2_exp600_MappingCount_31196_resume.txt                         |        419 |           600 | TAIR10
+ NGS2014_01_MicroD_exp602_MappingCount_32288_resume.txt                       |        422 |           602 | TAIR10
+ NGS2014_07_Hevea_exp604_MappingCount_NGS2014-07_Hevea.log                    |        424 |           604 | Hevea_mRNAContigs_Cirad
+ NGS2012_02_MicroD_exp601_MappingCount_16765_resume.txt                       |        421 |           601 | TAIR10
+ NGS2015_05_HIGH_TEMPERATURE_ROOT_exp586_MappingCount_12383_resume.txt        |        409 |           586 | TAIR10
+ NGS2014_21_SeedCom_exp598_MappingCountGenome_3765_resume.txt                 |        420 |           598 | Zea_mays.AGPv4
+ NGS2016_16_PATHO_exp611_MappingCount_5992_resume.txt                         |        431 |           611 | TAIR10
+ NGS2017_09_MOSS1_exp606_MappingCount_8075_resume.txt                         |        426 |           606 | 32926
+ NGS2015_12_ZeaWall2_exp612_explications_nomEch.txt                           |        432 |           612 | Zea_mays.AGPv3.22 + 2,322 Transcripts from Hirsch et al. (2014) + sp
+ecific sequences from both F288 and F271
+ NGS2015_01_Transition_exp607_MappingCount_21750_resume.txt                   |        427 |           607 | TAIR10_OneGeneModel, LncRNA library
+ AAP_BAP_NitroPath_2014_exp615_MappingCount_Botrytis_1872_resume.txt          |        435 |           615 | Arabidopsis TAIR10 and Botrytis B05.1
+ NGS2018_05_TOR_exp617_MappingCount_18713_resume.txt                          |        437 |           617 | TAIR10
+ JC2013_SYBIOPOP_2014_exp591_MappingCount_24ech_premanip.log                  |        413 |           591 | Populus trichocarpa
+ JC2013_SYBIOPOP_2014_exp623_MappingCount_13167_resume_24samples.txt          |        413 |           623 | Populus trichocarpa
+ NGS2015_06_ASCO_exp622_MappingCount_16867_resume.txt                         |        440 |           622 | TAIR10
+ NGS2016_10_Dormancy_exp616_MappingCount_21992_resume.txt                     |        436 |           616 | TAIR10
+ NGS2017_03_AAP-Starter_BAP_EK-XYL_exp614_MappingCountGenome_23458_resume.txt |        434 |           614 | AGPV4.32
+ NGS2017_11_ROSEX2_exp619_MappingCountGenome_21306_resume.txt                 |        438 |           619 | RChinensis_v1   OBDH_1.0
+ NGS2017_08_Brasilice_exp634_MappingCountGenome_30940_resume.txt              |        450 |           634 | Brassica napus  Genomes A+C     10 chromosomes  Genoscope       Bras
+sica_napus_v4       Brassica_napus.annotation_v5.gtf        gene_id exon
+ JC2013_SYBIOPOP_2014_exp640_MappingCount_13167_resume.txt                    |        413 |           640 | Ptrichocarpa primaryTranscriptOnly
+(21 rows)
+
+CATDB=> select rnaseqlibrary_id,rnaseqlibrary_name,library_strategy from chips.rnaseqlibrary;
+ rnaseqlibrary_id |                   rnaseqlibrary_name                    | library_strategy 
+------------------+---------------------------------------------------------+------------------
+                1 | CAT-seq_exp592                                          | RNA-Seq
+                3 | NGS2016_08_DYW2_exp600                                  | RNA-Seq
+                4 | NGS2012_02_MicroD_exp601                                | RNA-Seq
+                5 | NGS2014_01_microD_exp602                                | RNA-Seq
+                6 | NGS2014_07_Hevea_exp604                                 | RNA-Seq
+                7 | NGS2015_05_HIGH_TEMPERATURE_ROOT_exp586                 | RNA-Seq
+                8 | NGS2013_10_RTL_MRNA                             _exp541 | RNA-Seq
+                9 | NGS2013_13_Alien_exp605                                 | RNA-Seq
+               10 | NGS2014_21_SeedCom_exp598                               | RNA-Seq
+               11 | NGS2015_01_Transition_exp607                            | RNA-Seq
+               12 | NGS2017_01_nuc_exp608                                   | RNA-Seq
+               13 | NGS2016_09_ABOLIS_exp609                                | RNA-Seq
+               14 | NGS2016_01_LEAFNET3_exp610                              | RNA-Seq
+               15 | NGS12-01_MEIO_exp543                                    | RNA-Seq
+               16 | NGS2015_14_VitisDisease_exp593                          | RNA-Seq
+               30 | NGS2017_10_cpk5_6_exp631                                | RNA-Seq
+               31 | NGS2017_11_ROSEX2_exp619                                | RNA-Seq
+               18 | NGS2017_09_MOSS1_exp606                                 | RNA-Seq
+               19 | NGS2015_12_ZeaWall2_exp612                              | RNA-Seq
+               20 | NGS2016_11_Orchidee_exp613                              | RNA-Seq
+               21 | NGS2017_03_AAP-Starter_BAP_EK-XYL_exp614                | RNA-Seq
+               22 | AAP_BAP_NitroPath_2014_exp615                           | RNA-Seq
+               24 | NGS2016_10_Dormancy_exp616                              | RNA-Seq
+               25 | NGS2018_05_TOR_exp617                                   | RNA-Seq
+               23 | JC2013_SYBIOPOP_2014_exp591                             | RNA-Seq
+               26 | NGS2017_11_ROSEX2_exp620                                | RNA-Seq
+               32 | NGS2017_08_Brasilice_exp634                             | RNA-Seq
+               28 | JC2013_SYBIOPOP_2014_exp623                             | RNA-Seq
+               33 | NGS2013_14_RNAdapt_exp542                               | RNA-Seq
+               34 | JC2013_SYBIOPOP_2014_exp640                             | RNA-Seq
+               17 | NGS2016_16_PATHO_exp611                                 | RNA-Seq
+               27 | NGS2015_06_ASCO_exp622                                  | RNA-Seq
+               29 | NGS2014_25_CIVB_exp630                                  | RNA-Seq
+(33 rows)
+
+

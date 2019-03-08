@@ -1,0 +1,216 @@
+{% load staticfiles %}
+<html>
+<head>
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="{% static "css/main.css" %}"/>
+
+<script src="{% static "js/dg.js" %}"></script>
+
+<script src="https://d3js.org/d3.v4.min.js"></script>    
+
+</head>
+<style>
+
+     .legend {                                                   /* NEW */
+        font-size: 12px;                                          /* NEW */
+      }                                                           /* NEW */
+      rect {                                                      /* NEW */
+        stroke-width: 2;                                          /* NEW */
+      } 
+.animated-ring {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
+    width: 200px;
+}
+
+.selection {
+    text-align:center;
+    margin-top: 20px;
+}
+
+
+
+text {
+    font-family: sans-serif;
+    font-size: 12px;
+    fill: white;
+}
+#tooltip {
+    position: absolute;
+    width: 200px;
+    height: auto;
+    padding: 10px;
+    background-color: white;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    -webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+    -mox-box-shadow: 4px 4px 4px 10px rgba(0, 0, 0, 0.4);
+    box-shadow: 4px 4px 10px rbga(0, 0, 0, 0.4) pointer-events: none;
+}
+#tooltip.hidden {
+    opacity: 0;
+}
+#tooltip p {
+    margin: 0;
+    font-family: sans-serif;
+    font-size: 16px;
+    line-height: 20px;
+}
+
+div.tooltip {
+  position: absolute;
+  text-align: center;
+  width: 60px;
+  height: 28px;
+  padding: 2px;
+  font: 12px sans-serif;
+  background: lightsteelblue;
+  border: 0px;
+  border-radius: 8px;
+  pointer-events: none;
+}
+
+</style>
+<body>
+
+
+<div id="chart"></div>
+
+
+<div id="tooltip" class="hidden">
+    <p><strong id="affiche"></strong>
+    </p>
+    <p><span id="value">100</span>%</p>
+</div>
+
+
+</body>
+<script>
+var data_treatment=DG_execQuery('treatment_list','','');
+
+
+(function(d3) {
+    'use strict';
+
+    var dataset = [
+      { label: 'Tretament1', count: 10 }, 
+      { label: 'Treament2', count: 20 },
+      { label: 'Treatment3', count: 30 },
+      { label: 'Treatment4', count: 40 },
+      { label: 'Tretament5', count: 10 }, 
+      { label: 'Treament25', count: 20 },
+      { label: 'Treatment6', count: 30 },
+      { label: 'Treatment7', count: 40 },
+      { label: 'Tretament8', count: 10 }, 
+      { label: 'Treament9', count: 20 },
+      { label: 'Treatment10', count: 30 },
+      { label: 'Treatment11', count: 40 },
+      { label: 'Tretament12', count: 10 }, 
+      { label: 'Treament12', count: 20 },
+      { label: 'Treatment14', count: 30 },
+      { label: 'Treatment15', count: 40 },
+      { label: 'Tretament16', count: 10 }, 
+      { label: 'Treament17', count: 20 },
+      { label: 'Treatment18', count: 30 },
+      { label: 'Treatment19', count: 40 },
+      { label: 'Tretament20', count: 10 }, 
+      { label: 'Treament21', count: 20 },
+      { label: 'Treatment22', count: 30 },
+      { label: 'Treatment23', count: 40 },
+      { label: 'Tretament24', count: 10 }, 
+      { label: 'Treament25', count: 20 },
+      { label: 'Treatment26', count: 30 },
+      { label: 'Treatment27', count: 40 },
+      { label: 'Tretament28', count: 10 }, 
+      { label: 'Treament29', count: 20 },
+      { label: 'Treatment30', count: 30 },
+      { label: 'Treatment31', count: 40 },
+      { label: 'Tretament32', count: 10 },      
+    ];
+
+    var width = 400;
+    var height = 400;
+    var radius = Math.min(width-100, height-100) / 2;
+    var donutWidth = 15;
+    var legendRectSize = 10;                                  // NEW
+    var legendSpacing = 4;                                    // NEW
+
+    var color =d3.scaleOrdinal(d3.schemeCategory10);//d3.scaleOrdinal(['red','blue','green','yellow'])//# 
+	//console.log(color());
+    var svg = d3.select('#chart')
+      .append('svg')
+      .attr('width', width)
+      .attr('height', height)
+      .append('g')
+      .attr('transform', 'translate(' + (width / 2) + 
+        ',' + (height / 2) + ')');
+
+    var arc = d3.arc()
+      .innerRadius(radius - donutWidth)
+      .outerRadius(radius);
+
+    var pie = d3.pie()
+      .value(function(d) { return d.count; })
+      .sort(null);
+
+    var path = svg.selectAll('path')
+      .data(pie(dataset))
+      .enter()
+      .append('path')
+      .attr('d', arc)
+      .attr('fill', function(d, i) { 
+        return color(d.data.label);
+      })
+      .on("mouseover", function (d) {
+    d3.select("#tooltip")
+        .style("left", d3.event.pageX + "px")
+        .style("top", d3.event.pageY + "px")
+        .style("opacity", 1)
+        .select("#value")
+        .text(d.data.label+' '+d.value)
+        //.select('#affiche')
+        //.text(d.data.label);
+})
+    .on("mouseout", function () {
+    // Hide the tooltip
+    d3.select("#tooltip")
+        .style("opacity", 0);;
+});
+      
+      
+	
+    var legend = svg.selectAll('.legend')                     // NEW
+      .data(color.domain())                                   // NEW
+      .enter()                                                // NEW
+      .append('g')                                            // NEW
+      .attr('class', 'legend')                                // NEW
+      .attr('transform', function(d, i) {                     // NEW
+        var height =100;// legendRectSize + legendSpacing;          // NEW
+        var offset =200;//  height * color.domain().length / 2;     // NEW
+        var horz =-200;// -2 * legendRectSize;                       // NEW
+        var vert = 0;//i * height - offset;                       // NEW
+        return 'translate(' + horz + ',' + vert + ')';        // NEW
+      });                                                     // NEW
+
+    legend.append('rect')                                     // NEW
+      .attr('width', legendRectSize)                          // NEW
+      .attr('height', legendRectSize)                         // NEW
+      .style('fill', color)                                   // NEW
+      .style('stroke', color);                                // NEW
+      
+    legend.append('text')                                     // NEW
+      .attr('x', legendRectSize + legendSpacing)              // NEW
+      .attr('y', legendRectSize - legendSpacing) 
+      .style('fill', 'blue') // NEW
+      .text(function(d) { return d; });                       // NEW
+
+  })(window.d3);
+
+
+
+</script>
+</html>
