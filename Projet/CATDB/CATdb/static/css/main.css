@@ -773,6 +773,8 @@ position: relative;
 .adapteur{
 display: -webkit-box;
 width: 100%;
+margin: 0 auto;
+padding: 0% 4%;
 }
 
 
@@ -806,7 +808,7 @@ li{
 list-style: none;
 }
 .sidebar-list-item a[aria-expanded="true"]::after {
-    font-family: 'FontAwesome';
+    font-family: 'Font Awesome 5 Free';
     content: "\f106";
     font-size: 18px;
     line-height: 22px;
@@ -816,7 +818,7 @@ list-style: none;
 }
 
 .sidebar-list-item a[aria-expanded="false"]::after {
-    font-family: 'FontAwesome';
+    font-family: 'Font Awesome 5 Free';
     content: "\f107";
     font-size: 18px;
     line-height: 22px;
@@ -877,7 +879,7 @@ padding: 2%;
 
 .table-sort thead tr th::after {
 
-    font-family: 'FontAwesome';
+    font-family: 'Font Awesome 5 Free';
     content: "\f107";
     font-size: 14px;
     line-height: 22px;
@@ -931,4 +933,87 @@ padding: 2%;
     border-spacing: 0;
     border-collapse: collapse;
 
+}
+
+.aff{
+    font-size: 13px;
+    line-height: 17px;
+    display: table-cell;
+}
+
+.sidebar-sublist-item{
+font-size: 13px;
+line-height: 16px;
+font-weight: 600;
+}
+
+._loop_checkbox_inline input[type="checkbox"] {
+    position: absolute;
+    margin-left: 0;
+    z-index: 1;
+    width: 20px;
+    height: 20px;
+}
+
+button::-moz-focus-inner, input::-moz-focus-inner {
+    padding: 0;
+    border: 0;
+}
+
+::after, ::before {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+input[type="checkbox"], input[type="radio"] {
+    margin: 4px 0 0;
+    line-height: normal;
+}
+
+input[type="checkbox"], input[type="radio"] {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 0;
+}
+
+
+button, input, optgroup, select, textarea {
+    margin: 0;
+    font: inherit;
+        font-family: inherit;
+        font-size: inherit;
+        line-height: inherit;
+    color: inherit;
+}
+
+.aff_more{
+	color:blue;
+}
+
+.aff_more:hover {text-decoration: underline;cursor: move;}
+
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  z-index: 100;
+}
+
+.modal-content {
+  /*background-color: #fefefe;*/
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+  width: 80%;
+height: 100%;
 }
