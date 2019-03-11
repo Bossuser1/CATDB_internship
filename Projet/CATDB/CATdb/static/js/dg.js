@@ -21,6 +21,13 @@ function DG_execQuery($Tablename,$QueryType,$ListDataCond){
 	return Data;
 };
 
+var func1 = function() {}
+  
+var object = {
+  func2: function() {}
+}
+
+
 function LoadGrid(Dataload,id_div,zone,max_row,option){
 	var col_name=Object.keys(Dataload[1]._value);
 	var coldef="";
@@ -32,10 +39,13 @@ function LoadGrid(Dataload,id_div,zone,max_row,option){
 	try{
 	var name_opt="col_odrer";	
 	if(Object.keys(option).includes(name_opt)){console.log("tot");
+	
+		
 	var col_name=option["col_odrer"];
 	}else{ };
 	
 	}catch{};
+		
 	//if (Object.keys(Dataload).length<select.length){var select=Object.keys(Dataload)};
 	
 	//console.log('-----zone de taille--'+$('.'+zone).width()+'-----col length---:'+col_name.length);
@@ -52,7 +62,7 @@ function LoadGrid(Dataload,id_div,zone,max_row,option){
 	var colrefere=id_div.replace('e','_');
 	for (var j in col_name){
 		try{
-			$('#'+id_div).append("<div class='head_cell' id='"+colrefere+"ligne"+(-1)+"colonne"+(j)+"'>"+col_name[j]+"<i class='fas fa-sort-up' style='color: teal;cursor: pointer;' ></i> <i class='fas fa-sort-down' style='color: #800075;cursor: pointer;'></i> </div>");//
+			$('#'+id_div).append("<div class='head_cell' id='"+colrefere+"ligne"+(-1)+"colonne"+(j)+"'>"+col_name[j]+"<i class='fas fa-sort-up' style='color:#4d5bff;cursor:pointer;' onclick='actionclick(\""+id_div+'#'+zone+"\");'></i> <i class='fas fa-sort-down' style='color: #800075;cursor: pointer;'  onclick='actionclick(\""+id_div+'#'+zone+"\");'></i> </div>");//
 		}catch{};
 	};
 	//
@@ -95,7 +105,7 @@ function LoadGridevent(id_div,zone){
 	
 	var currentMousePos_x1=0;
 	var currentMousePos_x2=0;
-	console.log('#'+id_div+' .head_cell');
+	//console.log('#'+id_div+' .head_cell');
 	$('#'+id_div+' .head_cell').mousedown(function(e){
 		currentMousePos_x1 = e.pageX;
 
@@ -122,4 +132,5 @@ function LoadGridevent(id_div,zone){
 	});
 });
 };
+
 

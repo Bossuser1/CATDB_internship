@@ -223,15 +223,97 @@ $('.showcard3:eq(0)').css("height",($(window).height()/6)+"px");
 //
 //$('.main_show_card .showcard')
 
-var Dataload=DG_execQuery('all_experiment','select','');//all_experiment,type_analysis
-LoadGrid(Dataload,'grid_answ','showcard3',8,'');
-LoadGridevent('grid_answ','showcard3');
+
+function make_grid(Data,tagid,classid,max_val,option){
+	$('#'+tagid).empty();
+	//LoadGrid(Data,'grid_show_card','showcard2',9,option);
+	LoadGrid(Data,tagid,classid,max_val,option);
+	LoadGridevent(tagid,classid);
+	return Data;	
+};
 
 
-var Dataload1=DG_execQuery('TagRNas_vs_analys','select','');//all_experiment,type_analysis
+/* function for sorted data json  */
+function dynamicSort(property) {
+    var sortOrder = 1;
+
+    if(property[0] === "-") {
+        sortOrder = -1;
+        property = property.substr(1);
+    }
+
+    return function (a,b) {
+        if(sortOrder == -1){
+            return b[property].localeCompare(a[property]);
+        }else{
+            return a[property].localeCompare(b[property]);
+        }        
+    }
+}
+
+//Dataload1,"percentage"
+function arrangementdata(data,keys){
+	var Data=[];
+	var datasort=[];
+	for (var i=0;i<Object.keys(data).length;i++){
+	    //try{console.log(Dataload1[Object.keys(Dataload1)[i]]._value);}catch{};
+	    try{datasort.push(Dataload1[Object.keys(data)[i]]._value);}catch{};
+	};
+
+	var datasort_tru=datasort.sort(dynamicSort(keys));
+	for (var i=0;i<datasort_tru.length;i++){
+	Data.push({"_key":i+1,"_value":datasort_tru[i]});
+	};
+	return Data;
+};
+
+function variable_name(value){
+	var answer="";
+	if (value==='grid_answ'){var answer="Dataload_init1"};
+	if (value==='grid_show_card'){var answer="Dataload_init2"};
+	return answer;	
+	};
+
+
+
+
+
+
+var Dataload_init1=DG_execQuery('all_experiment','select','');//all_experiment,type_analysis
+
+make_grid(Dataload_init1,'grid_answ','showcard3',8,'');
+
+
+
+var Dataload_init2=DG_execQuery('TagRNas_vs_analys','select','');//all_experiment,type_analysis
 var option={'col_odrer':['analysis_type','count','percentage']};
-LoadGrid(Dataload1,'grid_show_card','showcard2',9,option);
-LoadGridevent('grid_show_card','showcard2');
+
+make_grid(Dataload_init2,'grid_show_card','showcard2',9,option);
+
+
+function actionclick(clef){
+$('.fas.fa-sort-up').on("click",function(){
+
+var id=$(this).parent('div').attr('id');
+var grid_current=id.split('-')[0].replace('ligne','');
+var colname_sorted=$('#'+id).html().split('<')[0];
+
+//console.log(clef.split('#')[0]);
+var dataname=variable_name(clef.split('#')[0]);
+make_grid(arrangementdata(eval(dataname),colname_sorted),clef.split('#')[0],clef.split('#')[1],9,option);
+
+});
+
+$('.fas.fa-sort-down').on("click",function(){
+var id=$(this).parent('div').attr('id');
+var grid_current=id.split('-')[0].replace('ligne','');
+var colname_sorted=$('#'+id).html().split('<')[0];
+
+var dataname=variable_name(clef.split('#')[0]);
+make_grid(arrangementdata(eval(dataname),'-'+colname_sorted),clef.split('#')[0],clef.split('#')[1],9,option);
+
+});
+};
 
 </script>
   

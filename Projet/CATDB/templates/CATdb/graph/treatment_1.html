@@ -74,6 +74,40 @@ div.tooltip {
   pointer-events: none;
 }
 
+body {
+    font-family: 'Roboto', sans-serif;
+    color: #333333;
+}
+
+/* Add shadow effect to chart. If you don't like it, get rid of it. */
+svg {
+    -webkit-filter: drop-shadow( 0px 3px 3px rgba(0,0,0,.3) );
+    filter: drop-shadow( 0px 3px 3px rgba(0,0,0,.25) );
+}
+
+/*Styling for the lines connecting the labels to the slices*/
+polyline{
+    opacity: .3;
+    stroke: black;
+    stroke-width: 2px;
+    fill: none;
+}
+
+/* Make the percentage on the text labels bold*/
+.labelName tspan {
+    font-style: normal;
+    font-weight: 700;
+}
+
+/* In biology we generally italicise species names. */
+.labelName {
+    font-size: 0.9em;
+    font-style: italic;
+}
+
+
+
+
 </style>
 <body>
 
@@ -90,127 +124,266 @@ div.tooltip {
 
 </body>
 <script>
-var data_treatment=DG_execQuery('treatment_list','','');
+function donutChart() {
+    var width,
+        height,
+        margin = {top: 10, right: 10, bottom: 10, left: 10},
+        colour = d3.scaleOrdinal(d3.schemeCategory20c), // colour scheme
+        variable, // value in data that will dictate proportions on chart
+        category, // compare data by
+        padAngle, // effectively dictates the gap between slices
+        floatFormat = d3.format('.4r'),
+        cornerRadius, // sets how rounded the corners are on each slice
+        percentFormat = d3.format(',.2%');
+
+    function chart(selection){
+        selection.each(function(data) {
+            // generate chart
+
+            // ===========================================================================================
+            // Set up constructors for making donut. See https://github.com/d3/d3-shape/blob/master/README.md
+            var radius = Math.min(width, height) / 2;
+
+            // creates a new pie generator
+            var pie = d3.pie()
+                .value(function(d) { return floatFormat(d[variable]); })
+                .sort(null);
+
+            // contructs and arc generator. This will be used for the donut. The difference between outer and inner
+            // radius will dictate the thickness of the donut
+            var arc = d3.arc()
+                .outerRadius(radius * 0.8)
+                .innerRadius(radius * 0.6)
+                .cornerRadius(cornerRadius)
+                .padAngle(padAngle);
+
+            // this arc is used for aligning the text labels
+            var outerArc = d3.arc()
+                .outerRadius(radius * 0.9)
+                .innerRadius(radius * 0.9);
+            // ===========================================================================================
+
+            // ===========================================================================================
+            // append the svg object to the selection
+            var svg = selection.append('svg')
+                .attr('width', width + margin.left + margin.right)
+                .attr('height', height + margin.top + margin.bottom)
+              .append('g')
+                .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
+            // ===========================================================================================
+
+            // ===========================================================================================
+            // g elements to keep elements within svg modular
+            svg.append('g').attr('class', 'slices');
+            svg.append('g').attr('class', 'labelName');
+            svg.append('g').attr('class', 'lines');
+            // ===========================================================================================
+
+            // ===========================================================================================
+            // add and colour the donut slices
+            var path = svg.select('.slices')
+                .datum(data).selectAll('path')
+                .data(pie)
+              .enter().append('path')
+                .attr('fill', function(d) { return colour(d.data[category]); })
+                .attr('d', arc);
+            // ===========================================================================================
+
+            // ===========================================================================================
+            // add text labels
+            var label = svg.select('.labelName').selectAll('text')
+                .data(pie)
+              .enter().append('text')
+                .attr('dy', '.35em')
+                .html(function(d) {
+                    // add "key: value" for given category. Number inside tspan is bolded in stylesheet.
+                    return d.data[category] + ': <tspan>' + percentFormat(d.data[variable]) + '</tspan>';
+                })
+                .attr('transform', function(d) {
+
+                    // effectively computes the centre of the slice.
+                    // see https://github.com/d3/d3-shape/blob/master/README.md#arc_centroid
+                    var pos = outerArc.centroid(d);
+
+                    // changes the point to be on left or right depending on where label is.
+                    pos[0] = radius * 0.95 * (midAngle(d) < Math.PI ? 1 : -1);
+                    return 'translate(' + pos + ')';
+                })
+                .style('text-anchor', function(d) {
+                    // if slice centre is on the left, anchor text to start, otherwise anchor to end
+                    return (midAngle(d)) < Math.PI ? 'start' : 'end';
+                });
+            // ===========================================================================================
+
+            // ===========================================================================================
+            // add lines connecting labels to slice. A polyline creates straight lines connecting several points
+            var polyline = svg.select('.lines')
+                .selectAll('polyline')
+                .data(pie)
+              .enter().append('polyline')
+                .attr('points', function(d) {
+
+                    // see label transform function for explanations of these three lines.
+                    var pos = outerArc.centroid(d);
+                    pos[0] = radius * 0.95 * (midAngle(d) < Math.PI ? 1 : -1);
+                    return [arc.centroid(d), outerArc.centroid(d), pos]
+                });
+            // ===========================================================================================
+
+            // ===========================================================================================
+            // add tooltip to mouse events on slices and labels
+            d3.selectAll('.labelName text, .slices path').call(toolTip);
+            // ===========================================================================================
+
+            // ===========================================================================================
+            // Functions
+
+            // calculates the angle for the middle of a slice
+            function midAngle(d) { return d.startAngle + (d.endAngle - d.startAngle) / 2; }
+
+            // function that creates and adds the tool tip to a selected element
+            function toolTip(selection) {
+
+                // add tooltip (svg circle element) when mouse enters label or slice
+                selection.on('mouseenter', function (data) {
+
+                    svg.append('text')
+                        .attr('class', 'toolCircle')
+                        .attr('dy', -15) // hard-coded. can adjust this to adjust text vertical alignment in tooltip
+                        .html(toolTipHTML(data)) // add text to the circle.
+                        .style('font-size', '.9em')
+                        .style('text-anchor', 'middle'); // centres text in tooltip
+
+                    svg.append('circle')
+                        .attr('class', 'toolCircle')
+                        .attr('r', radius * 0.55) // radius of tooltip circle
+                        .style('fill', colour(data.data[category])) // colour based on category mouse is over
+                        .style('fill-opacity', 0.35);
+
+                });
+
+                // remove the tooltip when mouse leaves the slice/label
+                selection.on('mouseout', function () {
+                    d3.selectAll('.toolCircle').remove();
+                });
+            }
+
+            // function to create the HTML string for the tool tip. Loops through each key in data object
+            // and returns the html string key: value
+            function toolTipHTML(data) {
+
+                var tip = '',
+                    i   = 0;
+
+                for (var key in data.data) {
+
+                    // if value is a number, format it as a percentage
+                    var value = (!isNaN(parseFloat(data.data[key]))) ? percentFormat(data.data[key]) : data.data[key];
+
+                    // leave off 'dy' attr for first tspan so the 'dy' attr on text element works. The 'dy' attr on
+                    // tspan effectively imitates a line break.
+                    if (i === 0) tip += '<tspan x="0">' + key + ': ' + value + '</tspan>';
+                    else tip += '<tspan x="0" dy="1.2em">' + key + ': ' + value + '</tspan>';
+                    i++;
+                }
+
+                return tip;
+            }
+            // ===========================================================================================
+
+        });
+    }
+
+    // getter and setter functions. See Mike Bostocks post "Towards Reusable Charts" for a tutorial on how this works.
+    chart.width = function(value) {
+        if (!arguments.length) return width;
+        width = value;
+        return chart;
+    };
+
+    chart.height = function(value) {
+        if (!arguments.length) return height;
+        height = value;
+        return chart;
+    };
+
+    chart.margin = function(value) {
+        if (!arguments.length) return margin;
+        margin = value;
+        return chart;
+    };
+
+    chart.radius = function(value) {
+        if (!arguments.length) return radius;
+        radius = value;
+        return chart;
+    };
+
+    chart.padAngle = function(value) {
+        if (!arguments.length) return padAngle;
+        padAngle = value;
+        return chart;
+    };
+
+    chart.cornerRadius = function(value) {
+        if (!arguments.length) return cornerRadius;
+        cornerRadius = value;
+        return chart;
+    };
+
+    chart.colour = function(value) {
+        if (!arguments.length) return colour;
+        colour = value;
+        return chart;
+    };
+
+    chart.variable = function(value) {
+        if (!arguments.length) return variable;
+        variable = value;
+        return chart;
+    };
+
+    chart.category = function(value) {
+        if (!arguments.length) return category;
+        category = value;
+        return chart;
+    };
+
+    return chart;
+}
+
+    var donut = donutChart()
+        .width(900)
+        .height(500)
+        .cornerRadius(3) // sets how rounded the corners are on each slice
+        .padAngle(0.015) // effectively dictates the gap between slices
+        .variable('Probability')
+        .category('Species');
+
+	data=[{'Species':'Halobacillus halophilus','Probability':0.10069108308662117,'Error':0.045296463390387814},
+{'Species':'Staphylococcus epidermidis','Probability':0.04076903848429238,'Error':0.0096463390387814},
+{'Species':'Chromobacterium violaceum','Probability':0.10318269548054262,'Error':0.03390387814},
+{'Species':'Halobacillus halophilus','Probability':0.10069108308662117,'Error':0.045296463390387814},
 
 
-(function(d3) {
-    'use strict';
-
-    var dataset = [
-      { label: 'Tretament1', count: 10 }, 
-      { label: 'Treament2', count: 20 },
-      { label: 'Treatment3', count: 30 },
-      { label: 'Treatment4', count: 40 },
-      { label: 'Tretament5', count: 10 }, 
-      { label: 'Treament25', count: 20 },
-      { label: 'Treatment6', count: 30 },
-      { label: 'Treatment7', count: 40 },
-      { label: 'Tretament8', count: 10 }, 
-      { label: 'Treament9', count: 20 },
-      { label: 'Treatment10', count: 30 },
-      { label: 'Treatment11', count: 40 },
-      { label: 'Tretament12', count: 10 }, 
-      { label: 'Treament12', count: 20 },
-      { label: 'Treatment14', count: 30 },
-      { label: 'Treatment15', count: 40 },
-      { label: 'Tretament16', count: 10 }, 
-      { label: 'Treament17', count: 20 },
-      { label: 'Treatment18', count: 30 },
-      { label: 'Treatment19', count: 40 },
-      { label: 'Tretament20', count: 10 }, 
-      { label: 'Treament21', count: 20 },
-      { label: 'Treatment22', count: 30 },
-      { label: 'Treatment23', count: 40 },
-      { label: 'Tretament24', count: 10 }, 
-      { label: 'Treament25', count: 20 },
-      { label: 'Treatment26', count: 30 },
-      { label: 'Treatment27', count: 40 },
-      { label: 'Tretament28', count: 10 }, 
-      { label: 'Treament29', count: 20 },
-      { label: 'Treatment30', count: 30 },
-      { label: 'Treatment31', count: 40 },
-      { label: 'Tretament32', count: 10 },      
-    ];
-
-    var width = 400;
-    var height = 400;
-    var radius = Math.min(width-100, height-100) / 2;
-    var donutWidth = 15;
-    var legendRectSize = 10;                                  // NEW
-    var legendSpacing = 4;                                    // NEW
-
-    var color =d3.scaleOrdinal(d3.schemeCategory10);//d3.scaleOrdinal(['red','blue','green','yellow'])//# 
-	//console.log(color());
-    var svg = d3.select('#chart')
-      .append('svg')
-      .attr('width', width)
-      .attr('height', height)
-      .append('g')
-      .attr('transform', 'translate(' + (width / 2) + 
-        ',' + (height / 2) + ')');
-
-    var arc = d3.arc()
-      .innerRadius(radius - donutWidth)
-      .outerRadius(radius);
-
-    var pie = d3.pie()
-      .value(function(d) { return d.count; })
-      .sort(null);
-
-    var path = svg.selectAll('path')
-      .data(pie(dataset))
-      .enter()
-      .append('path')
-      .attr('d', arc)
-      .attr('fill', function(d, i) { 
-        return color(d.data.label);
-      })
-      .on("mouseover", function (d) {
-    d3.select("#tooltip")
-        .style("left", d3.event.pageX + "px")
-        .style("top", d3.event.pageY + "px")
-        .style("opacity", 1)
-        .select("#value")
-        .text(d.data.label+' '+d.value)
-        //.select('#affiche')
-        //.text(d.data.label);
-})
-    .on("mouseout", function () {
-    // Hide the tooltip
-    d3.select("#tooltip")
-        .style("opacity", 0);;
-});
-      
-      
-	
-    var legend = svg.selectAll('.legend')                     // NEW
-      .data(color.domain())                                   // NEW
-      .enter()                                                // NEW
-      .append('g')                                            // NEW
-      .attr('class', 'legend')                                // NEW
-      .attr('transform', function(d, i) {                     // NEW
-        var height =100;// legendRectSize + legendSpacing;          // NEW
-        var offset =200;//  height * color.domain().length / 2;     // NEW
-        var horz =-200;// -2 * legendRectSize;                       // NEW
-        var vert = 0;//i * height - offset;                       // NEW
-        return 'translate(' + horz + ',' + vert + ')';        // NEW
-      });                                                     // NEW
-
-    legend.append('rect')                                     // NEW
-      .attr('width', legendRectSize)                          // NEW
-      .attr('height', legendRectSize)                         // NEW
-      .style('fill', color)                                   // NEW
-      .style('stroke', color);                                // NEW
-      
-    legend.append('text')                                     // NEW
-      .attr('x', legendRectSize + legendSpacing)              // NEW
-      .attr('y', legendRectSize - legendSpacing) 
-      .style('fill', 'blue') // NEW
-      .text(function(d) { return d; });                       // NEW
-
-  })(window.d3);
 
 
+];
+        d3.select('#chart')
+            .datum(data) // bind data to the div
+            .call(donut); // draw chart in div
+
+
+
+//		
+//		
+//Pseudomonas TKP	0.05880239155316942	0.0045296463390387745
+//Bacillus subtilis	0.1908578484310064	0.0765387676
+//Pseudomonas fluorescens	0.10663641563053275	0.0045296463390387676
+//Micrococcus luteus	0.04523420524963677	0.006463390387814
+//Pseudoalteromonas SM9913	0.08033880363132218	0.05296463390387814
+//Enterococcus faecalis	0.07214855298991701	0.0077390387814
+//Escherichia coli	0.2014657031774047	0.100646339038795
 
 </script>
 </html>

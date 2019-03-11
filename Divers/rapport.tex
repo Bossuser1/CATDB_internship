@@ -1,9 +1,8 @@
-
 \begin{developpement}
 
-la production de données de visualisation de proccess biologique est un domaine particulier car fait appel au differents état de comparaison de resultats et des facteurs minumamun pour obtenir le même resultat.
+la production de données de visualisation de proccess biologique est un domaine particulier car fait appel aux differents état de comparaison de résultats et des facteurs minumamun pour obtenir le même resultat.
 
-la representation de ses données sont d'autant plus importantes que 
+la représentation de ses données sont d'autant plus importantes que 
 
 
 \begin{contexte biologique}
@@ -16,7 +15,7 @@ les processus energistrées dans la base CATDB vont de collecté d'echantillons 
 \end{}
 
 \begin{les differentes types de bases}
-Ainsi les Banques et bases de données en Biologie specialisées dans le domaine sont nombreuses , mais on peux compte un certains nombreux d'entre elles specialisées par grands domaines tels que celle specialisées dans :
+Ainsi les Banques et bases de données en Biologie spécialisées dans le domaine sont nombreuses , mais on peux compte un certains nombreux d'entre elles spécialisées par grands domaines tels que celle specialisées dans :
 
 \ennumerate{}
 \item{les ressources pour les procaryotes}
@@ -27,28 +26,22 @@ Ainsi les Banques et bases de données en Biologie specialisées dans le domaine
 
 \end{} 
 
+\begin{Analyse du transcriptome}
+
+Le transcriptome est une expérience qui consiste a analysé tous les expressions des gènes du génome.elles correspondent a un standard dans tous les problèmes ou l'on essaye d'analyser les expressions de quelques gènes , notamment (la cinétique, la comparaison de plusieurs génotypes). 
+
+
+Le sites CATDB est ainsi un site particulier qui répond a ces différents critères a la fois car elle rassemble plusieurs projets allant dans ce sens. 
+
+Durant plusieurs années (todo),les technologies prédominantes étaient basée sur les puces à ADN.
+Le principe des puces à ADN consistent a utilisée une lame de verre sur lesquel on depose un fragment ADN correspondant a un petit fragment du génome.On peut ainsi placé plusieurs milliers de fragments sur un même verre .On recouvre le verre par une solution contenant la population d'ARN a étudier . les ARN s'hybrident sur les fragments d'ADNc . et la quantité d'ARN fixée correspone a la concentration d'ARN dans la solution . Mais il peux exister des biais.   
+P224 Savoir faire ,Bioinfo Principe des utilisations des outils.Denis Tagu
+\end{} 
+
 \end{} 
 \end{}
 
+la spécificité des data-bases biologiques sont aussi au niveau.
 
+Les plantes sont considéré comme des eucaryotes ainsi en l'une des particularité des plantes est la photosynthèse . cela se produire dans le chloroplaste .le chloroplaste se définit comme l'organite cellulaire des Eucaryotes photosynthétiques(algues et végétaux supérieurs) s'est ou exécuter la photosynthèses (274 Biochimie approche Bioénergétiques et médicale)
 
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
-#lecture de requete
-
-def lecture_query_tage(file_query):
-    """
-    function sert a lire les requetes prédefinir seulement
-    """
-    query_tag=dict()
-    with open(file_query,"r") as fiche:
-        data=fiche.readlines()
-        for line in data:
-            if line[0]!="#":
-                if line[0:9]=="Tag_query":
-                    _key=line[11:].replace('\n','').replace('"','')
-                elif line[0:5]=="query":
-                    query_tag[_key]=(line[6:].replace('\n','').replace('"',''))            
-    return query_tag
-lecture_query_tage("query_tag.ini")
