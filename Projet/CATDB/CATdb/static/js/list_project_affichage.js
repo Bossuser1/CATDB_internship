@@ -22,10 +22,10 @@ function formatatge(data,key){
 for (var i=0;i<Object.keys(data).length;i++){
 	try{
 		if (i<6){
-	var text1=text1+'<li><div class="aff"><input class="_loop_primary_checkbox" type="checkbox"></input><span class="sidebar-sublist-item">'+data[i]['_value'][key]+'</span><span>('+data[i]['_value']['count']+')</span></div></li>';
+	var text1=text1+'<li><div class="aff"><input class="_loop_primary_checkbox" type="checkbox" value="'+data[i]['_value'][key]+'"><label class="ng-tns-c4-3"><span class="sidebar-sublist-item">'+data[i]['_value'][key]+'</span><span>('+data[i]['_value']['count']+')</span></label></div></li>';
 	
 		} else{
-			var text2=text2+'<li><div class="aff"><input class="_loop_primary_checkbox" type="checkbox"></input><span class="sidebar-sublist-item">'+data[i]['_value'][key]+'</span><span>('+data[i]['_value']['count']+')</span></div></li>';
+			var text2=text2+'<li><div class="aff"><input class="_loop_primary_checkbox" type="checkbox" value="'+data[i]['_value'][key]+'"><label class="ng-tns-c4-3"><span class="sidebar-sublist-item">'+data[i]['_value'][key]+'</span><span>('+data[i]['_value']['count']+')</span></label></div></li>';
 		}
 		if (i==5){var text1=text1+'<li><div class="aff_more" onclick="putmore(\'aff_more\');">See More++</div></li>';}'this'
 		
@@ -35,41 +35,49 @@ for (var i=0;i<Object.keys(data).length;i++){
 return text1+'#'+text2;
 }
 
-function remplissage_project_add(data){
+function remplissage_project_add(data,key){
 		
+		var array=[];		
+		if (key!==''){
+		for (var i=1;i<21;i++){array.push((i+(key-1)*20))}
+		}else{
+		for (var i=1;i<21;i++){array.push((i))}
+		};
+		//console.log(array);
 		
 		try{
-			;
 		//var text="<div class='tablea_prod'>";
-		var text="<table class='table-sort'><thead><tr><th class='table_left'>Project name</th><th class='table_midlle'>Project Title</th><th class='table_left'>Public Date </th></tr></thead><tbody>"
+		var text="<thead><tr><th class='table_left'>Project name</th><th class='table_midlle'>Project Title</th><th class='table_left'>Public Date </th></tr></thead><tbody>"
 				//Object.keys(data).length
-		for (var i=1;i<20;i++){
+		//console.log(array);
+		for (var i=1; i<20;i++){
+			j=array[i-1];
+			//var i=array[j];
+			//console.clear();
 			var key=Object.keys(data[1]._value);
 			//var size='style="width: '+100/(key.length-1)+'%;float: left;"';
 			//var text=text+'<div class="row_table" id="'+key[0]+data[i]._value[key[0]]+'" >'; //style="display: inline-flex;"
 			var text=text+'<tr>'
-			var text=text+'<td class="table_left">'+__get_url({"key":"consult_project","value":data[i]._value['project_id'],"affichage":data[i]._value['project_name']})+'</td>';
-			var text=text+'<td class="table_middle">'+data[i]._value['title']+'</td>';
+			var text=text+'<td class="table_left">'+__get_url({"key":"consult_project","value":data[j]._value['project_id'],"affichage":data[j]._value['project_name']})+'</td>';
+			var text=text+'<td class="table_middle">'+data[j]._value['title']+'</td>';
 			var text=text+'<td class="table_right">'+data[i]._value['public_date']+'</td>';
 			var text=text+'</tr>';
 			//var text=text+'</div>';
 		};
 		
 		//var text=text+'</tbody> <tfoot><tr><th>Lasts Projects Publics</th></tr></tfoot></table>';
-		var text=text+'</table';
+		
 		if (Object.keys(data).length===0){var text="";};
-		$('#contenu_list_project .adapteur .panel_right .contenu_row').append(text);
-		$('#total_prod').text(Object.keys(data).length+' projects matching the search criteria-');
+		$('#contenu_list_project .adapteur .panel_right .contenu_row .table-sort').append(text);
+		$('#total_prod').text(array[0]+' - '+array[19]+' of '+Object.keys(data).length+' projects matching the search criteria-');
 		}catch{};
 	}
 	
 
 
 
-
-
 $('#list_btn').click();
-
+$('#list_btn').click();
 $('#contenu_list_project').append('<div class="adapteur"><div class="panel_left"></div><div class="panel_right"> </div></div>');
 
 
@@ -153,8 +161,9 @@ $('#contenu_list_project .adapteur .panel_left').append(text);
 };
 
 append_filtre_option();
+
 //$('#conteneur').css('background','#ffffff');
-$('#contenu_list_project .adapteur .panel_right').append('<div class="contenu_row"style="padding-left: 3%;"><div id="info_list_project">Showing 1 - 20 of <compt id="total_prod">--<compt> projects matching the search criteria - </div></div>');
+$('#contenu_list_project .adapteur .panel_right').append('<div class="contenu_row"style="padding-left: 3%;"><div id="info_list_project">Showing <compt id="total_prod">--<compt> projects matching the search criteria - </div></div>');
 
 
 //$('#contenu_list_project .adapteur .panel_right .contenu_row').append();
@@ -162,16 +171,18 @@ $('#contenu_list_project .adapteur .panel_right').append('<div class="contenu_ro
 
 
 
+$('#contenu_list_project .adapteur .panel_right .contenu_row').append("<table class='table-sort'></table>");
+
 var Data_list_project=[];
 try{Data_list_project=DG_execQuery('projet_all','','');//get data
 }catch(error){console.log("verifier la requete projetc_add_new requete is false")};
 
-try{remplissage_project_add(Data_list_project);}catch(error){};
+try{remplissage_project_add(Data_list_project,'');}catch(error){};
 
 var element='<li class="ligne_p"><a>1</a></li><li class="ligne_p"><a>2</a></li><li class="ligne_p"><a>3</a></li><li class="ligne_p"><a>4</a></li><li class="ligne_p"><a>5</a></li><li class="ligne_p"><a>6</a></li><li class="ligne_p"><a>7</a></li><li class="ligne_p"><a>8</a></li><li class="ligne_p"><a>9</a></li><li class="ligne_p"><a>10</a></li>'
 
 
-$('#contenu_list_project .adapteur .panel_right .contenu_row').append('<div><ul><li class="ligne_p"><i class="fa fa-angle-left" aria-hidden="true"></i><i class="fa fa-angle-left" aria-hidden="true"></i></li><li class="ligne_p"><i class="fa fa-angle-left" aria-hidden="true"></i></li>'+element+'<li class="ligne_p"><i class="fa fa-angle-right" aria-hidden="true"></i></li><li class="ligne_p"><i class="fa fa-angle-right" aria-hidden="true"></i><i class="fa fa-angle-right" aria-hidden="true"></i></li></ul></div>');
+$('#contenu_list_project .adapteur .panel_right .contenu_row').append('<div class="derouler"><ul><li class="ligne_p"><i class="fa fa-angle-left" aria-hidden="true"></i><i class="fa fa-angle-left" aria-hidden="true"></i></li><li class="ligne_p"><i class="fa fa-angle-left" aria-hidden="true"></i></li>'+element+'<li class="ligne_p"><i class="fa fa-angle-right" aria-hidden="true"></i></li><li class="ligne_p"><i class="fa fa-angle-right" aria-hidden="true"></i><i class="fa fa-angle-right" aria-hidden="true"></i></li></ul></div>');
 
 /* action clik sur boutton*/
 
@@ -198,4 +209,36 @@ $('#collapse_info').append('<div class="modal-content">	<i class="fa fa-window-c
 //<input type="button"
 $('#closecol').on("click",function(){
 	$('#collapse_info').hide();
+});
+
+
+for (var i=0;i<$('.derouler ul li a').length;i++){
+var key=i;
+$('.derouler ul li a:eq('+i+')').on("click",function(){
+	//console.log(i);
+	$('.table-sort').empty();
+	remplissage_project_add(Data_list_project,$(this).html());	
+	//alert("toto");
+});
+
+};
+
+
+$( "input" ).on( "click", function() {
+//var geteu=$( ".sidebar-sublist-item", $( "input:checked" ).parent().children().get(1)).text();
+var geteu=$( "input:checked" ).parent().children().get(1);   
+console.log(geteu);//sidebar-sublist-item//.outerHTML.split('>')[1].split('<')[0]
+  //$( "#log" ).html( $( "input:checked" ).val() + " is checked!" );
+
+console.log($(".panel_left").find("input:checked"));
+});
+
+
+
+$('.table-sort thead th').on("click",function(){
+	var cible=this.outerHTML.split('>')[1].split('<')[0];
+	alert("wait cette commande a été deactiver pour l'instance pour "+ cible);
+	$('.table-sort').empty();	
+	//console.log(Data_list_project);
+	remplissage_project_add(Data_list_project,'');	
 });
