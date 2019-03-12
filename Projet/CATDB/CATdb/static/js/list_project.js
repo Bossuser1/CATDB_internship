@@ -143,7 +143,7 @@ $('#dropdown-tab a:eq(1)').click();
 var Dataload=[];
 
 
-try{Dataload=DG_execQuery('projet_add_new','','');//get data
+try{Dataload=DG_execQuery('projet_add_new','','');//get data 
 }catch(error){console.log("verifier la requete projetc_add_new requete is false")};
 
 try{

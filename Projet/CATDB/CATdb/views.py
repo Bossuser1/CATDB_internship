@@ -86,6 +86,10 @@ def graph(request):
 def technologies(request):
     return render(request,'CATdb/technologies.html',{})
 
+def description(request):
+    return render(request,'CATdb/description.html',{})
+
+
 def redirect_view(request):
     response = redirect('/redirect-success/')
     return response

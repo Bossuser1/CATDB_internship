@@ -1,5 +1,16 @@
 var url_media='http://tools.ips2.u-psud.fr/'
 
+	
+//$('#conteneur').append("<div class='url_search'>.. </div>");
+//$('#conteneur').append("<div class='bar'>.</div>");
+
+
+
+
+
+
+$('#recherche_aera').append('<div class="cont1"><h1 style="margin-left: 50%;">Project</h1></div><div class="cont2"><input type="textarea" id="recher_element" placeholder="Search.."><input type="image" id="image_loop" alt="bl"       src="https://img.icons8.com/metro/26/000000/search.png"></div>');
+	
 
 
 /*################################################*/
@@ -40,7 +51,7 @@ function put_list_down(data_1,titre_1,data_2,titre_2,_name_astride,contenu_commu
 /*################################################*/
 $('#conteneur').append("<div class='url_search'>.. </div>");
 $('#conteneur').append("<div class='bar'>.</div>");
-
+$('#conteneur').append('<div id="recherche_aera"></div>');
 $('#conteneur').append("<section id='list_project_element'> <!--<div class='titre_pro'>Projects:<span>ADT03-02_Leaf_Flower-Bud</span><a class='info-b'></a> </div>--> <div class='contenu_pro'> </div></section>");
 
 //$('#conteneur .contenu_pro').append('<div class="article"> <h2 class="title">Titre</h2></div><div class="article"> Col2</div> <div class="article"> Col3</div>');

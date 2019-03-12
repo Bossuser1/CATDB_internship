@@ -106,7 +106,7 @@ background-size: contain;
 .copyright{
 font-size: 0.875em;
 border-top: 2px solid #eee;
-margin: 4em 9.8em 0;
+margin: 2em 6.8em 0;
 padding: 2em 0;
 color: #8e9ea9;
 word-spacing: 2.5em;
@@ -121,13 +121,14 @@ word-spacing: 2.5em;
     text-decoration: none;
 }
 
-.footer {    display: table;
-    width: 100%;
+.footer {
+    display: table;
+    width: 88.5%;
     padding: 0 6em;
-    min-height: 40px;
-    background: #52a524;
-    position: absolute;
+    height: 80px;
+    background: #3aa411;
 }
+
 .url_search {
  heigth:200%;
 width: 100%;
@@ -875,7 +876,6 @@ padding: 2%;
     font-weight: 600;
     display: inline-block;
     color: #0071BC;
-cursor: pointer;	
 }
 
 
@@ -931,9 +931,11 @@ cursor: pointer;
 }
 
 .table-sort{
-    min-height:900px;
+
     border-spacing: 0;
     border-collapse: collapse;
+    width: 100%;
+    height: 500px;
 
 }
 
@@ -1019,26 +1021,3 @@ button, input, optgroup, select, textarea {
   width: 80%;
 height: 100%;
 }
-
-/*
-.ng-tns-c4-3::before {
-    content: '';
-    margin-right: 8px;
-    display: inline-block;
-    vertical-align: text-top;
-    padding: 4px;
-    width: 20px;
-    height: 20px;
-    background: #FAFDFF;
-    border: 1px solid #D8E7F5;
-    box-shadow: inset 0px 3px 0px 0px #F0F7FE;
-    cursor: pointer;
-    float: left;
-}
-
-.ng-tns-c4-3::before {
-    background: #0071BC;
-    box-shadow: inset 0px 3px 0px 0px #0071BC;
-}
-
-*/
