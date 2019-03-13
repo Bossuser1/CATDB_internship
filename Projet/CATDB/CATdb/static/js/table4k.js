@@ -153,6 +153,7 @@ var text=text+'<div class="project" id="project_id_'+data1[i][key[1]]+'">'+data1
 */
 
 //var text='<table> <tbody><tr><td> AB</td><td>CD</td></tr><tr><td> AB2</td><td>CD2</td></tr> </tbody></table>';
+
 /*
 var text=text+'</tbody></table>';	
 $('#contenu_pro').append(text);
@@ -178,9 +179,103 @@ var text=text+'<tr>'+data1[1][key[2]]+'<td>'+data1[1][key[3]]//+'</td><td>'+''+'
 console.log(text);
 
 */
+var key_2=Object.keys(data1);
+
+//console.log(key_2);
+
+
+
 
 var text="<div>A</div><div>B</div><div>C</div>"
 
-$('#contenu_pro').append('<div id="put_table" style="width: 1280px;height: 1200px;background-color: white;display: -webkit-box;"></div>');
-$('#contenu_pro #put_table').append(text);
+$('#contenu_pro').append('<div id="put_table" style="width: 1280px;height: 1200px;background-color: white;display: inline-table;"></div>');
 
+
+var text_puch="";
+var data=DG_execQuery('select_all_tab','','');
+
+for (var i=1;i<Object.keys(data).length;i++){
+	try{
+		var text_puch=text_puch+'<div id="projetc_'+data[i]['_value']['project_id']+'">'
+		var key_2=Object.keys(data[i]['_value'])
+		for (var j=0;j<Object.keys(data[i]).length;j++){
+			var text_puch=text_puch+data[i]['_value'][key_2[j]]+"</div>";
+		}
+		var text_puch=text_puch+'</div>'
+	}catch{};
+}
+
+console.log(data[1]['_value']['project_id']);
+
+var key_col_opt=['project_name','organism_name','experiment_name','experiment_type','organ','sample_name']
+function affichage_extreme_data(key_col_opt){
+var data=DG_execQuery('select_all_tab','','');
+console.clear();
+var key_main=Object.keys(data)
+var lign=key_main.length;
+var col=key_col_opt.length;
+var grid=''
+for (var i=0;i<=lign;i++){
+	var key_row='row nb'+String(i)
+	var grid=grid+'<div class="'+key_row+'">'
+	for (var j=1;j<=col;j++){
+		var key_id='cell_'+i+'_'+j
+		var key_col='"col nb_c'+j
+		var grid=grid+'<div id='+key_id+' class='+key_col+'" ></div>'
+	}
+	var grid=grid+'</div>'	
+}
+
+$('#contenu_pro #put_table').append(grid);
+
+for (var i=1;i<=col;i++){
+$('#cell_'+0+'_'+i).append(key_col_opt[i-1])
+}
+for (var i=1;i<=col;i++){
+	for (var j=1;j<=lign;j++){
+		$('#cell_'+j+'_'+i).append(data[j]['_value'][key_col_opt[i-1]])
+}
+}
+
+for (var i=1;i<=col;i++){
+	for (var j=1;j<=lign;j++){
+		if($('#cell_'+(j-1)+'_'+i).text()==$('#cell_'+j+'_'+i).text()){
+			$('#cell_'+j+'_'+i).html(".");
+		}
+		/*if($('#cell_'+(j-2)+'_'+i).text()==$('#cell_'+j+'_'+i).text()){
+			$('#cell_'+j+'_'+i).html(".");
+		}*/
+		/*if($('#cell_'+j+'_'+i).text()=$('#cell_'+j+'_'+(i+1)).text()){
+		$('#cell_'+j+'_'+i).html("");
+		}*/
+}
+}
+
+
+}
+
+affichage_extreme_data(key_col_opt);
+/*
+var data1=[{
+    'project_id': ['363','1,1'],
+    'project_name':['AFFY_MED','1,2'],
+    'organism_name':['AFFY_T','1,3'],
+},{
+    'project_id': ['367','2,1'],
+    'project_name':['AFFY_A','2,2'],
+    'organism_name':['AFFY_ZKJSQSQ','2,3','AFFY_ZKJSQSQ','2,3'],
+}]
+
+
+var key_2=Object.keys(data1);
+for (var ele1 in key_2){
+	var key=Object.keys(data1[ele1]);
+	for (var ele in key){
+		var dat=data1[ele1][key[ele]]
+		var cell='cell_'+dat[1].split(',')[1]+'_'+dat[1].split(',')[0]
+		$('#'+cell).append(dat[0]);
+		//console.log(cell);
+	};
+};
+console.log(key_2);
+*/
