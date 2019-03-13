@@ -25,6 +25,8 @@ urlpatterns = [
     url('^listproject.html$',views.list_project),
     url('^graph/treatment_1.html$',views.graph),
     url('^description.html$',views.description),
+    url('^requete.html$',views.requete),
+
         
 ]+static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

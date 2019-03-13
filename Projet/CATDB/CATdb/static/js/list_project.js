@@ -472,3 +472,5 @@ var text=text+'<circle cx="'+(5+100*(j))+'" cy="'+(7*i*2+7)+'" r="5" fill="'+dat
 };
 var text=text+'</svg>';
 $('#legenda_project').append(text);
+
+$('.footer').append('<a href="#" class="logo_inra"></a><a href="#" class="logo_cnrs"></a><a href="#" class="logo_inapg"></a><a href="#" class="logo_evry"></a><img src="{% static "img/logoCnrs3.gif" %}" /><img src="{% static "img/logoInapg3.gif" %}" /><img src="{% static "img/logoEvry3.gif" %}"/>');

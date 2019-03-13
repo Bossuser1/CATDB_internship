@@ -90,6 +90,10 @@ def description(request):
     return render(request,'CATdb/description.html',{})
 
 
+def requete(request):
+    return render(request,'CATdb/requete.html',{})
+
+
 def redirect_view(request):
     response = redirect('/redirect-success/')
     return response
