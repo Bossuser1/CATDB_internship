@@ -14,6 +14,7 @@ from django.conf.urls import handler404, handler500
 urlpatterns = [
     path('', views.index,name='index'),
     url('^ajax/chekEmail$',views.ajax_check_email_fields),
+    url('^ajax/reconnaissance_project$',views.reconnaissance_project),
     url('^index$',views.view_data),
     
     url('^index$',views.view_data),

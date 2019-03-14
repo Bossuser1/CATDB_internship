@@ -133,4 +133,24 @@ function LoadGridevent(id_div,zone){
 });
 };
 
-
+function DG_execQuery_regroupe($Tablename,$QueryType,$ListDataCond){
+	console.log($Tablename+'----------'+$QueryType+'-'+$ListDataCond.length);
+	var Data=[];
+	if ($ListDataCond!=''){var instruction={'data_requete_element':$Tablename,'value_search':$ListDataCond}}
+	else{var instruction={'data_requete_element':$Tablename}};
+	
+	$.ajax({
+	    type:"GET",
+	    data:instruction,
+	    dataType: "json",
+	    async: false,
+	    url:"/CATdb/ajax/reconnaissance_project",
+	    success: function(data) {
+		Data=data;
+				
+	    },
+	error:function(err) { console.clear();console.log('error'+$Tablename);}
+	    
+	});
+	return Data;
+};

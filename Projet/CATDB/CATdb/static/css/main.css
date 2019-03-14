@@ -632,7 +632,7 @@ h1 {
   text-align: center;
 position: relative;
 border-bottom: 0px solid #80b827
-background-color: #80b827
+background-color: #80b827;
 color: #fff;
 }
 
@@ -1070,4 +1070,15 @@ background-size: contain;
 .col{
 float:left;
 width:15%;	
+}
+
+
+.nb0{
+background-color: #80b827;
+width: 100%;
+float: left;
+font-family: "Open Sans", sans-serif;
+font-size: 10px;
+line-height: 22px;
+text-transform: uppercase;
 }

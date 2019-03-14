@@ -41,6 +41,31 @@ def ajax_check_email_fields(request):
     return HttpResponse(json.dumps(memory), content_type="application/json") 
 
 
+def reconnaissance_project(request):
+    """
+    reconnait les filtres
+    """
+    answer_send=request.GET.get('data_requete_element', None)
+    value_send=request.GET.get('value_search',None)
+    colname_send=request.GET.get('colname_search',None)
+    memory=execution_requete(answer_send,value_send,colname_send)
+    out_dat=dict()
+    out_main_data=dict()
+    for elm in memory.keys():
+        key_current=memory[elm]['_value']['organ']
+        if key_current not in out_dat.keys():
+            out_dat[key_current]=[memory[elm]['_value']['project_id']]
+        else:
+            current_data=out_dat[key_current]
+            current_data.append(memory[elm]['_value']['project_id'])
+            out_dat[key_current]=list(set(current_data))
+    for element in range(len(out_dat.keys())):
+        out_main_data[element]={'_key':element,'_value':{'organ':list(out_dat.keys())[element],'project_id':out_dat[list(out_dat.keys())[element]]}}
+
+    return HttpResponse(json.dumps(out_main_data), content_type="application/json") 
+
+
+
 
 
 def view_data(request):

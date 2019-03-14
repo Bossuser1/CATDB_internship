@@ -1,6 +1,9 @@
 
 /*   */
 
+var List_Main_project=[];
+
+/*  */
 window.FontAwesomeConfig = {
       searchPseudoElements: true
    }
@@ -13,6 +16,15 @@ function putmore(element){
 	$('#collapse_info').show();
 	
 };
+
+function select_data(data,array){
+ var data_selec=[];
+ for (var i=1;i<Object.keys(data).length;i++){
+	if( data[i]['_value']['project_id'] in array){data_selec.push(i);}
+ }
+ List_Main_project=data_selec	
+}
+
 
 
 function formatatge(data,key){
@@ -36,7 +48,7 @@ return text1+'#'+text2;
 }
 
 function remplissage_project_add(data,key){
-		
+		if (List_Main_project.length===0){
 		var array=[];		
 		if (key!==''){
 		for (var i=1;i<21;i++){array.push((i+(key-1)*20))}
@@ -44,13 +56,17 @@ function remplissage_project_add(data,key){
 		for (var i=1;i<21;i++){array.push((i))}
 		};
 		//console.log(array);
-		
+		}else{
+		 var array=List_Main_project;
+		}
+		console.log(List_Main_project);
 		try{
 		//var text="<div class='tablea_prod'>";
 		var text="<thead><tr><th class='table_left'>Project name</th><th class='table_midlle'>Project Title</th><th class='table_left'>Public Date </th></tr></thead><tbody>"
-				//Object.keys(data).length
+		//Object.keys(data).length
 		//console.log(array);
-		for (var i=1; i<20;i++){
+		if (array.length>20){var tampon=20}else{var tampon=array.length}		
+		for (var i=1; i<tampon;i++){
 			j=array[i-1];
 			//var i=array[j];
 			//console.clear();
@@ -68,6 +84,7 @@ function remplissage_project_add(data,key){
 		//var text=text+'</tbody> <tfoot><tr><th>Lasts Projects Publics</th></tr></tfoot></table>';
 		
 		if (Object.keys(data).length===0){var text="";};
+		$('#contenu_list_project .adapteur .panel_right .contenu_row .table-sort').empty();
 		$('#contenu_list_project .adapteur .panel_right .contenu_row .table-sort').append(text);
 		$('#total_prod').text(array[0]+' - '+array[19]+' of '+Object.keys(data).length+' projects matching the search criteria-');
 		}catch{};
@@ -120,14 +137,14 @@ function append_filtre_option(){
 		}catch{};
 	};
 	*/
-	var organ=DG_execQuery('Tag2','','');
+	var organ=DG_execQuery_regroupe('get_organ','','');//DG_execQuery('Tag2','','');
 	var organ_text="";
 	
 	
 	
 	for (var i=0;i<Object.keys(organ).length;i++){
 		try{
-		var organ_text=organ_text+'<li><div class="aff"><input class="_loop_primary_checkbox" type="checkbox"></input><span class="sidebar-sublist-item">'+organ[i]['_value']['organism_name']+'</span><span>('+organ[i]['_value']['count']+')</span></div></li>';
+		var organ_text=organ_text+'<li><div class="aff"><input class="_loop_primary_checkbox" type="checkbox" value="'+organ[i]['_value']['project_id']+' "></input><span class="sidebar-sublist-item" >'+organ[i]['_value']['organ']+'</span><span>('+organ[i]['_value']['project_id'].length+')</span></div></li>';
 		}catch{};
 	};
 	
@@ -224,13 +241,30 @@ $('.derouler ul li a:eq('+i+')').on("click",function(){
 };
 
 
-$( "input" ).on( "click", function() {
-//var geteu=$( ".sidebar-sublist-item", $( "input:checked" ).parent().children().get(1)).text();
-var geteu=$( "input:checked" ).parent().children().get(1);   
-console.log(geteu);//sidebar-sublist-item//.outerHTML.split('>')[1].split('<')[0]
-  //$( "#log" ).html( $( "input:checked" ).val() + " is checked!" );
+$(".panel_left input" ).on( "click", function() {
+var key_project=[];
+var proj=$( "input:checked" )
+for (var j=0;j<proj.length;j++){
+var current=$("input:checked:eq("+j+")").val().split(',');
+for (var key in current){
+ if (current[key] in key_project){}else{key_project.push(current[key])} 
+}
+};
 
-console.log($(".panel_left").find("input:checked"));
+//console.log(key_project);
+$('.table-sort').empty();
+
+select_data(Data_list_project,current);
+
+remplissage_project_add(Data_list_project,'')
+//console.log(remplissage_project_add(Data_list_project,''))
+//var Data_list_project=[];
+
+//try{Data_list_project=DG_execQuery('projet_all','','');//get data
+//}catch(error){console.log("verifier la requete projetc_add_new requete is false")};
+
+//remplissage_project_add(Data_list_project,'')
+//try{remplissage_project_add(Data_list_project,'');}catch(error){};
 });
 
 
@@ -242,3 +276,5 @@ $('.table-sort thead th').on("click",function(){
 	//console.log(Data_list_project);
 	remplissage_project_add(Data_list_project,'');	
 });
+
+	

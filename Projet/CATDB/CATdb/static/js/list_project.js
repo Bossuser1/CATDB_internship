@@ -75,7 +75,7 @@ $('#conteneur').append('<div id="recherche_aera"></div>');
 
 
 
-$('#recherche_aera').append('<div class="cont1"><h1 style="margin-left: 50%;">Project</h1></div><div class="cont2"><input type="textarea" id="recher_element" placeholder="Search.."><input type="image" id="image_loop" alt="bl"       src="https://img.icons8.com/metro/26/000000/search.png"></div>');
+$('#recherche_aera').append('<div class="cont1"><h1 style="margin-left: 50%;">Project</h1></div><div class="cont2"><a class="namespace-select" id="select-namespace" onclick="return false;" href=""><span class="caret_white" id="selected-namespace">Help</span></a><input type="textarea" id="recher_element" placeholder="Search.."><input type="image" id="image_loop" alt="bl"       src="https://img.icons8.com/metro/26/000000/search.png"></div>');
 
 $('#conteneur').append('<nav class="_loop_page_nav" id="wrap"><ul class="tab_prim" id="dropdown-tab"><li class="_loop_nav_list_item"><a class="active disabled">summary</a></li><li class="_loop_nav_list_item"><a class="disabled">project list</a></li></ul></nav>');
 
