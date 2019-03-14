@@ -69,15 +69,17 @@ function put_list_down(data_1,titre_1,data_2,titre_2,_name_astride,contenu_commu
 
 $('#conteneur').append("<div class='url_search'>.. </div>");
 $('#conteneur').append("<div class='bar'>.</div>");
+
 $('#conteneur').append('<div id="recherche_aera"></div>');
 
 
 
 
 
-$('#recherche_aera').append('<div class="cont1"><h1 style="margin-left: 50%;">Project</h1></div><div class="cont2"><a class="namespace-select" id="select-namespace" onclick="return false;" href=""><span class="caret_white" id="selected-namespace">Help</span></a><input type="textarea" id="recher_element" placeholder="Search.."><input type="image" id="image_loop" alt="bl"       src="https://img.icons8.com/metro/26/000000/search.png"></div>');
 
-$('#conteneur').append('<nav class="_loop_page_nav" id="wrap"><ul class="tab_prim" id="dropdown-tab"><li class="_loop_nav_list_item"><a class="active disabled">summary</a></li><li class="_loop_nav_list_item"><a class="disabled">project list</a></li></ul></nav>');
+$('#recherche_aera').append('<div class="cont1"><h1 style="margin-left: 50%;">Project</h1></div><div class="cont2"><a class="namespace-select" id="select-namespace" onclick="return false;" href="" style="/*! display: table-cell; */white-space: nowrap;/*! color: #fff; */font-weight: 700;padding: 0 .5em;text-decoration: none;border: 2px solid #fff;"><span class="caret_white" id="selected-namespace" >All DataBase<i class="fas fa-chevron-down"></i></span></a><input type="textarea" id="recher_element" placeholder="Search.."><input type="image" id="image_loop" alt="bl"       src="https://img.icons8.com/metro/26/000000/search.png"></div>');
+
+$('#conteneur').append('<nav class="_loop_page_nav" id="wrap"><ul class="tab_prim" id="dropdown-tab"><li class="_loop_nav_list_item"><a class="active disabled">summary</a></li><li class="_loop_nav_list_item"><a class="disabled">project list</a></li><li class="_loop_nav_list_item"><a class="disabled" href="/CATdb/requete.html">lists Experiments</a></li></ul></nav>');
 
 
 
@@ -447,7 +449,7 @@ function donutChart() {
             .datum(data) // bind data to the div
             .call(donut); // draw chart in div
 
-
+    /*    
     var donut = donutChart()
         .width(360)
         .height(300)
@@ -460,7 +462,7 @@ function donutChart() {
         d3.select('#info_project')
             .datum(data) // bind data to the div
             .call(donut); // draw chart in div
-
+	*/
 
 var text='<svg width="100%" height="100%">';
 for (var j=0 ;j<4;j++){
@@ -474,3 +476,4 @@ var text=text+'</svg>';
 $('#legenda_project').append(text);
 
 $('.footer').append('<a href="#" class="logo_inra"></a><a href="#" class="logo_cnrs"></a><a href="#" class="logo_inapg"></a><a href="#" class="logo_evry"></a><img src="{% static "img/logoCnrs3.gif" %}" /><img src="{% static "img/logoInapg3.gif" %}" /><img src="{% static "img/logoEvry3.gif" %}"/>');
+

@@ -48,11 +48,12 @@ def reconnaissance_project(request):
     answer_send=request.GET.get('data_requete_element', None)
     value_send=request.GET.get('value_search',None)
     colname_send=request.GET.get('colname_search',None)
-    memory=execution_requete(answer_send,value_send,colname_send)
+    memory=execution_requete(answer_send,None,colname_send)
     out_dat=dict()
     out_main_data=dict()
+    value_send
     for elm in memory.keys():
-        key_current=memory[elm]['_value']['organ']
+        key_current=memory[elm]['_value'][value_send]
         if key_current not in out_dat.keys():
             out_dat[key_current]=[memory[elm]['_value']['project_id']]
         else:
@@ -60,7 +61,7 @@ def reconnaissance_project(request):
             current_data.append(memory[elm]['_value']['project_id'])
             out_dat[key_current]=list(set(current_data))
     for element in range(len(out_dat.keys())):
-        out_main_data[element]={'_key':element,'_value':{'organ':list(out_dat.keys())[element],'project_id':out_dat[list(out_dat.keys())[element]]}}
+        out_main_data[element]={'_key':element,'_value':{value_send:list(out_dat.keys())[element],'project_id':out_dat[list(out_dat.keys())[element]],'count':len(out_dat[list(out_dat.keys())[element]])}}
 
     return HttpResponse(json.dumps(out_main_data), content_type="application/json") 
 

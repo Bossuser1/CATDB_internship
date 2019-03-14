@@ -13,16 +13,20 @@ function putmore(element){
 	
 	//var a=this.className;
 	console.log(element);
-	$('#collapse_info').show();
+	//$('#collapse_info').show();
 	
 };
 
 function select_data(data,array){
  var data_selec=[];
- for (var i=1;i<Object.keys(data).length;i++){
-	if( data[i]['_value']['project_id'] in array){data_selec.push(i);}
- }
- List_Main_project=data_selec	
+ for (var i=0;i<Object.keys(data).length;i++){
+	 if( data[Object.keys(data)[i]]['_value']['project_id'] in array){
+		 data_selec.push(i)
+		}
+	 
+	}
+ 
+ List_Main_project=data_selec;	
 }
 
 
@@ -34,10 +38,10 @@ function formatatge(data,key){
 for (var i=0;i<Object.keys(data).length;i++){
 	try{
 		if (i<6){
-	var text1=text1+'<li><div class="aff"><input class="_loop_primary_checkbox" type="checkbox" value="'+data[i]['_value'][key]+'"><label class="ng-tns-c4-3"><span class="sidebar-sublist-item">'+data[i]['_value'][key]+'</span><span>('+data[i]['_value']['count']+')</span></label></div></li>';
+	var text1=text1+'<li><div class="aff"><input class="_loop_primary_checkbox" type="checkbox" value="'+data[i]['_value'][key[0]]+'"><label class="ng-tns-c4-3"><span class="sidebar-sublist-item">'+data[i]['_value'][key[1]]+'</span><span>('+data[i]['_value'][key[2]]+')</span></label></div></li>';
 	
 		} else{
-			var text2=text2+'<li><div class="aff"><input class="_loop_primary_checkbox" type="checkbox" value="'+data[i]['_value'][key]+'"><label class="ng-tns-c4-3"><span class="sidebar-sublist-item">'+data[i]['_value'][key]+'</span><span>('+data[i]['_value']['count']+')</span></label></div></li>';
+			//var text2=text2+'<li><div class="aff"><input class="_loop_primary_checkbox" type="checkbox" value="'+data[i]['_value'][key]+'"><label class="ng-tns-c4-3"><span class="sidebar-sublist-item">'+data[i]['_value'][key]+'</span><span>('+data[i]['_value']['count']+')</span></label></div></li>';
 		}
 		if (i==5){var text1=text1+'<li><div class="aff_more" onclick="putmore(\'aff_more\');">See More++</div></li>';}'this'
 		
@@ -66,7 +70,7 @@ function remplissage_project_add(data,key){
 		//Object.keys(data).length
 		//console.log(array);
 		if (array.length>20){var tampon=20}else{var tampon=array.length}		
-		for (var i=1; i<tampon;i++){
+		for (var i=1; i<tampon+1;i++){
 			j=array[i-1];
 			//var i=array[j];
 			//console.clear();
@@ -127,8 +131,8 @@ $('#contenu_list_project .adapteur .panel_left').show( "slow" );
 
 function append_filtre_option(){
 	
-	var organism_list=DG_execQuery('Tag2','','');
-	var organism_text=formatatge(organism_list,"organism_name");
+	var organism_list=DG_execQuery_regroupe('get_organism','','organism_name')//DG_execQuery('Tag2','','');
+	var organism_text=formatatge(organism_list,['project_id',"organism_name",'count']);
 	
 	/*
 	for (var i=0;i<Object.keys(organism_list).length;i++){
@@ -137,20 +141,23 @@ function append_filtre_option(){
 		}catch{};
 	};
 	*/
-	var organ=DG_execQuery_regroupe('get_organ','','');//DG_execQuery('Tag2','','');
-	var organ_text="";
+	var organ=DG_execQuery_regroupe('get_organ','','organ');//DG_execQuery('Tag2','','');
+	console.log(organ);
+	var organ_text=formatatge(organ,['project_id','organ','count']);;
 	
 	
-	
+	/*
 	for (var i=0;i<Object.keys(organ).length;i++){
 		try{
 		var organ_text=organ_text+'<li><div class="aff"><input class="_loop_primary_checkbox" type="checkbox" value="'+organ[i]['_value']['project_id']+' "></input><span class="sidebar-sublist-item" >'+organ[i]['_value']['organ']+'</span><span>('+organ[i]['_value']['project_id'].length+')</span></div></li>';
 		}catch{};
 	};
-	
+	*/
 
-	var analysis_type=DG_execQuery('TagRNas_vs_analys','','');
+	var analysis_type=DG_execQuery_regroupe('get_analysis_type_name','','analysis_type');
 	
+	var analysis_type_text=formatatge(analysis_type,['project_id',"analysis_type",'count']);
+	/*
 	var analysis_type_text="";
 	var analysis_type_text1=""
 	for (var i=0;i<Object.keys(analysis_type).length;i++){
@@ -167,6 +174,7 @@ function append_filtre_option(){
 			}catch{};
 		
 	};
+	*/
 	//console.log(analysis_type);
 	
 var text='<div class="sidebar-list"><li class="sidebar-list-item"><a class="sidebar-link" aria-expanded="true" onclick="close_file(\'.sidebar-link:eq(0)\');">Analysis Type</a> </li><ul class="sidebar-sublist">'+analysis_type_text+'</ul></div>';	
@@ -246,15 +254,15 @@ var key_project=[];
 var proj=$( "input:checked" )
 for (var j=0;j<proj.length;j++){
 var current=$("input:checked:eq("+j+")").val().split(',');
-for (var key in current){
- if (current[key] in key_project){}else{key_project.push(current[key])} 
-}
+try{
+for (var key in current){if (current[key] in key_project){}else{key_project.push(current[key])}}
+}catch{}
 };
 
-//console.log(key_project);
-$('.table-sort').empty();
 
-select_data(Data_list_project,current);
+$('.table-sort').empty();
+select_data(Data_list_project,key_project);
+console.log("selection "+List_Main_project);
 
 remplissage_project_add(Data_list_project,'')
 //console.log(remplissage_project_add(Data_list_project,''))
@@ -277,4 +285,16 @@ $('.table-sort thead th').on("click",function(){
 	remplissage_project_add(Data_list_project,'');	
 });
 
-	
+$('#selected-namespace').on	("click",function(){
+	console.log($("#recherchoption").css)
+	var Xla=$('#selected-namespace').position();
+	$("#recherchoption").css({position:"absolute", top:Xla.top, left: Xla.left});
+	$("#recherchoption").attr("style","background:white;text-align:left;position: absolute; top: "+(Xla.top+20)+"px; left: "+Xla.left+"px;");
+	//alert("position");
+
+});
+
+$('body').append('<div id="recherchoption"><ul><li>Blue cheese</li><li>Feta</li></ul></div>');
+
+
+
