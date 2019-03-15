@@ -1202,5 +1202,11 @@ text-transform: uppercase;
     margin-left: 4px;
     float: right;
 }
+
+#table table thead tr {
+ font-weight: bold;
+}
 	
+#table table tbody {
+ border-collapse: collapse;
 }

@@ -27,7 +27,7 @@ urlpatterns = [
     url('^graph/treatment_1.html$',views.graph),
     url('^description.html$',views.description),
     url('^requete.html$',views.requete),
-
+    url('^rnaseq.html$',views.rnaseq),
         
 ]+static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

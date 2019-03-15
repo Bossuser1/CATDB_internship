@@ -118,6 +118,8 @@ def description(request):
 
 def requete(request):
     return render(request,'CATdb/requete.html',{})
+def rnaseq(request):
+    return render(request,'CATdb/rnaseq.html',{})
 
 
 def redirect_view(request):
