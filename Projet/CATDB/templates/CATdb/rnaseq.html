@@ -10,10 +10,202 @@
 </head>
 <body>
 
-<div>
-{% for v in data %}
- {{v}}	
-{% endfor %}
+<style>
+
+.my-custom-scrollbar {
+  /*position: relative;*/
+  height: 200px;
+  width: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+.table-wrapper-scroll-y {
+  display: block;
+}
+
+
+.table-fixed{
+  width: 100%;
+  background-color: #f3f3f3;
+  tbody{
+    height:200px;
+    overflow-y:auto;
+    width: 100%;
+    }
+  thead,tbody,tr,td,th{
+    display:block;
+  }
+  tbody{
+    td{
+      float:left;
+    }
+  }
+  thead {
+    tr{
+      th{
+        float:left;
+       background-color: #f39c12;
+       border-color:#e67e22;
+      }
+    }
+  }
+}
+
+table{
+font-size:calc(56.8%);
+}
+
+table thead{
+display: list-item;width: 100%;
+}
+
+table tbody{
+max-height: 250px;overflow-y: scroll;display: list-item;/*! width: 100%; *//*! float: right; */"
+}
+
+
+.col1{
+width: 89px !important;
+}
+
+
+.col2{
+width: 150px !important;
+}
+
+
+.col3{
+width: 100px !important;
+}
+
+
+.col4{
+width: 50px !important;
+}
+
+.col5,.col7,.col9,.col10{
+width: 50px !important;
+}
+
+.col6,.col8{
+width: 100px !important;
+}
+
+</style>
+
+<div class="container-fluid">
+
+<div id="header" class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar">
+
+<div class="entete1" style="display: flex;flex-flow: inherit;width: 100%;justify-content: space-between;"><div class="logo"><a href="http://tools.ips2.u-psud.fr/"><img src="/logos/logo-ips2-trans.png" alt="IPS2" height="75" border="0"></a></div> <div class="titre"><a href="/cgi-bin/projects/CATdb/catdb_index.pl"><img src="/projects/transcriptome/CATdb_style/catdb_logo.png" alt="CATdb" border="0"></a> <br> 
+ <font size="4"><b style="Color:#336699"><i>~ Search &amp; Consult Arabidopsis Projects~</i></b></font></div> <div class="insert"><table><tbody><tr><td><a href="/cgi-bin/projects/CATdb/catdb_projects_OtherSpecies.pl">see projects on Other Species <br> <img title="Affymetrix projects at IPS2" src="/projects/transcriptome/CATdb_style/affy_mini.png" height="30" border="0"></a></td></tr></tbody></table></div></div>
+
+
 </div>
+
+    <div class="row flex-xl-nowrap">
+
+        <div class="col-12 col-md-3 col-xl-2 bd-sidebar">
+
+        </div>
+        
+        <div class="content">
+
+            <div class="row">
+            <div class="d-flex col">
+                    <div class="flex-fill w-100 card">
+                        <div class="card-header"><span class="float-right badge badge-primary">Information</span>
+                            <h5 class="mb-0 card-title">Descriptif project</h5></div>
+                        <div class="card-body">
+                            <div class="chart chart-lg">
+                                <div class="chartjs-size-monitor">
+                                    <div class="chartjs-size-monitor-expand">
+                                        <div class=""></div>
+                                    </div>
+                                    <div class="chartjs-size-monitor-shrink">
+                                        <div class=""></div>
+                                    </div>
+                                </div>
+                                <canvas height="350" width="840" style="display: block; width: 840px; height: 350px;" class="chartjs-render-monitor"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+
+				
+            </div>
+            </div>
+            <div class="row">
+                <div id="tableau" class="col">
+                    
+                </div>
+
+            </div>
+
+            <div class="row">
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+
+$.ajax({
+	    type:"GET",
+	    dataType: "text",
+	    async: false,
+	    url:"/CATdb/data/tableau",
+	    success: function(data) {
+		//console.log(data);
+		$('#tableau').empty()
+		$('#tableau').append('<div class="panel panel-default flex-col">'+data+'</div>');		
+		$('#tableau div').append('<div class="hc-plot-handle" style="/*! padding: 12%; *//*! background: black; */position: absolute;bottom: 0;width: '+$('#tableau table').width()+'px;height: 10px;background-color: #dedede;cursor: row-resize;padding: 1px 0;border-top: 1px solid #ededed;-moz-transition: background-color 0.1s;-webkit-transition: background-color 0.1s;transition: background-color 0.1s;"><span></span><span></span><span></span></div>');
+	    
+		var y1=0;
+		var y2=0;
+		$('.hc-plot-handle').mousedown(function (e) { //Default mouse Position 
+		    var y1=e.pageY;
+			return y1;
+		});
+		$('.hc-plot-handle').mouseup(function (e) { //Default mouse Position 
+		    var y2=e.pageY;
+		    return y2;
+		});
+		$('.hc-plot-handle').click(function(){
+			alert(y2-y1);	
+		})
+		
+		corrected_wid(10);
+		corrected_wid(10);
+		
+	    },
+	error:function(err) { console.clear();}
+	    
+	});
+	
+
+function corrected_wid(nb){
+	
+	for (var i=1;i<nb;i++){
+		var xhead=$('th.th-sm.col'+i+':eq(1)').width();
+		var xbody=$('#tableau table tbody tr td.col'+i+':eq(1)').width();
+		/*if(xhead<xbody){
+			$('#tableau table tbody tr td.col'+i+':eq(1)').css('width',(xhead+2));
+			console.log("==up ===");
+		}else{
+			$('th.th-sm.col'+i+':eq(1)').css('width',(xbody+2));
+			console.log("==down ===");
+		};*/
+		//console.log($('#tableau table tbody tr td.col'+i+':eq(1)').width());
+	
+	}
+}
+
+
+</script>
 </body>
 </html>

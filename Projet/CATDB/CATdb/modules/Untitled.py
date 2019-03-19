@@ -14,14 +14,14 @@ import json
 from bs4 import BeautifulSoup
 sys.path.insert(0, "../")
 
-schema="public" #chips
+schema='chips'#"public" #
 
 link_experiment="http://urgv.evry.inra.fr/cgi-bin/projects/CATdb/consult_expce.pl?experiment_id="
 from configparser import ConfigParser
 
 def config(section='postgresql'):
     #os.getcwd()
-    direction='/home/traore/Bureau/Dossier_Stage/CATDB_internship/Projet/CATDB/CATdb/'#'/export/home/gnet/btraore/WWW_DEV/cgi-bin/projects/CATDB/CATdb'
+    direction='/export/home/gnet/btraore/WWW_DEV/cgi-bin/projects/CATDB/CATdb'#'/home/traore/Bureau/Dossier_Stage/CATDB_internship/Projet/CATDB/CATdb/'#'/export/home/gnet/btraore/WWW_DEV/cgi-bin/projects/CATDB/CATdb'
     if os.getcwd()[0:12]!="/home/traore":
     	filename=direction+'/database.ini'
     else:
@@ -228,14 +228,14 @@ class data_table:
         
     def get_project_id_free(self):
         self.list=[]
-        requete="select experiment.experiment_id, experiment.project_id from "+schema+".project,"+schema+".experiment  where project.project_id=experiment.project_id and is_public='yes';"
+        requete="select experiment.experiment_id, experiment.project_id from "+schema+".project,"+schema+".experiment  where project.project_id=experiment.project_id ;" #and is_public='yes'
         data=read_data_sql(requete)
         for el in range(1,len(data)+1):
             self.list.append(data[el]['_value']['experiment_id'])
         return self.list
     def get_unit_experminent(self):
         #print(self.list[self.i])
-        direction='/home/traore/Bureau/Dossier_Stage/CATDB_internship/Projet/CATDB/CATdb/'#'/export/home/gnet/btraore/WWW_DEV/cgi-bin/projects/CATDB/CATdb'
+        direction='/export/home/gnet/btraore/WWW_DEV/cgi-bin/projects/CATDB/CATdb'#'/home/traore/Bureau/Dossier_Stage/CATDB_internship/Projet/CATDB/CATdb/'#'/export/home/gnet/btraore/WWW_DEV/cgi-bin/projects/CATDB/CATdb'
         with open(direction+'/modules/data/test.json') as json_file:  
             for elemnt in json_file.readlines():
                 try:
@@ -248,8 +248,8 @@ class data_table:
     def get_all_table(self):
         for self.i in range(1,len(self.list)):
             #print(self.list[self.i])
-            #dat=project_rna_seq_info(self.list[self.i])
-            dat=self.get_unit_experminent()
+            dat=project_rna_seq_info(self.list[self.i])
+            #dat=self.get_unit_experminent()
             if (len(dat))>1:
                 self.data.append(dat)
             #self.data.append(self.get_unit_experminent())
@@ -259,8 +259,9 @@ class data_table:
         self.data=sorted(self.data, key=operator.itemgetter(col))
         return self.data
     def get_specifique_data(self):
-        colspecifique=['experiment_id','title','analysis_type','project_name','experiment_type','experiment_name','echantillon_nb','replicats']
+        colspecifique=['experiment_id','title','organism_name','organ','analysis_type','project_name','experiment_type','experiment_name','echantillon_nb','replicats']
         selection=[]
+        
         for k in self.data:
             sel={}
             for el in k.keys():
@@ -268,13 +269,24 @@ class data_table:
                     sel[el]=k[el]
             selection.append(sel)
         
-        html="<table>"
+        html="<table class='table table-bordered table-striped mb-0' cellspacing='0'width='100%'>" #table-bordered table-striped mb-0
+        head_table="<thead><tr><th class='th-sm col0'><input type='checkbox' id='all_call'></th>"
+        for k in range(len(colspecifique)):
+            head_table=head_table+'<th class="th-sm col'+str(k+1)+'">'+str(colspecifique[k])+'</th>'
+        html=html+head_table+"</tr></thead><tbody>"
         for k in range(len(selection)):
-            text=""
+            text="<td class='col0'><input type='checkbox' id='select_row"+str(k)+"'></td>"
+            cpt=0
             for el in colspecifique:
-                text=text+"<td >"+selection[k][el]+"</td>"
+                cpt=cpt+1
+                try:
+                    ans=selection[k][el]
+                except:
+                    ans=''
+                    pass
+                text=text+"<td class='col"+str(cpt)+"'>"+str(ans)+"</td>"
             html=html+"<tr>"+text+"</tr>"
-        html=html+"</table>"
+        html=html+"</tbody></table>"
         return selection,html
     
     
