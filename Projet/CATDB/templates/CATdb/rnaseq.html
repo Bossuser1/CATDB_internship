@@ -5,21 +5,15 @@
 <head>
   <meta charset="UTF-8">
   <title>Fiche Description </title>
-  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.2/css/all.min.css'>
-   <link rel="stylesheet" type="text/css" href="{% static "css/main.css" %}">
-   <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-  <!--<script src="{% static "js/jquery.min.js" %}"/></script>-->
-  <script src="{% static "js/url_get.js" %}"/></script>	
-<script src="https://d3js.org/d3.v4.min.js"></script>  
+  <link rel='stylesheet' href="{% static "bibliotheque/bootstrap/css/bootstrap.min.css" %}">
+   <script src="{% static "bibliotheque/jquery-3.3.1.min.js" %}"/></script>
 </head>
 <body>
 
-
-
+<div>
+{% for v in data %}
+ {{v}}	
+{% endfor %}
+</div>
 </body>
-
-<script src="{% static "js/initial.js" %}"/></script>
-<script src="{% static "js/dg.js" %}"></script>
-<script src="{% static "js/rnadat.js" %}"/></script>
-
 </html>

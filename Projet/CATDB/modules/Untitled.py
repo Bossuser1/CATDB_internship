@@ -231,14 +231,10 @@ def project_rna_seq_info(experiment_id):
 experiment_id=591
 project_rna_seq_info(experiment_id)#['echantillon_nb']
 
+import json
 
-# In[ ]:
-
-
-
-
-
-# In[ ]:
+with open('data.txt') as json_file:  
+    data = json.load(json_file)
 
 
 

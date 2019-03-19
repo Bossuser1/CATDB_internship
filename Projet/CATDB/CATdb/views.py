@@ -5,14 +5,16 @@ from decimal import Decimal
 from django.shortcuts import render
 import decimal
 # Create your views here.
+import sys
 from django.shortcuts import redirect
 from django.http import Http404
 from django.http import HttpResponse
 from django.template.context_processors import request
 import json
+#from CATdb.connection import *
 from CATdb.connection import *
-
-
+sys.path.insert(0, "/modules/")
+from CATdb.modules.Untitled import data_table
 
 def index(request):
 
@@ -119,7 +121,11 @@ def description(request):
 def requete(request):
     return render(request,'CATdb/requete.html',{})
 def rnaseq(request):
-    return render(request,'CATdb/rnaseq.html',{})
+    data={}
+    data['a']="AD"
+    data['b']="AD"
+    	
+    return render(request,'CATdb/rnaseq.html',{'data': data})
 
 
 def redirect_view(request):
@@ -141,3 +147,15 @@ def error_500(request):
         data = {}
         return render(request,'CATdb/main.html', data)  
 
+###########################################################
+        
+def get_tableau(request):
+    sort_col=request.GET.get('sorted_col_specifique', None)
+    tableau=data_table('pass')
+    tableau.get_project_id_free()
+    tableau.get_all_table()
+    if sort_col!=None:
+        tableau.sorted_data(sort_col)
+    av,html=tableau.get_specifique_data()
+    
+    return HttpResponse(html, content_type="application/json")     
