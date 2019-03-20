@@ -14,14 +14,14 @@ import json
 from bs4 import BeautifulSoup
 sys.path.insert(0, "../")
 
-schema="public" #'chips'#
+schema='chips'#"public"
 
 link_experiment="http://urgv.evry.inra.fr/cgi-bin/projects/CATdb/consult_expce.pl?experiment_id="
 from configparser import ConfigParser
 
 def config(section='postgresql'):
     #os.getcwd()
-    direction='/home/traore/Bureau/Dossier_Stage/CATDB_internship/Projet/CATDB/CATdb/'#'/export/home/gnet/btraore/WWW_DEV/cgi-bin/projects/CATDB/CATdb''/export/home/gnet/btraore/WWW_DEV/cgi-bin/projects/CATDB/CATdb'
+    direction='/export/home/gnet/btraore/WWW_DEV/cgi-bin/projects/CATDB/CATdb'#'/export/home/gnet/btraore/WWW_DEV/cgi-bin/projects/CATDB/CATdb'
     if os.getcwd()[0:12]!="/home/traore":
     	filename=direction+'/database.ini'
     else:
@@ -114,8 +114,10 @@ def project_rna_seq_info(experiment_id):
     try:
         requete="select * from "+schema+".experiment,"+schema+".project where project.project_id=experiment.project_id and experiment.experiment_id="+str(experiment_id)+";"
         data=read_data_sql(requete)
-        response=data[1]['_value']
+            
+        A=True
         if data[1]['_value']['analysis_type']=='RNA-Seq':
+            response=data[1]['_value']
             try:
                 requete="SELECT * from "+schema+".rnaseqdata where rnaseqdata.project_id="+data[1]['_value']['project_id']+"and rnaseqdata.experiment_id="+data[1]['_value']['experiment_id']+";" 
                 current_data=read_data_sql(requete)
@@ -134,11 +136,57 @@ def project_rna_seq_info(experiment_id):
                 pass
             try:
                 requete="SELECT * from "+schema+".sample,"+schema+".sample_source,"+schema+".organism,"+schema+".ecotype where organism.organism_id=sample_source.organism_id and ecotype.ecotype_id=sample_source.ecotype_id and sample.project_id=sample_source.project_id and sample_source.sample_source_id=sample.sample_source_id and sample.experiment_id=sample_source.experiment_id and sample.project_id="+data[1]['_value']['project_id']+" and sample.experiment_id="+data[1]['_value']['experiment_id']+";"
+                
                 current_data=read_data_sql(requete)
                 response['echantillon_nb']=len(current_data)
-                response['echantillon']=current_data
+                response['echantillon']=current_data[1]['_value']
+                all_orgnaism=[]
+                for element in range(1,len(current_data)+1):
+                    all_orgnaism.append(current_data[element]['_value']['organism_name'])
+                ans=list(set(all_orgnaism))
+                an=ans[0]
+                for element in range(1,len(ans)):
+                    an=an+','+ans[element]
+                response['organism_name']=an
+                
             except:
                 pass
+            try:
+                requete="Select distinct e.experiment_id, s.organ from "+schema+".experiment e, "+schema+".sample s, "+schema+".project p where e.experiment_id=s.experiment_id and e.project_id=p.project_id and  p.project_id="+data[1]['_value']['project_id']+" and e.experiment_id="+data[1]['_value']['experiment_id']+";" 
+                current_data=read_data_sql(requete)
+                #print(requete)
+                organ=[]
+                try:
+                    for element in range(1,len(current_data)+1):
+                        organ.append(current_data[element]['_value']['organ'])
+                    ans=list(set(organ))
+                    an=ans[0]
+                    for element in range(1,len(ans)):
+                        an=an+','+ans[element]
+                    response['organ']=an
+                except:
+                    pass                    
+            except:
+                pass
+            
+            
+            try:
+                requete="select * from "+schema+".array_type, "+schema+".organism,"+schema+".organism_ecotype,"+schema+".array_batch, "+schema+".array df , "+schema+".hybridization where organism.organism_id=organism_ecotype.organism_id and array_type.array_type_id=organism_ecotype.array_type_id and array_type.array_type_id=array_batch.array_type_id and df.array_batch_id=array_batch.array_batch_id and hybridization.array_id=df.array_id and hybridization.project_id="+data[1]['_value']['project_id']+" and hybridization.experiment_id="+data[1]['_value']['experiment_id']+";" 
+                current_data=read_data_sql(requete)
+                if 'organism_name' not in response.keys():
+                    all_orgnaism=[]
+                    for element in range(1,len(current_data)+1):
+                        all_orgnaism.append(current_data[element]['_value']['organism_name'])
+                    ans=list(set(all_orgnaism))
+                    an=ans[0]
+                    for element in range(1,len(ans)):
+                        an=an+','+ans[element]
+                    response['organism_name']=an                    
+            except:
+                pass
+             
+            
+              
             ###for publmed
             try:
                 requete="SELECT * from "+schema+".project_Biblio,"+schema+".Biblio_list,"+schema+".project where Biblio_list.pubmed_id=project_Biblio.pubmed_id and project.project_id=project_Biblio.project_id and project.project_id="+data[1]['_value']['project_id']+";"
@@ -176,7 +224,7 @@ def project_rna_seq_info(experiment_id):
                 #protocol
                 requete="SELECT * from "+schema+".protocol where protocol.protocol_id="+response['protocol_id']+";"
                 current_data=read_data_sql(requete)
-                if len(current_data)>1:
+                if len(current_data)>0:
                     for element in current_data[1]['_value'].keys():
                         response[element]=current_data[1]['_value'][element]   
             except:
@@ -228,7 +276,7 @@ class data_table:
         
     def get_project_id_free(self):
         self.list=[]
-        requete="select experiment.experiment_id, experiment.project_id from "+schema+".project,"+schema+".experiment  where project.project_id=experiment.project_id ;" #and is_public='yes'
+        requete="select distinct experiment.experiment_id, experiment.project_id from "+schema+".project,"+schema+".experiment  where project.project_id=experiment.project_id ;"#and project.is_public='yes';"
         data=read_data_sql(requete)
         for el in range(1,len(data)+1):
             self.list.append(data[el]['_value']['experiment_id'])
@@ -263,7 +311,7 @@ class data_table:
         collabel=['Id','Title','Organism_name','organ','Analysis_type','Project_name','Experiment_type','Experiment_name','Size of Echantillon','Size of Replicats']
 
         selection=[]
-        
+        #print(self.data)
         for k in self.data:
             sel={}
             for el in k.keys():
@@ -277,7 +325,7 @@ class data_table:
         html="<table class='table table-bordered table-striped mb-0' cellspacing='0'width='100%'>" #table-bordered table-striped mb-0
         head_table="<thead><tr style='overflow-wrap: break-word;display: grid;grid-template-columns: "+gridarea+";' ><th class='th-sm col0'><input type='checkbox' id='all_call'></th>"
         for k in range(len(colspecifique)):
-            head_table=head_table+'<th class="th-sm col'+str(k+1)+'">'+str(collabel[k])+'</th>'
+            head_table=head_table+'<th class="th-sm col'+str(k+1)+'" onclick="sorted_table(\'tableau\',\'col'+str(k+1)+'\',bestcss);">'+str(collabel[k])+'<i class="fas fa-sort-up"></i></th>'
         html=html+head_table+"</tr></thead><tbody>"
         for k in range(len(selection)):
             text="<td class='col0'><input type='checkbox' id='select_row"+str(k)+"'></td>"
@@ -285,7 +333,7 @@ class data_table:
             for el in colspecifique:
                 cpt=cpt+1
                 try:
-                    ans=selection[k][el]
+                    ans=selection[k][el]    
                 except:
                     ans=''
                     pass
@@ -328,12 +376,14 @@ class data_table:
                 #   "<div>"
                 return html
         return None
-    
+
 """    
 tableau=data_table('pass')
 tableau.get_project_id_free()
-                                                                                            tableau.get_all_table()
-tableau.sorted_data('project_id')
-
+tableau.get_all_table()
+#tableau.sorted_data('project_id')
 av=tableau.get_specifique_data()
+import csv
+with open('get_specique_data.csv', mode='w') as avtw:
+    avtw = csv.writer(av, delimiter='•', quotechar='¤', quoting=csv.QUOTE_MINIMAL)
 """
