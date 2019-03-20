@@ -28,7 +28,8 @@ urlpatterns = [
     url('^description.html$',views.description),
     url('^requete.html$',views.requete),
     url('^rnaseq.html$',views.rnaseq),
-     url('^data/tableau$',views.get_tableau),    
+     url('^data/tableau$',views.get_tableau),
+    url('^data/expermient$',views.get_information_experiment),    
 ]+static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 

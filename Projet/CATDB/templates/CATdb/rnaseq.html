@@ -63,7 +63,7 @@ table tbody{
 max-height: 250px;overflow-y: scroll;display: list-item;/*! width: 100%; *//*! float: right; */"
 }
 
-
+/*
 .col1{
 width: 89px !important;
 }
@@ -90,7 +90,63 @@ width: 50px !important;
 .col6,.col8{
 width: 100px !important;
 }
+*/
+.dropdown {
+    position: relative;
+}
 
+li > a {
+    display: block;
+    padding: 3px 20px;
+    clear: both;
+    font-weight: normal;
+    line-height: 1.42857143;
+    color: #333;
+    white-space: nowrap;
+}
+
+.open > .dropdown-menu {
+    display: block;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    display: none;
+    float: left;
+    min-width: 160px;
+    padding: 5px 0;
+    margin: 2px 0 0;
+    font-size: 14px;
+    text-align: left;
+    list-style: none;
+    background-color: #fff;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    border: 1px solid #ccc;
+    border: 1px solid rgba(0, 0, 0, .15);
+    border-radius: 4px;
+    -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+}
+
+#description_body{
+    min-height: 250px;
+}
+
+.description,.contact_prod{margin:2%};
+
+#description_body{
+
+    display: -webkit-box;
+
+}
+
+#font_less{
+margin-left:2%;
+}
 </style>
 
 <div class="container-fluid">
@@ -116,7 +172,7 @@ width: 100px !important;
                     <div class="flex-fill w-100 card">
                         <div class="card-header"><span class="float-right badge badge-primary">Information</span>
                             <h5 class="mb-0 card-title">Descriptif project</h5></div>
-                        <div class="card-body">
+                        <div class="card-body" id="description_body">
                             <div class="chart chart-lg">
                                 <div class="chartjs-size-monitor">
                                     <div class="chartjs-size-monitor-expand">
@@ -126,14 +182,54 @@ width: 100px !important;
                                         <div class=""></div>
                                     </div>
                                 </div>
-                                <canvas height="350" width="840" style="display: block; width: 840px; height: 350px;" class="chartjs-render-monitor"></canvas>
+                                
                             </div>
                         </div>
+			<div class="card-footer text-muted" style="cursor: row-resize;">
+			   
+			</div>
+
                     </div>
 
 
 				
             </div>
+
+
+            </div>
+            <div class="row">
+                <div id="rechercheaera" class="col">
+ <div class="card-header"><span class="float-right badge badge-primary">search</span>
+                            <h5 class="mb-0 card-title">Search Aera</h5></div>
+                        <div class="card-body" style="display:flex;">
+			                    
+			<div class="col-md-6" style="display: -webkit-inline-box;">
+			      <input type="text" class="form-control" placeholder="search"><input type="image" id="image_loop" alt="bl" src="https://img.icons8.com/metro/26/000000/search.png" style="margin-top: 20%;">
+			</div>
+
+			<div class="col-md-4" style="display:flex;">
+			<div class="dropdown">
+<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+All Databases
+<span class="caret"></span>
+</button>
+<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+<li class="dropdown-header">Etiquette header</li>
+<li><a href="#" title="Lien 1">All Databases</a></li>
+<li><a href="#" title="Lien 2">Projects</a></li>
+<li><a href="#" title="Lien 3">Experiments</a></li>
+<li role="separator" class="divider"></li>
+<li><a href="#" title="Lien 4">Lien 4</a></li>
+</ul>
+</div>
+<button class="btn btn-default" type="button" style="margin-left: 2%;">Valide</button>
+
+</div> 
+<div class="btn btn-primary" id="font_add" >A+</div><div class="btn btn-primary" id="font_less">A-</div>
+
+ </div>
+
+                </div>
             </div>
             <div class="row">
                 <div id="tableau" class="col">
@@ -182,6 +278,9 @@ $.ajax({
 		corrected_wid(10);
 		corrected_wid(10);
 		
+		
+		select_td_info();
+		
 	    },
 	error:function(err) { console.clear();}
 	    
@@ -189,23 +288,98 @@ $.ajax({
 	
 
 function corrected_wid(nb){
-	
-	for (var i=1;i<nb;i++){
-		var xhead=$('th.th-sm.col'+i+':eq(1)').width();
-		var xbody=$('#tableau table tbody tr td.col'+i+':eq(1)').width();
-		/*if(xhead<xbody){
-			$('#tableau table tbody tr td.col'+i+':eq(1)').css('width',(xhead+2));
-			console.log("==up ===");
-		}else{
-			$('th.th-sm.col'+i+':eq(1)').css('width',(xbody+2));
-			console.log("==down ===");
-		};*/
-		//console.log($('#tableau table tbody tr td.col'+i+':eq(1)').width());
-	
+	var bestcss=''
+	for (var i=0;i<nb;i++){
+		//var xhead=$('th.th-sm.col'+i+':eq(1)').width();
+		//var xbody=$('#tableau table tbody tr td.col'+i+':eq(1)').width(),10);
+		var m1=parseInt($('.col'+i+':eq(1)').css('margin').split('p')[0],10);
+		if (i===0 || i===1){var p1=0;}else{var p1=parseInt($('.col'+i+':eq(1)').css('padding').split('p')[0],10);}
+		var w1=parseInt($('.col'+i+':eq(1)').css('width').split('p')[0],10);
+		
+		var bestcss=bestcss+(m1+p1+w1)+'px '	
 	}
+	var bestcss=bestcss+'auto'
+     $("#tableau table thead tr").css('grid-template-columns',bestcss);	
+    for (var j=0;j<$("#tableau table tbody tr").length;j++){
+	$("#tableau table tbody tr:eq("+j+")").attr("style","display: grid; grid-template-columns:"+bestcss+";");	
+	};
 }
 
+
+$('#dropdownMenu1').on("click",function(){
+$('.dropdown').toggleClass("open");
+
+});
+
+
+for (var i=0;i<$('.dropdown-menu a').length;i++){
+
+$('.dropdown-menu a:eq('+i+')').on("click",function(){
+$('#dropdownMenu1').html($('.dropdown-menu a:eq('+i+')').html());
+});
+
+}
+
+
+function select_td_info(){
+var text="";
+for (var i=0;i<$('#tableau tbody tr').length;i++){
+   $('#tableau tbody tr:eq('+i+')').on("click",function(){
+	var id_exp=$(this).find('td.col1').text();
+	get_experiment_info(id_exp);	
+	//var text=$('#tableau tbody tr:eq('+i+') td.col1').text();
+	//alert(text);
+});
+}
+
+};
+
+
+function get_experiment_info(id){
+
+$.ajax({
+	    type:"GET",
+	    dataType: "text",
+	    data:{'experiment_id':id},
+	    async: false,
+	    url:"/CATdb/data/expermient",
+	    success: function(data) {
+	   data		
+	   $('#description_body').empty();
+	   $('#description_body').append(data);	 
+	},
+	error:function(err) { console.clear();}
+	    
+	});	
+}
+
+$('#font_less').on("click",function(){
+ var size=$("#tableau table").css('font-size');
+ var current_size=size.split('p')[0];
+ var current_size=parseInt(current_size,10)-1;
+ $("#tableau table").css('font-size',current_size+'px'); 
+});
+
+$('#font_add').on("click",function(){
+ var size=$("#tableau table").css('font-size');
+ var current_size=size.split('p')[0];
+ var current_size=parseInt(current_size,10)+1;
+ $("#tableau table").css('font-size',current_size+'px'); 
+});
+/*
+{
+	$('#tableau tbody tr:eq('+i+') td.col0 input').prop('checked');
+	var text=$('#tableau tbody tr:eq('+i+') td.col1').text();
+
+	});	
+
+*/
 
 </script>
 </body>
 </html>
+
+
+
+
+

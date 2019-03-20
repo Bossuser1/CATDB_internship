@@ -14,14 +14,14 @@ import json
 from bs4 import BeautifulSoup
 sys.path.insert(0, "../")
 
-schema='chips'#"public" #
+schema="public" #'chips'#
 
 link_experiment="http://urgv.evry.inra.fr/cgi-bin/projects/CATdb/consult_expce.pl?experiment_id="
 from configparser import ConfigParser
 
 def config(section='postgresql'):
     #os.getcwd()
-    direction='/export/home/gnet/btraore/WWW_DEV/cgi-bin/projects/CATDB/CATdb'#'/home/traore/Bureau/Dossier_Stage/CATDB_internship/Projet/CATDB/CATdb/'#'/export/home/gnet/btraore/WWW_DEV/cgi-bin/projects/CATDB/CATdb'
+    direction='/home/traore/Bureau/Dossier_Stage/CATDB_internship/Projet/CATDB/CATdb/'#'/export/home/gnet/btraore/WWW_DEV/cgi-bin/projects/CATDB/CATdb''/export/home/gnet/btraore/WWW_DEV/cgi-bin/projects/CATDB/CATdb'
     if os.getcwd()[0:12]!="/home/traore":
     	filename=direction+'/database.ini'
     else:
@@ -235,7 +235,7 @@ class data_table:
         return self.list
     def get_unit_experminent(self):
         #print(self.list[self.i])
-        direction='/export/home/gnet/btraore/WWW_DEV/cgi-bin/projects/CATDB/CATdb'#'/home/traore/Bureau/Dossier_Stage/CATDB_internship/Projet/CATDB/CATdb/'#'/export/home/gnet/btraore/WWW_DEV/cgi-bin/projects/CATDB/CATdb'
+        direction='/home/traore/Bureau/Dossier_Stage/CATDB_internship/Projet/CATDB/CATdb/'#'/export/home/gnet/btraore/WWW_DEV/cgi-bin/projects/CATDB/CATdb'#'/export/home/gnet/btraore/WWW_DEV/cgi-bin/projects/CATDB/CATdb'#
         with open(direction+'/modules/data/test.json') as json_file:  
             for elemnt in json_file.readlines():
                 try:
@@ -260,6 +260,8 @@ class data_table:
         return self.data
     def get_specifique_data(self):
         colspecifique=['experiment_id','title','organism_name','organ','analysis_type','project_name','experiment_type','experiment_name','echantillon_nb','replicats']
+        collabel=['Id','Title','Organism_name','organ','Analysis_type','Project_name','Experiment_type','Experiment_name','Size of Echantillon','Size of Replicats']
+
         selection=[]
         
         for k in self.data:
@@ -268,11 +270,14 @@ class data_table:
                 if el in colspecifique:
                     sel[el]=k[el]
             selection.append(sel)
-        
+        gridarea=''
+        for j in range(len(collabel)):
+            gridarea=gridarea+'10px '
+        gridarea=gridarea+'auto'    
         html="<table class='table table-bordered table-striped mb-0' cellspacing='0'width='100%'>" #table-bordered table-striped mb-0
-        head_table="<thead><tr><th class='th-sm col0'><input type='checkbox' id='all_call'></th>"
+        head_table="<thead><tr style='overflow-wrap: break-word;display: grid;grid-template-columns: "+gridarea+";' ><th class='th-sm col0'><input type='checkbox' id='all_call'></th>"
         for k in range(len(colspecifique)):
-            head_table=head_table+'<th class="th-sm col'+str(k+1)+'">'+str(colspecifique[k])+'</th>'
+            head_table=head_table+'<th class="th-sm col'+str(k+1)+'">'+str(collabel[k])+'</th>'
         html=html+head_table+"</tr></thead><tbody>"
         for k in range(len(selection)):
             text="<td class='col0'><input type='checkbox' id='select_row"+str(k)+"'></td>"
@@ -288,7 +293,41 @@ class data_table:
             html=html+"<tr>"+text+"</tr>"
         html=html+"</tbody></table>"
         return selection,html
-    
+    def specifique_information(self,col,ident):
+        html="<div class='row'>"        
+        for k in self.data:
+            if k[col]==ident:
+                #block description
+                html=html+"<div class='description'><div><span>Project:<span><label>"+k['project_name']+"</label></div>"+"<div><span>Experiment Name:<span><label>"+k['experiment_name']+"</label></div>"+"<div><span>Experiment type:<span><label>"+k['experiment_type']+"</label></div>"
+                try:
+                    nb_ex=int(k['other_experiment_nb'])
+                    if nb_ex>0:
+                        for el in range(1,nb_ex+1):
+                            html=html+"<div><span>Other Experiment "+str(el)+":</span><label>"+str(k['other_experiment_'+str(el)+'_experiment_name'])+"</label></div>"
+                except:
+                    pass
+                html=html+'</div>'
+                #block contact 
+                html=html+"<div class='contact_prod'>"
+                
+                try:
+                    nb_ex=int(k['coordiantor_nb'])
+                    if nb_ex>0:
+                        for el in range(1,nb_ex+1):
+                            html=html+"<div><span>Contact "+str(el)+":</span><label>"+str(k['coordiantor_'+str(el)+'_last_name'])+"</label></div>"
+                except:
+                    pass
+                html=html+"</div></div>"
+                print(k)
+                
+                html=html+"<div class='biological_project'><span>Biologicial Interest:</span>"+k['biological_interest']+"</div>"
+                #html=html+"<div class='row'>"
+                #'gem2net_id'
+                #'source'
+                #<a class="btn btn-primary"></a>
+                #   "<div>"
+                return html
+        return None
     
 """    
 tableau=data_table('pass')

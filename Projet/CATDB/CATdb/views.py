@@ -16,6 +16,15 @@ from CATdb.connection import *
 sys.path.insert(0, "/modules/")
 from CATdb.modules.Untitled import data_table
 
+av,html=0,0
+av,html
+tableau=data_table('pass')
+tableau.get_project_id_free()
+tableau.get_all_table()
+av,html=tableau.get_specifique_data()
+
+
+
 def index(request):
 
     context_dict = {'boldmessage': "I am bold font from the context"}
@@ -151,11 +160,15 @@ def error_500(request):
         
 def get_tableau(request):
     sort_col=request.GET.get('sorted_col_specifique', None)
-    tableau=data_table('pass')
-    tableau.get_project_id_free()
-    tableau.get_all_table()
-    if sort_col!=None:
-        tableau.sorted_data(sort_col)
-    av,html=tableau.get_specifique_data()
-    
+    #tableau=data_table('pass')
+    #tableau.get_project_id_free()
+    #tableau.get_all_table()
+    #if sort_col!=None:
+    #    tableau.sorted_data(sort_col)
+    #av,html=tableau.get_specifique_data()
     return HttpResponse(html, content_type="application/json")     
+
+def get_information_experiment(request):
+    experimentid=request.GET.get('experiment_id', None)
+    value=tableau.specifique_information('experiment_id',experimentid)    
+    return HttpResponse(json.dumps(value), content_type="application/json")
