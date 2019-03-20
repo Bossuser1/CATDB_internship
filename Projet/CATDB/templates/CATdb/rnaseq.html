@@ -279,8 +279,8 @@ $.ajax({
 		corrected_wid(10);
 		
 		
+		sorted_table('tableau','col2');
 		select_td_info();
-		
 	    },
 	error:function(err) { console.clear();}
 	    
@@ -366,14 +366,23 @@ $('#font_add').on("click",function(){
  var current_size=parseInt(current_size,10)+1;
  $("#tableau table").css('font-size',current_size+'px'); 
 });
-/*
-{
-	$('#tableau tbody tr:eq('+i+') td.col0 input').prop('checked');
-	var text=$('#tableau tbody tr:eq('+i+') td.col1').text();
 
-	});	
-
-*/
+function sorted_table(table,col){
+	var tr=$('#'+table+' table tbody tr').length;
+	var data=[];
+	var colseq=[];	
+	for (var i=0;i<tr;i++){
+	 	data.push($('#'+table+' table tbody tr:eq('+String(i)+')').html());
+		colseq.push($('#'+table+' table tbody tr td.'+col+':eq('+String(i)+')').text()+'¤'+i);
+	};
+	colseq=colseq.sort()
+	$('#'+table+' table tbody').empty();
+	for (var i=0;i<tr;i++){
+	    console.log(data[parseInt(colseq[i].split('¤')[1],10)]);
+	    $('#'+table+' table tbody').append('<tr>'+data[parseInt(colseq[i].split('¤')[1],10)]+'</tr>');
+	}
+	corrected_wid(10);
+}
 
 </script>
 </body>

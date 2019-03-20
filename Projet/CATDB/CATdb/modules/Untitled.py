@@ -318,7 +318,7 @@ class data_table:
                 except:
                     pass
                 html=html+"</div></div>"
-                print(k)
+                #print(k)
                 
                 html=html+"<div class='biological_project'><span>Biologicial Interest:</span>"+k['biological_interest']+"</div>"
                 #html=html+"<div class='row'>"
@@ -332,7 +332,7 @@ class data_table:
 """    
 tableau=data_table('pass')
 tableau.get_project_id_free()
-tableau.get_all_table()
+                                                                                            tableau.get_all_table()
 tableau.sorted_data('project_id')
 
 av=tableau.get_specifique_data()
