@@ -289,9 +289,9 @@ background: #f7f7f7;
         <div class="col-12 col-md-3 col-xl-2 bd-sidebar">
 
             <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                <a class="nav-link active" id="v-pills-listproject" data-toggle="pill" role="tab" aria-controls="v-pills-home" aria-selected="true">New Project</a>
+                <a class="nav-link" id="v-pills-listproject" data-toggle="pill" role="tab" aria-controls="v-pills-home" aria-selected="true">New Project</a>
                 <a class="nav-link " id="v-pills-profile-tab" data-toggle="pill" role="tab" aria-controls="v-pills-profile" aria-selected="false">Search</a>
-                <a class="nav-link " id="experiment_link" data-toggle="pill" role="tab" aria-controls="v-pills-messages" aria-selected="false">Fiche experiments</a>
+                <a class="nav-link active" id="experiment_link" data-toggle="pill" role="tab" aria-controls="v-pills-messages" aria-selected="false">Fiche experiments</a>
                 <!-- <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" role="tab" aria-controls="v-pills-settings" aria-selected="false">Settings</a>-->
             </div>
 
@@ -622,24 +622,18 @@ $('.content').empty();
 
 fiche_experiment();
 });
- 
-/* 
-function fiche_experiment(){
-	$('.content').append('')	
-	
-}
-*/
+
 bestcss=load_table({'None':'None'},10);
 
+var currentLocation = window.location.href;
+var currentLocation=currentLocation.split('?')[1].split('=')[1];
 
-/*
 if ($('#experiment_link').attr('class').split(' ').length>1){
-	requete={'sample':'sample','experiment_id':623};
+	requete={'sample':'sample','experiment_id':currentLocation};
 	bestcss=load_table(requete,7);
 	$('.th-sm.col1').click();
 	
 }
-*/
 
 </script>
 

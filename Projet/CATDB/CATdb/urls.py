@@ -25,6 +25,7 @@ urlpatterns = [
     url('^technologies.html$',views.technologies),
     url('^listproject.html$',views.list_project),
     url('^graph/treatment_1.html$',views.graph),
+    url('^experiment.html$',views.experiment),
     url('^description.html$',views.description),
     url('^requete.html$',views.requete),
     url('^rnaseq.html$',views.rnaseq),

@@ -174,33 +174,3 @@ def execution_requete(element,value_send,colname_send,order_ele=None):
     else:
         print("error") 
 
-# def execution_requete_new(element,value_send,colname_send,order_by):
-#     """
-#     fonction faite pour envoyer des orders by
-#     """
-#     my_ppty="CHIPS"
-#     
-#     my_querySpecies="select * from (select array_type_name, count(hybridization_id) "+\
-#     "from "+my_ppty+".hybridization "+\
-#     "where project_id in (select project_id from "+my_ppty+".project where is_public='yes') "+\
-#     "and experiment_id in (select experiment_id from "+my_ppty+".experiment "+\
-#     "where analysis_type='Arrays') "+\
-#     "and array_type_name in "+\
-#     "(select a.array_type_name from "+my_ppty+".array_type a where a.common_name<>'Arabidopsis')"+\
-#     "group by array_type_name order by array_type_name) pf order by pf."+order_by+";"
-#     #my_req_recherche1="select project_id,Experiment_type,Experiment_name from chips.experiment where project_id in (select project_id from chips.project where is_public='yes');"
-#     return read_data_sql(my_querySpecies,'text')    
-#     
-# 
-# def execution_requete_main_A(element,value_send,colname_send):
-#     my_ppty='CHIPS'
-#     my_reqstat ="Select count(*) from "+my_ppty+".biblio_list;"
-# #    
-#    my_sample="SELECT sample.sample_name, sample.organ, sample.age_value, sample.age_unit, sample.age_db FROM "+my_ppty+".sample, "+my_ppty+".project WHERE project.project_id = sample.project_id AND project.is_public = 'yes';"
-#    
-#    my_sample_source="SELECT sample_source.project_id,sample_source.sample_source_name,organism.organism_name,sample_source.genotype,sample_source.mutant, sample_source.planting_date FROM "+my_ppty+".sample_source, "+my_ppty+".project , "+my_ppty+".organism, "+my_ppty+".Ecotype WHERE project.project_id=sample_source.project_id and project.is_public = 'yes' and Ecotype.ecotype_id=CAST(nullif(sample_source.ecotype_id, '') AS integer);"
-#
-#    requete=my_sample_source
-#    if colname_send!=None:
-#    	requete="select * from ("+requete.replace(';','')+") df order by "+colname_send+";" 
-#    return read_data_sql(requete,element)	

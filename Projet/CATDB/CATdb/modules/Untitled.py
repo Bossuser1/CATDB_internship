@@ -14,14 +14,14 @@ import json
 from bs4 import BeautifulSoup
 sys.path.insert(0, "../")
 
-schema="public"#'chips'#
+schema='chips'#
 
 link_experiment="http://urgv.evry.inra.fr/cgi-bin/projects/CATdb/consult_expce.pl?experiment_id="
 from configparser import ConfigParser
 
 def config(section='postgresql'):
     #os.getcwd()
-    direction='/home/traore/Bureau/Dossier_Stage/CATDB_internship/Projet/CATDB/CATdb/'#'/export/home/gnet/btraore/WWW_DEV/cgi-bin/projects/CATDB/CATdb'#'/export/home/gnet/btraore/WWW_DEV/cgi-bin/projects/CATDB/CATdb'#
+    direction='/export/home/gnet/btraore/WWW_DEV/cgi-bin/projects/CATDB/CATdb'#'/export/home/gnet/btraore/WWW_DEV/cgi-bin/projects/CATDB/CATdb'#
     if os.getcwd()[0:12]!="/home/traore":
     	filename=direction+'/database.ini'
     else:
@@ -347,7 +347,7 @@ class data_table:
         for k in self.data:
             if k[col]==ident:
                 #block description
-                html=html+"<div class='description'><div><span>Project:</span><label>"+k['project_name']+"</label></div>"+"<div><span>Experiment Name:</span><label>"+k['experiment_name']+"</label></div>"+"<div><span>Experiment type:</span><label>"+k['experiment_type']+"</label></div>"+"<div><span>Array type:</span><label>"+k['array_type']+"</label> <span>Analysis type:</span><label>"+k['analysis_type']+"</label></div>" 
+                html=html+"<div class='description'><div><span>Project:</span><label>"+k['project_name']+"</label></div>"+"<div><span>Experiment Name:</span><label>"+k['experiment_name']+"</label></div>"+"<div><span>Experiment type:</span><label>"+k['experiment_type']+"</label></div>"+"<div><span>Sequencer:</span><label>"+k['array_type']+"</label> <span>Analysis type:</span><label>"+k['analysis_type']+"</label></div>" 
                 try:
                     nb_ex=int(k['other_experiment_nb'])
                     if nb_ex>0:
@@ -387,7 +387,7 @@ class data_table:
                 
                 html=html+"<div class='biological_project'><span>Biologicial Interest:</span>"+k['biological_interest']+"</div>"
                 
-                html=html+"<div class='file_project'></div>"#<span>Biologicial Interest:</span>"+k['biological_interest']+"
+                html=html+"<div class='file_project'>  <a id='experim' href='/CATdb/experiment.html?exp='> link </a></div>"#<span>Biologicial Interest:</span>"+k['biological_interest']+"
                 
                     
                 #html=html+"<div class='row'>"
@@ -398,13 +398,65 @@ class data_table:
                 return html
         return None
 
-"""    
-tableau=data_table('pass')
-tableau.get_project_id_free()
-tableau.get_all_table()
-#tableau.sorted_data('project_id')
-av=tableau.get_specifique_data()
-import csv
-with open('get_specique_data.csv', mode='w') as avtw:
-    avtw = csv.writer(av, delimiter='•', quotechar='¤', quoting=csv.QUOTE_MINIMAL)
-"""
+
+
+def get_experiment_rnaseq_information_select(key): 
+    response={}
+    requete="select n1.sample_name,n1.organ,n1.genotype,n1.growth_conditions,n1.sample_id,n2.treatment_name from (select sample.sample_name,sample.sample_id,sample.organ,sample_source.genotype,sample_source.growth_conditions,sample.experiment_id,sample_source.sample_source_id,sample.sample_source_id from chips.sample LEFT JOIN chips.sample_source ON sample_source.sample_source_id=sample.sample_source_id where sample.experiment_id="+str(key)+") as n1 , chips.treatment as n2 ,chips.sample_treated as n3 where n2.experiment_id="+str(key)+" and n3.treatment_id=n2.treatment_id and n1.sample_id=n3.sample_id;"
+    current_data=read_data_sql(requete)
+    colspecifique=['sample_id','sample_name','organ','genotype','treatment_name','growth_conditions']
+    collabel=['Id','Name','organ','genotype','treatment','growth_conditions']
+    
+    selection=[]
+    list_select=[]
+    if len(current_data)>0:
+        for k in range(1,len(current_data)+1):
+            sel={}
+            for el in current_data[k]['_value'].keys():
+                if el in colspecifique:
+                    sel[el]=current_data[k]['_value'][el]
+            selection.append(sel)
+            list_select.append(current_data[k]['_value']['sample_id'])
+    text=""
+    if len(list_select)>0:
+        text=list_select[0]
+        for val in range(1,len(list_select)):
+            text=text+','+list_select[val]
+    print(text)
+    if text!="":
+        requete="select n1.sample_id,n1.sample_name,n1.organ,n1.genotype,n1.growth_conditions from (select sample.sample_id,sample.sample_name,sample.organ,sample_source.genotype,sample_source.growth_conditions,sample.experiment_id,sample_source.sample_source_id,sample.sample_source_id from chips.sample LEFT JOIN chips.sample_source ON sample_source.sample_source_id=sample.sample_source_id where sample.sample_id not in ("+text+") and sample.experiment_id="+str(key)+") as n1 ;"
+    else:
+        requete="select n1.sample_id,n1.sample_name,n1.organ,n1.genotype,n1.growth_conditions from (select sample.sample_id,sample.sample_name,sample.organ,sample_source.genotype,sample_source.growth_conditions,sample.experiment_id,sample_source.sample_source_id,sample.sample_source_id from chips.sample LEFT JOIN chips.sample_source ON sample_source.sample_source_id=sample.sample_source_id where sample.experiment_id="+str(key)+") as n1 ;"
+    current_data1=read_data_sql(requete)
+    if len(current_data1)>0:
+        for k in range(1,len(current_data1)+1):
+            sel={}
+            for el in current_data1[k]['_value'].keys():
+                if el in colspecifique:
+                    sel[el]=current_data1[k]['_value'][el]
+            sel['treatment_name']="No treatment"
+            selection.append(sel)
+    if len(selection)>0:        
+        gridarea=''
+        for j in range(len(collabel)):
+            gridarea=gridarea+'100px '
+        gridarea=gridarea+'auto'    
+        html="<table class='table table-bordered table-striped mb-0' cellspacing='0'width='100%'>" #table-bordered table-striped mb-0
+        head_table="<thead><tr style='overflow-wrap: break-word;display: grid;grid-template-columns: "+gridarea+";' ><th class='th-sm col0'><input type='checkbox' id='all_call'></th>"
+        for k in range(len(colspecifique)):
+            head_table=head_table+'<th class="th-sm col'+str(k+1)+'" onclick="sorted_table(\'tableau\',\'col'+str(k+1)+'\',bestcss);">'+str(collabel[k])+'<i class="fas fa-sort-up"></i></th>'
+        html=html+head_table+"</tr></thead><tbody>"
+        for k in range(len(selection)):
+            text="<td class='col0'><input type='checkbox' id='select_row"+str(k)+"'></td>"
+            cpt=0
+            for el in colspecifique:
+                cpt=cpt+1
+                try:
+                    ans=selection[k][el]    
+                except:
+                    ans=''
+                    pass
+                text=text+"<td class='col"+str(cpt)+"'>"+str(ans)+"</td>"
+            html=html+"<tr>"+text+"</tr>"
+        html=html+"</tbody></table>"
+    return html

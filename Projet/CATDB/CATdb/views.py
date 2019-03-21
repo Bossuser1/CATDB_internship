@@ -15,9 +15,8 @@ import json
 from CATdb.connection import *
 sys.path.insert(0, "/modules/")
 from CATdb.modules.Untitled import data_table
-
+from CATdb.modules.Untitled import get_experiment_rnaseq_information_select
 av,html=0,0
-av,html
 tableau=data_table('pass')
 tableau.get_project_id_free()
 tableau.get_all_table()
@@ -117,7 +116,8 @@ def list_project(request):
 def graph(request):
     " sert a visualiser les graphs D3js"
     return render(request,'CATdb/graph/treatment_1.html',{})
-
+def experiment(request):
+    return render(request,'CATdb/experiment.html',{})
 
 
 def technologies(request):
@@ -166,9 +166,16 @@ def get_tableau(request):
     #if sort_col!=None:
     #    tableau.sorted_data(sort_col)
     #av,html=tableau.get_specifique_data()
-    return HttpResponse(html, content_type="application/text")     
+    experimentid=request.GET.get('experiment_id', None)
+    sample=request.GET.get('sample', None)
+    if sample=="sample":
+       res=get_experiment_rnaseq_information_select(experimentid)
+       if res!={}:
+           return HttpResponse(res,content_type="application/json")     
+    else:
+        return HttpResponse(html, content_type="application/json")     
 
 def get_information_experiment(request):
     experimentid=request.GET.get('experiment_id', None)
     value=tableau.specifique_information('experiment_id',experimentid)    
-    return HttpResponse(value, content_type="application/text")
+    return HttpResponse(json.dumps(value), content_type="application/json")
