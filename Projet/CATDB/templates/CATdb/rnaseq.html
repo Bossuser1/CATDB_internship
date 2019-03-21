@@ -6,12 +6,22 @@
   <meta charset="UTF-8">
   <title>Fiche Description </title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.0/css/all.css">
+   <link rel='stylesheet' href="{% static "css/all.css" %}">
   <link rel='stylesheet' href="{% static "bibliotheque/bootstrap/css/bootstrap.min.css" %}">
    <script src="{% static "bibliotheque/jquery-3.3.1.min.js" %}"/></script>
 </head>
 <body>
 
 <style>
+
+.nav-link:hover{
+  background-color:#ffffff;
+}
+
+span {
+    font-weight: bold;
+    text-decoration: underline #1cbf03;
+}
 
 .my-custom-scrollbar {
   /*position: relative;*/
@@ -62,6 +72,14 @@ display: list-item;width: 100%;
 
 table tbody{
 max-height: 250px;overflow-y: scroll;display: list-item;/*! width: 100%; *//*! float: right; */"
+}
+.file_project {
+    border: 1px solid #f7f7f7;
+    min-height: 45px;
+}
+
+.nav-pills .nav-link {
+cursor: pointer;
 }
 
 /*
@@ -148,15 +166,149 @@ li > a {
 #font_less{
 margin-left:2%;
 }
+
+
+.logo{
+content: "";
+display: inline-block;
+width: 100%;
+height: 100%;
+margin: -0.2em 0.5em 0 0;
+background: url("http://tools.ips2.u-psud.fr//GEM2NET/logos/catdb_icon122x68.jpg") no-repeat center center;
+background-size: contain;
+}
+
+.logo_gem2net{
+content: "";
+display: inline-block;
+width: 100%;
+height: 100%;
+margin: -0.2em 0.5em 0 0;
+background: url("http://tools.ips2.u-psud.fr/projects/GEM2NET/logos/GEM2NET_logo5_transpa.png") no-repeat center center;
+background-size: contain;
+}
+
+.logIPS2{
+content: "";
+display: inline-block;
+width: 100%;
+height: 100%;
+margin: -0.2em 0.5em 0 0;
+background: url("http://tools.ips2.u-psud.fr/logos/logo-ips2-trans.png") no-repeat center center;
+background-size: contain;
+} 
+
+.bd-sidebar{
+background: #f7f7f7;
+}
+
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+/* Modal Button */
+#myBtn {
+  background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="28" height="49" viewBox="0 0 28 49"%3E%3Cg fill-rule="evenodd"%3E%3Cg id="hexagons" fill="%239C92AC" fill-opacity="0.4" fill-rule="nonzero"%3E%3Cpath d="M13.99 9.25l13 7.5v15l-13 7.5L1 31.75v-15l12.99-7.5zM3 17.9v12.7l10.99 6.34 11-6.35V17.9l-11-6.34L3 17.9zM0 15l12.98-7.5V0h-2v6.35L0 12.69v2.3zm0 18.5L12.98 41v8h-2v-6.85L0 35.81v-2.3zM15 0v7.5L27.99 15H28v-2.31h-.01L17 6.35V0h-2zm0 49v-8l12.99-7.5H28v2.31h-.01L17 42.15V49h-2z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');
+  background-color: #82b1ff;
+  display: inline;
+}
+/* Modal Header */
+.modal-header {
+  padding: 3em;
+  background-color: #0288d1;
+  color: white;
+  border-radius: 10px 10px 0px 0px;
+  box-shadow: 5px;
+}
+
+/* Modal Body */
+.modal-body {
+  padding: 3em;
+}
+
+/* Modal Footer */
+.modal-footer {
+  padding: 3em;
+  margin-bottom: 30px;
+  background-color: #0288d1;
+  color: white;
+  border-radius: 0px 0px 10px 10px;
+  box-shadow: 5px;
+}
+
+/* Modal Content */
+.modal-content {
+  position: relative;
+  background-color: #fefefe;
+  margin: auto;
+  margin-top: 30px;
+  padding: 0;
+   width: 500px;
+  text-align: center;
+  vertical-align: center;
+  border: 0px 1px 0px 1px solid #888;
+  border-radius: 10%;
+  box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.19), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  animation-name: animatetop;
+  animation-duration: 0.5s;
+}
+
+/* Add Animation */
+@keyframes animatetop {
+  from {
+    top: -300px;
+    opacity: 0;
+  }
+  to {
+    top: 0;
+    opacity: 1;
+  }
+}
+
+/* The Close Button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#logIn {
+  
+}
+.login {
+  align-content: center;
+  
+}
+
+
 </style>
 
 <div class="container-fluid">
 
-<div id="header" class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar">
-
+<div id="header" class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar" style="height: 3.5625em;">
+<!--
 <div class="entete1" style="display: flex;flex-flow: inherit;width: 100%;justify-content: space-between;"><div class="logo"><a href="http://tools.ips2.u-psud.fr/"><img src="/logos/logo-ips2-trans.png" alt="IPS2" height="75" border="0"></a></div> <div class="titre"><a href="/cgi-bin/projects/CATdb/catdb_index.pl"><img src="/projects/transcriptome/CATdb_style/catdb_logo.png" alt="CATdb" border="0"></a> <br> 
- <font size="4"><b style="Color:#336699"><i>~ Search &amp; Consult Arabidopsis Projects~</i></b></font></div> <div class="insert"><table><tbody><tr><td><a href="/cgi-bin/projects/CATdb/catdb_projects_OtherSpecies.pl">see projects on Other Species <br> <img title="Affymetrix projects at IPS2" src="/projects/transcriptome/CATdb_style/affy_mini.png" height="30" border="0"></a></td></tr></tbody></table></div></div>
-
+ <font size="4"><b style="Color:#336699"><i>~ Search &amp; Consult Arabidopsis Projects~</i></b></font></div> <div class="insert"><table><tbody><tr><td><a href="/cgi-bin/projects/CATdb/catdb_projects_OtherSpecies.pl">see projects on Other Species <br> <img title="Affymetrix projects at IPS2" src="/projects/transcriptome/CATdb_style/affy_mini.png" height="30" border="0"></a></td></tr></tbody></table></div>
+</div>
+-->
 
 </div>
 
@@ -165,10 +317,10 @@ margin-left:2%;
         <div class="col-12 col-md-3 col-xl-2 bd-sidebar">
 		
 		<div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-  <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Home</a>
-  <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Profile</a>
-  <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Messages</a>
-  <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Settings</a>
+  <a class="nav-link" id="v-pills-listproject" data-toggle="pill" role="tab" aria-controls="v-pills-home" aria-selected="true">New Project</a>
+  <a class="nav-link active" id="v-pills-profile-tab" data-toggle="pill"  role="tab" aria-controls="v-pills-profile" aria-selected="false">Search</a>
+  <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" role="tab" aria-controls="v-pills-messages" aria-selected="false">Fiche experiments</a>
+ <!-- <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" role="tab" aria-controls="v-pills-settings" aria-selected="false">Settings</a>-->
 </div>
 		
 		
@@ -188,8 +340,8 @@ margin-left:2%;
             <div class="row">
             <div class="d-flex col">
                     <div class="flex-fill w-100 card">
-                        <div class="card-header"><span class="float-right badge badge-primary">Information</span>
-                            <h5 class="mb-0 card-title">Descriptif project</h5></div>
+                        <div class="card-header"><span class="float-right badge badge-primary" id="info">Information</span>
+                            <h5 class="mb-0 card-title"><button type="button" id="descript_button" class="btn btn-info">-</button> Descriptif project</h5></div>
                         <div class="card-body" id="description_body">
                             <div class="chart chart-lg">
                                 <div class="chartjs-size-monitor">
@@ -221,23 +373,23 @@ margin-left:2%;
                             <h5 class="mb-0 card-title">Search Aera</h5></div>
                         <div class="card-body" style="display:flex;">
 			                    
-			<div class="col-md-6" style="display: -webkit-inline-box;">
+			<div class="col-md-6" style="display:none;/*display: -webkit-inline-box;*/">
 			      <input type="text" class="form-control" placeholder="search"><input type="image" id="image_loop" alt="bl" src="https://img.icons8.com/metro/26/000000/search.png" style="margin-top: 20%;">
 			</div>
 
-			<div class="col-md-4" style="display:flex;">
+			<div class="col-md-4" style="display:none;/*display:flex;*/">
 			<div class="dropdown">
 <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
 All Databases
 <span class="caret"></span>
 </button>
 <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-<li class="dropdown-header">Etiquette header</li>
-<li><a href="#" title="Lien 1">All Databases</a></li>
-<li><a href="#" title="Lien 2">Projects</a></li>
-<li><a href="#" title="Lien 3">Experiments</a></li>
+<!--<li class="dropdown-header">Etiquette header</li>-->
+<li><a title="Lien 1">All Databases</a></li>
+<li><a title="Lien 2">Projects</a></li>
+<li><a title="Lien 3">Experiments</a></li>
 <li role="separator" class="divider"></li>
-<li><a href="#" title="Lien 4">Lien 4</a></li>
+<!--<li><a title="Lien 4">Lien 4</a></li>-->
 </ul>
 </div>
 <button class="btn btn-default" type="button" style="margin-left: 2%;">Valide</button>
@@ -260,9 +412,6 @@ All Databases
 
             </div>
 
-        </div>
-    </div>
-    
 <div class="row">
 
 <div class="col" style="min-height: 100px;">
@@ -271,9 +420,31 @@ All Databases
 
 
 </div>    
+
+
+
+
+        </div>
+    </div>
+    
     
 </div>
 
+
+    <div id="myModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Project</h2>
+	  <span class="close">&times;</span>
+        </div>
+        <div class="modal-body">
+          <p>Descriptif</p>
+        </div>
+        <div class="modal-footer">
+          <h5>Modal Footer</h5>
+        </div>
+      </div>
+    </div>
 
 
 <script>
@@ -354,7 +525,9 @@ $('#dropdownMenu1').html($('.dropdown-menu a:eq('+i+')').html());
 });
 
 }
-
+$('.dropdown-menu').on("click",function(){
+$('.dropdown').toggleClass("open");
+});
 
 function select_td_info(){
 var text="";
@@ -408,7 +581,9 @@ function sorted_table(table,col,bestcss){
 	var colseq=[];	
 	for (var i=0;i<tr;i++){
 	 	data.push($('#'+table+' table tbody tr:eq('+String(i)+')').html());
-		colseq.push($('#'+table+' table tbody tr td.'+col+':eq('+String(i)+')').text()+'¤'+i);
+		var word=$('#'+table+' table tbody tr td.'+col+':eq('+String(i)+')').text().trim();
+		try{var word=word.toUpperCase();}catch{var word};
+		colseq.push(word+'¤'+i);
 	};
 	colseq=colseq.sort()
 	$('#'+table+' table tbody').empty();
@@ -420,7 +595,68 @@ function sorted_table(table,col,bestcss){
 	select_td_info();
 }
 
+$('#header').append('<a href="#" class="logo"> </a><a href="#" class="logo_gem2net"> </a><a href="#" class="logIPS2"></a>');
+
+$('#descript_button').on("click",function(){
+if ($('#descript_button').text()==='-'){
+$('#description_body').hide();
+$('#descript_button').text('+');
+} else {
+$('#description_body').show();
+$('#descript_button').text('-');
+}
+});
+
+
+
+// Get the modal
+var modal = document.getElementById("myModal");
+
+// Get the button that opens the modal
+var btn = document.getElementById("info");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks on the button, open the modal
+btn.onclick = function() {
+  modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+};
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+};
+
+/*
+$('.nav-link:eq(0)').css('color','#007bff');
+$('.nav-link:eq(1)').css('color','#007bff');
+$('.nav-link:eq(2)').css('color','#007bff');
+$('.nav-link:eq(3)').css('color','#007bff');
+$('.nav-link.active').css('color','white');
+ */   
+$('#v-pills-listproject').on("click",function(){
+$('.nav-link.active').remove("active");
+$('.nav-link:eq(0)').css('color','#007bff');
+$('.nav-link:eq(1)').css('color','#007bff');
+$('.nav-link:eq(2)').css('color','#007bff');
+$('.nav-link:eq(3)').css('color','#007bff');
+$('.nav-link.active').css('color','white');
+});
+
+
 </script>
+
+
+
+
 </body>
 </html>
  

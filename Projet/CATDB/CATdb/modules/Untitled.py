@@ -14,14 +14,14 @@ import json
 from bs4 import BeautifulSoup
 sys.path.insert(0, "../")
 
-schema='chips'#"public"
+schema="public"#'chips'#
 
 link_experiment="http://urgv.evry.inra.fr/cgi-bin/projects/CATdb/consult_expce.pl?experiment_id="
 from configparser import ConfigParser
 
 def config(section='postgresql'):
     #os.getcwd()
-    direction='/export/home/gnet/btraore/WWW_DEV/cgi-bin/projects/CATDB/CATdb'#'/export/home/gnet/btraore/WWW_DEV/cgi-bin/projects/CATDB/CATdb'
+    direction='/home/traore/Bureau/Dossier_Stage/CATDB_internship/Projet/CATDB/CATdb/'#'/export/home/gnet/btraore/WWW_DEV/cgi-bin/projects/CATDB/CATdb'#'/export/home/gnet/btraore/WWW_DEV/cgi-bin/projects/CATDB/CATdb'#
     if os.getcwd()[0:12]!="/home/traore":
     	filename=direction+'/database.ini'
     else:
@@ -342,11 +342,12 @@ class data_table:
         html=html+"</tbody></table>"
         return selection,html
     def specifique_information(self,col,ident):
+        print(self.data[0])
         html="<div class='row'>"        
         for k in self.data:
             if k[col]==ident:
                 #block description
-                html=html+"<div class='description'><div><span>Project:<span><label>"+k['project_name']+"</label></div>"+"<div><span>Experiment Name:<span><label>"+k['experiment_name']+"</label></div>"+"<div><span>Experiment type:<span><label>"+k['experiment_type']+"</label></div>"
+                html=html+"<div class='description'><div><span>Project:</span><label>"+k['project_name']+"</label></div>"+"<div><span>Experiment Name:</span><label>"+k['experiment_name']+"</label></div>"+"<div><span>Experiment type:</span><label>"+k['experiment_type']+"</label></div>"+"<div><span>Array type:</span><label>"+k['array_type']+"</label> <span>Analysis type:</span><label>"+k['analysis_type']+"</label></div>" 
                 try:
                     nb_ex=int(k['other_experiment_nb'])
                     if nb_ex>0:
@@ -354,21 +355,41 @@ class data_table:
                             html=html+"<div><span>Other Experiment "+str(el)+":</span><label>"+str(k['other_experiment_'+str(el)+'_experiment_name'])+"</label></div>"
                 except:
                     pass
-                html=html+'</div>'
+                try:
+                    html=html+"<div><span>Experiment factors:</span><label>"+k['experiment_factors']+"</label></div>"
+                except:
+                    pass
+                try:
+                    html=html+"<div><span>Source:</span><label>"+k['source']+"</label></div>"
+                except:
+                    pass
+                html=html+"</div>"
                 #block contact 
                 html=html+"<div class='contact_prod'>"
                 
                 try:
                     nb_ex=int(k['coordiantor_nb'])
+                    if nb_ex>1:
+                        html=html+'<div class="coordinateur_project_ele" style="    display: flex;"><span> Contact(s) </span><div class="progress-bar progress-bar-warning" style="margin-left: 5%;width: 12.5%;">'+str(nb_ex)+'</div></div>'
+                    if nb_ex==1:
+                        html=html+'<div class="coordinateur_project_ele" style="    display: flex;"><span> Contact </span><div class="progress-bar progress-bar-warning" style="margin-left: 5%; width: 12.5%;">'+str(nb_ex)+'</div></div>'
                     if nb_ex>0:
                         for el in range(1,nb_ex+1):
-                            html=html+"<div><span>Contact "+str(el)+":</span><label>"+str(k['coordiantor_'+str(el)+'_last_name'])+"</label></div>"
+                            text='<div class="coordinateur_project_ele"><div><i class="fas fa-user-tie"></i><span>Name</span>: '+k['coordiantor_'+str(el)+'_last_name']+' '+k['coordiantor_'+str(el)+'_first_name']+'</div>'
+                            #text=text+'<div><i class="fas fa-mobile-alt"></i><span>Phone: </span> '+k['coordiantor_'+str(el)+'_phone']+'</div><div><i class="fas fa-envelope"></i><span>Email</span>:'+k['coordiantor_'+str(el)+'_email']+'</div><div><i class="fas fa-university"></i><span>Insitution:</span>'+k['coordiantor_'+str(el)+'_institution']+'</div>'
+                            #text=text+'<div><i class="far fa-building"></i><span>Laboratory: </span> '+k['coordiantor_'+str(el)+'_laboratory']+'</div><div><i class="fas fa-map-marked"></i><span>Address:</span>'+k['coordiantor_'+str(el)+'_address']+'</div></div>'
+                            html=html+text+'</div>'
+                            #html=html+"<div><span>Contact "+str(el)+":</span><label>"+str(k['coordiantor_'+str(el)+'_last_name'])+"</label></div>"
                 except:
                     pass
                 html=html+"</div></div>"
                 #print(k)
                 
                 html=html+"<div class='biological_project'><span>Biologicial Interest:</span>"+k['biological_interest']+"</div>"
+                
+                html=html+"<div class='file_project'></div>"#<span>Biologicial Interest:</span>"+k['biological_interest']+"
+                
+                    
                 #html=html+"<div class='row'>"
                 #'gem2net_id'
                 #'source'

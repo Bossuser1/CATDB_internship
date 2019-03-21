@@ -166,9 +166,9 @@ def get_tableau(request):
     #if sort_col!=None:
     #    tableau.sorted_data(sort_col)
     #av,html=tableau.get_specifique_data()
-    return HttpResponse(html, content_type="application/json")     
+    return HttpResponse(html, content_type="application/text")     
 
 def get_information_experiment(request):
     experimentid=request.GET.get('experiment_id', None)
     value=tableau.specifique_information('experiment_id',experimentid)    
-    return HttpResponse(json.dumps(value), content_type="application/json")
+    return HttpResponse(value, content_type="application/text")
