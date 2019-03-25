@@ -85,7 +85,7 @@ html_print="""
   <meta charset="UTF-8" />
   <title>d3.js learning</title>
   <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-  <script src="{% static "bibliotheque/d3/d3.js" %}"></script>
+  <!--<script src="{% static "bibliotheque/d3/d3.js" %}"></script>-->
   <style type="text/css">
   svg {
     font: 10px sans-serif;

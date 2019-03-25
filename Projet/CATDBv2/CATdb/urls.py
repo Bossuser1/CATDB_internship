@@ -10,4 +10,5 @@ from . import views
 urlpatterns = [
     path('', views.index, name='index'),
     url('^ajax/chekEmail$',views.ajax_check_email_fields),
+    url('^ficheexperiment.html$',views.ficheexperiment),
 ]+static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

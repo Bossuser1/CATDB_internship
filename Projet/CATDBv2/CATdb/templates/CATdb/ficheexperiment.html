@@ -1,0 +1,85 @@
+{% extends "CATdb/home.html" %}
+{% block content %}
+{% load staticfiles %}
+<script src="{% static "js/dg.js" %}"></script>
+
+<style>
+#description_project .rnasformat a::before {
+  content: url("{% static "/img/icons8-fichier-image.svg");
+}
+#description_project .rnasformat{
+display: grid;
+grid-template-columns: fit-content(45%) fit-content(45%);
+}
+</style>
+
+<div id="description_project"> 
+
+<div>Project name:{{experiment}} && {{project}} </div>
+</div>
+
+<script>
+var condiction='experiment_id={{experiment}}#project_id={{project}}';
+
+try{
+var Data_experi=DG_execQuery('experiment_info_rnaseq','',condiction);
+console.log(Data_experi);
+}catch{
+console.log('=======Verif======');
+};
+var descript_rnas_prod="";
+try{
+var descript_rnas_prod=descript_rnas_prod+'<div class="info_ex">';
+var descript_rnas_prod=descript_rnas_prod+'<div> Project Name:'+Data_experi[1]._value['project_name']+'</div>';
+var descript_rnas_prod=descript_rnas_prod+'<div> Experiment Name:'+Data_experi[1]._value['experiment_name']+'</div>';
+var descript_rnas_prod=descript_rnas_prod+'<div> Experiment Type:'+Data_experi[1]._value['experiment_type']+'</div>';
+var descript_rnas_prod=descript_rnas_prod+'<div> Experiment factors:'+Data_experi[1]._value['experiment_factors']+'</div>'
+
+$('#description_project').append(descript_rnas_prod);
+
+}catch{
+
+
+};
+
+
+
+
+try{
+var Data=DG_execQuery('rnaseqdata','',condiction);
+}catch{
+};
+var infolibaraby="";
+try{
+var infolibaraby=infolibaraby+'<div class="rnasformat" style="display: grid;grid-template-columns: fit-content(45%) fit-content(45%);margin: 12px;">';
+var infolibaraby=infolibaraby+'<div> Mapping Type:'+Data[1]._value['mapping_type']+'</div>'
+var infolibaraby=infolibaraby+'<div> Type of Sequence:'+Data[1]._value['seq_type']+'</div>';
+var infolibaraby=infolibaraby+'<div> Multihits:'+Data[1]._value['multihits']+'</div>';
+var infolibaraby=infolibaraby+'<div> Stranded:'+Data[1]._value['stranded']+'</div>';
+var infolibaraby=infolibaraby+'<div> Project file:<a href="{{sortage_link}}'+Data[1]._value['project_file']+'"><img src="{% static "/img/icons8-fichier-image.svg" %}" style="width: 25px;height: 15px;" >'+'</a></div>';
+var infolibaraby=infolibaraby+'<div> Resume file:<a href="{{sortage_link}}'+Data[1]._value['resume_file']+'"><img src="{% static "/img/icons8-fichier-image.svg" %}" style="width: 25px;height: 15px;" onclick="{{sortage_link}}'+Data[1]._value['resume_file']+'">'+'</a></div>'; 
+var infolibaraby=infolibaraby+'<div> log file:<a href="{{sortage_link}}'+Data[1]._value['log_file']+'"><img src="{% static "/img/icons8-fichier-image.svg" %}" style="width: 25px;height: 15px;" onclick="{{sortage_link}}'+Data[1]._value['log_file']+'">'+'</a></div>';
+var infolibaraby=infolibaraby+'</div>'
+$('#description_project').append(infolibaraby);
+}catch{
+}
+//remplissage des librarys
+try{
+var Data_labry=DG_execQuery('rnaseqlibrary','',condiction);
+}catch{
+};
+
+var library="";
+try{
+var library=library+'<div> Name of Rnaseq Library :'+Data_labry[1]._value['rnaseqlibrary_name']+'</div>'
+var library=library+'<div> Strategy of Rnaseq Library :'+Data_labry[1]._value['library_strategy']+'</div>'
+var library=library+'<div> Sequencer :'+Data_labry[1]._value['sequencer']+'</div>'
+var library=library+'<div> Sizing :'+Data_labry[1]._value['sizing']+'</div>'
+var library=library+'<div> Selection :'+Data_labry[1]._value['rna_selection']+'</div>'
+var library=library+'<div> sequence Length :'+Data_labry[1]._value['seq_length']+'</div>'
+
+$('#description_project').append(library);
+}catch{}
+
+</script>
+{% endblock %}

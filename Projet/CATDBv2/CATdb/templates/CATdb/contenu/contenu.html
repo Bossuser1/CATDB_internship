@@ -14,7 +14,11 @@
 
 <script>
 var Dataload='';
-function affichage_project_add(data){
+try{
+var url="{{url1}}";
+}catch{};
+
+function affichage_project_add(data,url){
 		try{
 			;
 		//var text="<div class='tablea_prod'>";
@@ -24,7 +28,8 @@ function affichage_project_add(data){
 			var key=Object.keys(data[1]._value);
 			//var size='style="width: '+100/(key.length-1)+'%;float: left;"';
 			//var text=text+'<div class="row_table" id="'+key[0]+data[i]._value[key[0]]+'" >'; //style="display: inline-flex;"
-			var text=text+'<tr>'
+			var key=data[i]._value['experiment_id'];
+			var text=text+'<tr>';
 			var text=text+'<td class="table_name_left">'+data[i]._value['project_name']+'</td>';//._value['project_id']//._value['project_name']} __get_url({"key":"consult_project","value":data[i][1],"affichage":data[i][0])
 			var text=text+'<td class="table_name_middle">'+data[i]._value['experiment_name']+'</td>';//._value['title']
 			var text=text+'<td class="table_name_middle">'+data[i]._value['experiment_type']+'</td>';//._value['title']
@@ -42,7 +47,7 @@ try{var Dataload=DG_execQuery('projet_add_new','','');//get data
 }catch(error){console.log("verifier la requete projetc_add_new requete is false")};
 
 try{
-	 affichage_project_add(Dataload);
+	 affichage_project_add(Dataload,url);
      //console.log(Object.keys(Dataload));
      //console.log(Dataload[1]._value);   
 }catch(error){};

@@ -154,3 +154,11 @@ function DG_execQuery_regroupe($Tablename,$QueryType,$ListDataCond){
 	});
 	return Data;
 };
+
+function _geturl(url,key){
+    var text=url+key;
+    var text='<a href="'+text+'"'+'>';
+    return text;
+    }
+
+
