@@ -1,0 +1,50 @@
+{% load staticfiles %}
+<div id="contenu_pro" class="analysis">
+<div class="_loop_card_header_main_footer"><div class="_loop_card_header"></div><div class="_loop_card_main_section">
+</div></div>
+</div>
+<script src="{% static "js/dg.js" %}"></script>
+<!--<link rel="stylesheet" type="text/css" href="{% static "css/main.css" %}">-->
+<style>
+.table_name_left{float:left,width:25%}
+.table_name_middle{float:left,width:50%}
+.table_name_right{float:right,width:25%}
+
+</style>
+
+<script>
+var Dataload='';
+function affichage_project_add(data){
+		try{
+			;
+		//var text="<div class='tablea_prod'>";
+		var text="<table><thead><tr><th class='table_name_left'>Project name</th><th class='table_name_midlle'>experiment_name</th><th class='table_name_midlle'>experiment_type</th><th class='table_name_left'>analysis_type </th></tr></thead><tbody>"
+				
+		for (var i=1;i<Object.keys(data).length;i++){
+			var key=Object.keys(data[1]._value);
+			//var size='style="width: '+100/(key.length-1)+'%;float: left;"';
+			//var text=text+'<div class="row_table" id="'+key[0]+data[i]._value[key[0]]+'" >'; //style="display: inline-flex;"
+			var text=text+'<tr>'
+			var text=text+'<td class="table_name_left">'+data[i]._value['project_name']+'</td>';//._value['project_id']//._value['project_name']} __get_url({"key":"consult_project","value":data[i][1],"affichage":data[i][0])
+			var text=text+'<td class="table_name_middle">'+data[i]._value['experiment_name']+'</td>';//._value['title']
+			var text=text+'<td class="table_name_middle">'+data[i]._value['experiment_type']+'</td>';//._value['title']
+			var text=text+'<td class="table_name_right">'+data[i]._value['analysis_type']+'</td>';//._value['public_date']
+			var text=text+'</tr>';
+			//var text=text+'</div>';
+		}; //project_name,ex.experiment_name,ex.experiment_type,ex.analysis_type,ex.array_type
+		var text=text+'</tbody> <tfoot><tr><th>Lasts Experiments Publics</th></tr></tfoot></table>';
+		if (Object.keys(data).length===0){var text="";};
+		$('._loop_card_main_section').append(text);
+		}catch{};
+	}
+	
+try{var Dataload=DG_execQuery('projet_add_new','','');//get data 
+}catch(error){console.log("verifier la requete projetc_add_new requete is false")};
+
+try{
+	 affichage_project_add(Dataload);
+     //console.log(Object.keys(Dataload));
+     //console.log(Dataload[1]._value);   
+}catch(error){};
+
+</script>

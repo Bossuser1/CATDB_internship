@@ -21,7 +21,7 @@ from configparser import ConfigParser
 
 def config(section='postgresql'):
     #os.getcwd()
-    direction='/export/home/gnet/btraore/WWW_DEV/cgi-bin/projects/CATDB/CATdb'#'/export/home/gnet/btraore/WWW_DEV/cgi-bin/projects/CATDB/CATdb'#
+    direction='/home/traore/Bureau/Dossier_Stage/CATDB_internship/Projet/CATDB/CATdb/'#'/export/home/gnet/btraore/WWW_DEV/cgi-bin/projects/CATDB/CATdb'#'/export/home/gnet/btraore/WWW_DEV/cgi-bin/projects/CATDB/CATdb'#
     if os.getcwd()[0:12]!="/home/traore":
     	filename=direction+'/database.ini'
     else:

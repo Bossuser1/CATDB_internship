@@ -1,0 +1,272 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en" >
+   <head>
+      <meta charset="UTF-8">
+      <title>Fiche Description </title>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.0/css/all.css">
+      <link rel='stylesheet' href="{% static "css/all.css" %}">
+      <link rel='stylesheet' href="{% static "bibliotheque/bootstrap/css/bootstrap.min.css" %}">
+      <script src="{% static "bibliotheque/jquery-3.3.1.min.js" %}"/></script>
+   </head>
+   <body>
+      <style>
+         .nav-link:hover{
+         background-color:#ffffff;
+         }
+         span {
+         font-weight: bold;
+         text-decoration: underline #1cbf03;
+         }
+         .my-custom-scrollbar {
+         /*position: relative;*/
+         height: 200px;
+         width: 100%;
+         overflow-y: scroll;
+         overflow-x: hidden;
+         }
+         .table-wrapper-scroll-y {
+         display: block;
+         }
+         .table-fixed{
+         width: 100%;
+         background-color: #f3f3f3;
+         tbody{
+         height:200px;
+         overflow-y:auto;
+         width: 100%;
+         }
+         thead,tbody,tr,td,th{
+         display:block;
+         }
+         tbody{
+         td{
+         float:left;
+         }
+         }
+         thead {
+         tr{
+         th{
+         float:left;
+         background-color: #f39c12;
+         border-color:#e67e22;
+         }
+         }
+         }
+         }
+         table{
+         font-size:calc(56.8%);
+         }
+         table thead{
+         display: list-item;width: 100%;
+         }
+         table tbody{
+         max-height: 250px;overflow-y: scroll;display: list-item;/*! width: 100%; *//*! float: right; */"
+         }
+         .file_project {
+         border: 1px solid #f7f7f7;
+         min-height: 45px;
+         }
+         .nav-pills .nav-link {
+         cursor: pointer;
+         }
+         .dropdown {
+         position: relative;
+         }
+         li > a {
+         display: block;
+         padding: 3px 20px;
+         clear: both;
+         font-weight: normal;
+         line-height: 1.42857143;
+         color: #333;
+         white-space: nowrap;
+         }
+         .open > .dropdown-menu {
+         display: block;
+         }
+         .dropdown-menu {
+         position: absolute;
+         top: 100%;
+         left: 0;
+         z-index: 1000;
+         display: none;
+         float: left;
+         min-width: 160px;
+         padding: 5px 0;
+         margin: 2px 0 0;
+         font-size: 14px;
+         text-align: left;
+         list-style: none;
+         background-color: #fff;
+         -webkit-background-clip: padding-box;
+         background-clip: padding-box;
+         border: 1px solid #ccc;
+         border: 1px solid rgba(0, 0, 0, .15);
+         border-radius: 4px;
+         -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+         box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+         }
+         #description_body{
+         min-height: 250px;
+         }
+         .description,.contact_prod{margin:2%};
+         #description_body{
+         display: -webkit-box;
+         }
+         #font_less{
+         margin-left:2%;
+         }
+         .logo{
+         content: "";
+         display: inline-block;
+         width: 100%;
+         height: 100%;
+         margin: -0.2em 0.5em 0 0;
+         background: url("http://tools.ips2.u-psud.fr//GEM2NET/logos/catdb_icon122x68.jpg") no-repeat center center;
+         background-size: contain;
+         }
+         .logo_gem2net{
+         content: "";
+         display: inline-block;
+         width: 100%;
+         height: 100%;
+         margin: -0.2em 0.5em 0 0;
+         background: url("http://tools.ips2.u-psud.fr/projects/GEM2NET/logos/GEM2NET_logo5_transpa.png") no-repeat center center;
+         background-size: contain;
+         }
+         .logIPS2{
+         content: "";
+         display: inline-block;
+         width: 100%;
+         height: 100%;
+         margin: -0.2em 0.5em 0 0;
+         background: url("http://tools.ips2.u-psud.fr/logos/logo-ips2-trans.png") no-repeat center center;
+         background-size: contain;
+         } 
+         .bd-sidebar{
+         background: #f7f7f7;
+         }
+         /* The Modal (background) */
+         .modal {
+         display: none; /* Hidden by default */
+         position: fixed; /* Stay in place */
+         z-index: 1; /* Sit on top */
+         left: 0;
+         top: 0;
+         width: 100%; /* Full width */
+         height: 100%; /* Full height */
+         overflow: auto; /* Enable scroll if needed */
+         background-color: rgb(0,0,0); /* Fallback color */
+         background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+         }
+         /* Modal Button */
+         #myBtn {
+         background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="28" height="49" viewBox="0 0 28 49"%3E%3Cg fill-rule="evenodd"%3E%3Cg id="hexagons" fill="%239C92AC" fill-opacity="0.4" fill-rule="nonzero"%3E%3Cpath d="M13.99 9.25l13 7.5v15l-13 7.5L1 31.75v-15l12.99-7.5zM3 17.9v12.7l10.99 6.34 11-6.35V17.9l-11-6.34L3 17.9zM0 15l12.98-7.5V0h-2v6.35L0 12.69v2.3zm0 18.5L12.98 41v8h-2v-6.85L0 35.81v-2.3zM15 0v7.5L27.99 15H28v-2.31h-.01L17 6.35V0h-2zm0 49v-8l12.99-7.5H28v2.31h-.01L17 42.15V49h-2z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');
+         background-color: #82b1ff;
+         display: inline;
+         }
+         /* Modal Header */
+         .modal-header {
+         padding: 3em;
+         background-color: #0288d1;
+         color: white;
+         border-radius: 10px 10px 0px 0px;
+         box-shadow: 5px;
+         }
+         /* Modal Body */
+         .modal-body {
+         padding: 3em;
+         }
+         /* Modal Footer */
+         .modal-footer {
+         padding: 3em;
+         margin-bottom: 30px;
+         background-color: #0288d1;
+         color: white;
+         border-radius: 0px 0px 10px 10px;
+         box-shadow: 5px;
+         }
+         /* Modal Content */
+         .modal-content {
+         position: relative;
+         background-color: #fefefe;
+         margin: auto;
+         margin-top: 30px;
+         padding: 0;
+         width: 500px;
+         text-align: center;
+         vertical-align: center;
+         border: 0px 1px 0px 1px solid #888;
+         border-radius: 10%;
+         box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.19), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+         animation-name: animatetop;
+         animation-duration: 0.5s;
+         }
+         /* Add Animation */
+         @keyframes animatetop {
+         from {
+         top: -300px;
+         opacity: 0;
+         }
+         to {
+         top: 0;
+         opacity: 1;
+         }
+         }
+         /* The Close Button */
+         .close {
+         color: #aaa;
+         float: right;
+         font-size: 28px;
+         font-weight: bold;
+         }
+         .close:hover,
+         .close:focus {
+         color: black;
+         text-decoration: none;
+         cursor: pointer;
+         }
+         #logIn {
+         }
+         .login {
+         align-content: center;
+         }
+      </style>
+      <div class="container-fluid">
+         <div id="header" class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar" style="height: 3.5625em;">
+         </div>
+         <div class="row flex-xl-nowrap">
+            <div class="col-12 col-md-2 col-xl-2 bd-sidebar">
+               <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                  <a class="nav-link active" id="v-pills-listproject" data-toggle="pill" role="tab" aria-controls="v-pills-home" aria-selected="true">New Project</a>
+                  <a class="nav-link " id="v-pills-profile-tab" data-toggle="pill" role="tab" aria-controls="v-pills-profile" aria-selected="false">Search</a>
+                  <a class="nav-link " id="experiment_link" data-toggle="pill" role="tab" aria-controls="v-pills-messages" aria-selected="false">Fiche experiments</a>
+                  <!-- <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" role="tab" aria-controls="v-pills-settings" aria-selected="false">Settings</a>-->
+               </div>
+            </div>
+            <div class="content col-md-9" style="margin-left: 3%;margin-top: 2%;">
+                  {% block content %}
+                  {% endblock %}	
+            </div>
+         </div>
+      </div>
+      <div id="myModal" class="modal">
+         <div class="modal-content">
+            <div class="modal-header">
+               <h2>Project</h2>
+               <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+               <p>Descriptif</p>
+            </div>
+            <div class="modal-footer">
+               <h5>Modal Footer</h5>
+            </div>
+         </div>
+      </div>
+      <script>
+         $('#header').append('<a href="#" class="logo"> </a><a href="#" class="logo_gem2net"> </a><a href="#" class="logIPS2"></a>');
+      </script>
+   </body>
+</html>
