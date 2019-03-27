@@ -161,11 +161,22 @@ def graph_experiment_factors():
     
     xdata=[]
     ydata=[]
-    list1=list(comptability.keys())[0:20]
-    for element in list1:
-        xdata.append(element)# = ["A", "B", "C", "D", "E", "F"]
-        ydata.append(len(comptability[element]))# = [3, 4, 0, -3, 5, 7]
+    list1=list(comptability.keys())#[0:20]
+
     
+    dataplost={}
+    for element in list1:
+        dataplost[element]=len(comptability[element])
+    a=sorted(dataplost,key=dataplost.__getitem__,reverse=True)
+    
+    ######a corriger car fixer
+    for element in a[0:30]:
+        xdata.append(element)
+        ydata.append(dataplost[element])
+    #xdata.append(element)# = ["A", "B", "C", "D", "E", "F"]
+        #ydata.append(len(comptability[element]))# = [3, 4, 0, -3, 5, 7]
+    #array=np.array([xdata,ydata])
+    #a=np.sort(array,axis=1)
     chart.add_serie(y=ydata, x=xdata)
     chart.buildhtml()
 
@@ -186,6 +197,7 @@ def graph_experiment_factors():
     
     return text
 
+#graph_experiment_factors()
 #print(graph_experiment_factors())  
     
 #
