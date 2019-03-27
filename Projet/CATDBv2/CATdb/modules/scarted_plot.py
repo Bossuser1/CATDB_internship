@@ -486,7 +486,9 @@ except:
     pass  
 
 
-with open("/home/traore/Bureau/Dossier_Stage/CATDB_internship/Projet/CATDBv2/CATdb/templates/CATdb/graph/graph.html",'w') as fi:
-    fi.write(html_print)
-    fi.close()
-  
+try:
+    with open("/home/traore/Bureau/Dossier_Stage/CATDB_internship/Projet/CATDBv2/CATdb/templates/CATdb/graph/graph.html",'w') as fi:
+        fi.write(html_print)
+        fi.close()
+except:
+    pass
