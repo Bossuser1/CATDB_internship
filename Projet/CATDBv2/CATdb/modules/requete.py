@@ -1,13 +1,32 @@
 import psycopg2
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+import os
 
-params={'database':"postgresql",
+
+cwd=os.getcwd()
+
+params1={'database':"postgresql",
 'host':'localhost',
 'database':'catdb',
 'user':'uselect2',
 'password':'seloct06',
 'port':'5432'}
+
+
+params2={'database':"postgresql",
+'host':'dayhoff.ips2.u-psud.fr',
+'database':'CATDB',
+'user':'uselect',
+'password':'seloct06',
+'port':'1521'}
+
+
+
+if cwd[0:12]=='/home/traore':
+    params=params1
+else:
+    params=params2
 
 def getdata(requete):
     conn = psycopg2.connect(**params)
