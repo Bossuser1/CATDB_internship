@@ -33,8 +33,8 @@ def graph_treatment():
         for i in range(0,len(data)):
             xdata.append(data[i][0])
             ydata.append(int(data[i][1]))
-    dimwith=700
-    dimheight=500
+    dimwith=800
+    dimheight=700
     
     from nvd3 import pieChart
     type =key2
@@ -47,8 +47,9 @@ def graph_treatment():
     argument1="""chart.color(d3.scale.category20c().range());\n\n    chart.tooltipContent(function(key, y, e, graph) {\n          var x = String(key);\n              var y =  String(y)  + \' cal\';\n\n              tooltip_str = \'<center><b>\'+x+\'</b></center>\' + y;\n              return tooltip_str;\n              });\n"""
     ##$('#piechart svg.nvd3-svg').attr('width')=dimwith+100
     argument2=" "
-    
-    
+    argument7="""});\n        var datum ="""
+    argument8="""});\n  chart.legendPosition("right");\n      var datum ="""
+    text=text.replace(argument7,argument8)
     text=text.replace(argument1,argument2)
     #text=text.replace('return tooltip_str;\n              });\n       ','return tooltip_str;\n              });*\ \n       ')
     argument3="nv.addGraph(function() {\n"
@@ -118,6 +119,11 @@ def graph_ecotype():
     argument2="var chart"+key+" = nv.models.multiBarChart();\n\n \n\n"
     text=text.replace(argument1,argument2)
     text=text.replace("chart.","chart"+key+".")
+
+    argument7="""});\n        var datum ="""
+    argument8="""});\n  chart"""+key+""".legendPosition("right");\n      var datum ="""
+    text=text.replace(argument7,argument8)
+
     text=text.replace(".call(chart);",".call(chart"+key+");")
     text=text.replace("</script>","$('#multigraph1 .nv-controlsWrap .nv-series:eq(0)').addClass('nv-disabled');\n </script>")    
     argument3="nv.addGraph(function() {\n"
@@ -197,10 +203,15 @@ def graph_experiment_factors():
     
     return text
 
+
+#def graph_experiment_type():
+#    requete="SELECT experiment.experiment_factors,experiment.project_id  "\
+#    "FROM chips.experiment;"
+#    from nvd3 import multiBarHorizontalChart
 #graph_experiment_factors()
 #print(graph_experiment_factors())  
-    
-#
+
+
 #import operator
 #
 #split=dict(np.transpose(dat2).sum())
@@ -213,3 +224,5 @@ def graph_experiment_factors():
 #       list2.append(element)   
 #
 #dat2.loc[list2,u'Vitis vinifera']
+
+#.legendPosition("right");
