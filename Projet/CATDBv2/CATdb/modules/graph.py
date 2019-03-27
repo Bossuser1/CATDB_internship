@@ -115,7 +115,7 @@ def graph_ecotype():
     chart1.buildhtml()
     text=chart1.htmlcontent
     argument1="var chart = nv.models.multiBarChart();\n\n"
-    argument2="var chart"+key+" = nv.models.multiBarChart();\n\n"
+    argument2="var chart"+key+" = nv.models.multiBarChart();\n\n \n\n"
     text=text.replace(argument1,argument2)
     text=text.replace("chart.","chart"+key+".")
     text=text.replace(".call(chart);",".call(chart"+key+");")
@@ -124,11 +124,70 @@ def graph_ecotype():
     argument4="function rungraph(){ \n nv.addGraph(function() {\n"
     text=text.replace(argument3,argument4) 
     argument5="</script>"
-    argument6="};\n rungraph(); \n </script>"
+    argument6="};\n rungraph(); \n alert(); </script>"
     text=text.replace(argument5,argument6)                                
     return text     
 
+def graph_experiment_factors():
+    requete="SELECT experiment.experiment_factors,experiment.project_id  "\
+    "FROM chips.experiment;"
+    r,data=getdata(requete)
+    list_element=[]
+    comptability={}
+    for j in range(len(data)):
+        text=data[j][0]
+        for elemnt in text.split(','):
+            if elemnt[0]==' ':
+               elemnt=elemnt[1:]
+            elemnt=elemnt.replace('\t','')
+            if elemnt[-1]==' ':
+               elemnt=elemnt[0:-1]
+            if elemnt[-5:]=='a wt)':
+               elemnt=elemnt[0:-4]
+            if elemnt[0:2]!='--':
+               list_element.append(elemnt)
+               if elemnt not in comptability.keys():
+                   comptability[elemnt]=[data[j][1]]
+               else:
+                   cpt=comptability[elemnt]
+                   cpt.append(data[j][1])
+                   comptability[elemnt]=list(set(cpt))
+    #data_plot={}
+    #for element in comptability.keys():
+    #    data_plot[0]
+    
+    from nvd3 import discreteBarChart
+    chart = discreteBarChart(name='discreteBarChart', height=400, width=800)
+    
+    xdata=[]
+    ydata=[]
+    list1=list(comptability.keys())[0:20]
+    for element in list1:
+        xdata.append(element)# = ["A", "B", "C", "D", "E", "F"]
+        ydata.append(len(comptability[element]))# = [3, 4, 0, -3, 5, 7]
+    
+    chart.add_serie(y=ydata, x=xdata)
+    chart.buildhtml()
 
+    
+    text=chart.htmlcontent
+
+    argument1="var chart = nv.models.discreteBarChart();\n\n"
+    argument2="var chart = nv.models.discreteBarChart();\n\n chart.xAxis.rotateLabels(-90); \n\n"
+    text=text.replace(argument1,argument2)
+
+    argument3="nv.addGraph(function() {\n"
+    argument4="function rungraphdiscret(){ \n nv.addGraph(function() {\n"
+    text=text.replace(argument3,argument4) 
+    argument5="</script>"
+    argument6="};\n rungraphdiscret(); alert();\n </script>"
+    text=text.replace(argument5,argument6)                                
+
+    
+    return text
+
+#print(graph_experiment_factors())  
+    
 #
 #import operator
 #
