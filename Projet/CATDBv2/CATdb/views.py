@@ -10,12 +10,13 @@ from django.http import HttpResponseRedirect
 from CATdb.modules.requete import getdata 
 from CATdb.modules.scarted_plot import analyis_arra_type
 from CATdb.modules.sample import sampling_get
-from CATdb.modules.graph import graph_treatment
+from CATdb.modules.graph import graph_treatment,graph_ecotype
 
 def explorationgraph(request):
-    list_graph="<div> <ul><li>Graph1</li><li>Graph2</li></ul></div>"
-    show_treatment=graph_treatment()    
-    return render(request, 'CATdb/graph/explore_graph.html',{'list_graph':list_graph,'titre_page':'Explore Databases','show_treatment':show_treatment})
+    list_graph="<div> <ul><li>Treatment</li><li>Graph2</li></ul></div>"
+    show_treatment=graph_treatment()
+    show_ecotype=graph_ecotype()    
+    return render(request, 'CATdb/graph/explore_graph.html',{'list_graph':list_graph,'titre_page':'Explore Databases','show_treatment':show_treatment,'show_ecotype':show_ecotype})
 
 
 

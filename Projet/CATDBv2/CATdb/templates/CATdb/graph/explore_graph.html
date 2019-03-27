@@ -2,6 +2,21 @@
 {% block content %}
 {% load staticfiles %}
 
+<style>
+.graph_comment,.comment_graph{
+    border: aquamarine;
+    background: #b6a6a6;
+    text-align: center;
+    border-left: 5px solid #007bff;
+    border-right: 5px solid #007bff;
+}
+</style>
+<div class="graph_comment"> Treatment :{{titre_graph}} </div>
 {{show_treatment|safe}}
+
+
+<div class="graph_comment"> Ecotype cross Organism by project Table Graph1:{{titre_graph}} </div>
+{{show_ecotype|safe}}
+
 
  {% endblock %}
