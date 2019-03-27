@@ -3,11 +3,19 @@
 <html lang="en" >
    <head>
       <meta charset="UTF-8">
-      <title>Fiche Description </title>
+      <title>{{titre_page}} </title>
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.0/css/all.css">
       <link rel='stylesheet' href="{% static "css/all.css" %}">
       <link rel='stylesheet' href="{% static "bibliotheque/bootstrap/css/bootstrap.min.css" %}">
+
+
       <script src="{% static "bibliotheque/jquery-3.3.1.min.js" %}"/></script>
+   <script src="{% static "js/d3.v3.min.js" %}"/></script> 
+    
+      <link rel="stylesheet" href="{% static "build/nv.d3.min.css" %}">
+      <script src="{% static "build/nv.d3.min.js" %}"/></script>
+
+
    </head>
    <body>
       <style>
@@ -239,9 +247,13 @@
          <div class="row flex-xl-nowrap">
             <div class="col-12 col-md-2 col-xl-2 bd-sidebar">
                <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                  <a class="nav-link active" id="v-pills-listproject" data-toggle="pill" role="tab" aria-controls="v-pills-home" aria-selected="true">New Project</a>
-                  <a class="nav-link " id="v-pills-profile-tab" data-toggle="pill" role="tab" aria-controls="v-pills-profile" aria-selected="false">Search</a>
-                  <a class="nav-link " id="experiment_link" data-toggle="pill" role="tab" aria-controls="v-pills-messages" aria-selected="false">Fiche experiments</a>
+                  <a class="nav-link active" id="v-pills-listproject" data-toggle="pill" role="tab" aria-controls="v-pills-home" aria-selected="true" href="experiment.html">New Project</a>
+                  <a class="nav-link " id="v-pills-profile-tab" data-toggle="pill" role="tab" aria-controls="v-pills-profile" aria-selected="false" href="experiment.html">Lists Projects</a>
+                  <a class="nav-link " id="v-pills-profile-tab" data-toggle="pill" role="tab" aria-controls="v-pills-profile" aria-selected="false" href="explore.html">Explore Database</a>
+                  {{list_graph|safe}}
+<a class="nav-link" id="experiment" data-toggle="pill" role="tab" aria-controls="v-pills-messages" aria-selected="false" href="experiment.html">Experiments</a>               
+		
+		<a class="nav-link " id="experiment_link" data-toggle="pill" role="tab" aria-controls="v-pills-messages" aria-selected="false" href="ficheexperiment.html">Fiches experiments</a>
                   <!-- <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" role="tab" aria-controls="v-pills-settings" aria-selected="false">Settings</a>-->
                </div>
             </div>
@@ -266,6 +278,7 @@
          </div>
       </div>
       <script>
+         $('.col-12.col-md-2.col-xl-2.bd-sidebar').css('min-height',$(window).height()+'px');
          $('#header').append('<a href="#" class="logo"> </a><a href="#" class="logo_gem2net"> </a><a href="#" class="logIPS2"></a>');
       </script>
    </body>

@@ -8,7 +8,9 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from . import views
 
 urlpatterns = [
-    path('', views.index, name='index'),
+    path('', views.experiment),
+    url('^experiment.html$', views.experiment),
+    url('^explore.html$', views.explorationgraph),
     url('^ajax/chekEmail$',views.ajax_check_email_fields),
     url('^ficheexperiment.html$',views.ficheexperiment),
 ]+static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
