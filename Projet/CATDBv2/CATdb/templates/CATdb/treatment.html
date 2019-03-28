@@ -18,6 +18,12 @@
     border-left: 5px solid #007bff;
     border-right: 5px solid #007bff;
 }
+
+table tr:nth-child(2n){
+background-color:blue;
+}
+
+
 table tbody {
 tr:nth-child(even) {background: #CCC} !important;
 tr:nth-child(odd) {background: #FFF} !important;
@@ -26,7 +32,26 @@ tr:nth-child(odd) {background: #FFF} !important;
 <div class="graph_comment"> Treatment Table Graph:{{titre_graph}} </div>
 {{show_treatment|safe}}
 <!-- contenu -->
+
+
+<style>
+table tr td div {
+text-decoration:underline;
+cursor:move;
+}
+
+table tr:nth-child(even) td {background: #CCC} !important;
+table tr:nth-child(odd) {background: #FFF} !important;
+</style>
 <div class="comment_graph">  Contenant: </div>
 {{data|safe}}
+
+
+<script>
+$(document).ready(function(){
+$("table tr:odd").css("background","#ccc");
+$("table tr:odd").css("background","#fff");
+});
+</script>
 
 {% endblock %}
