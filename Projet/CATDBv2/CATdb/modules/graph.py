@@ -56,7 +56,7 @@ def graph_treatment():
     argument4="function rungraphpi(){ \n nv.addGraph(function() {\n"
     text=text.replace(argument3,argument4) 
     argument5="</script>"
-    argument6="} ;\n rungraphpi(); alert(); \n </script>"
+    argument6=" $('#piegraph').ready(function(){ d3.selectAll('.nv-slice').on('click',function(e){ var col=e.data.label; window.location='treatment.html?treatment='+col;   });}); } ;\n rungraphpi(); alert(); \n </script>"
     text=text.replace(argument5,argument6)   
 
 

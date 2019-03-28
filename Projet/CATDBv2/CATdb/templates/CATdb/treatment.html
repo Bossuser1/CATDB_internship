@@ -46,12 +46,15 @@ table tr:nth-child(odd) {background: #FFF} !important;
 <div class="comment_graph">  Contenant: </div>
 {{data|safe}}
 
-
 <script>
 $(document).ready(function(){
 $("table tr:odd").css("background","#ccc");
 $("table tr:odd").css("background","#fff");
+var size_ele=$(".comment_graph:eq(0)").width;
+$("table").css("width",size_ele+"px");
 });
+
+
 </script>
 
 {% endblock %}

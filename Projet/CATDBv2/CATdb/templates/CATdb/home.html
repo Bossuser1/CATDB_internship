@@ -11,6 +11,17 @@
 
       <script src="{% static "bibliotheque/jquery-3.3.1.min.js" %}"/></script>
    <script src="{% static "js/d3.v3.min.js" %}"/></script> 
+
+    <script>
+    function rgb2hex(rgb){
+     rgb = rgb.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
+     return (rgb && rgb.length === 4) ? "#" +
+      ("0" + parseInt(rgb[1],10).toString(16)).slice(-2) +
+      ("0" + parseInt(rgb[2],10).toString(16)).slice(-2) +
+      ("0" + parseInt(rgb[3],10).toString(16)).slice(-2) : '';
+    }
+    
+     </script>
     
       <link rel="stylesheet" href="{% static "build/nv.d3.min.css" %}">
       <script src="{% static "build/nv.d3.min.js" %}"/></script>
