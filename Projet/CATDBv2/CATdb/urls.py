@@ -10,6 +10,8 @@ from . import views
 urlpatterns = [
     path('', views.experiment),
     url('^experiment.html$', views.experiment),
+    url('^treatment.html$', views.treatment),
+    url('^project.html$', views.project),
     url('^explore.html$', views.explorationgraph),
     url('^ajax/chekEmail$',views.ajax_check_email_fields),
     url('^ficheexperiment.html$',views.ficheexperiment),

@@ -1,0 +1,32 @@
+{% extends "CATdb/home.html" %}
+{% block content %}
+
+<div class="comment"> 
+
+
+
+</div>
+
+
+
+<!-- graph -->
+<style>
+.graph_comment,.comment_graph{
+    border: aquamarine;
+    background: #b6a6a6;
+    text-align: center;
+    border-left: 5px solid #007bff;
+    border-right: 5px solid #007bff;
+}
+table tbody {
+tr:nth-child(even) {background: #CCC} !important;
+tr:nth-child(odd) {background: #FFF} !important;
+}
+</style>
+<div class="graph_comment"> Treatment Table Graph:{{titre_graph}} </div>
+{{show_treatment|safe}}
+<!-- contenu -->
+<div class="comment_graph">  Contenant: </div>
+{{data|safe}}
+
+{% endblock %}

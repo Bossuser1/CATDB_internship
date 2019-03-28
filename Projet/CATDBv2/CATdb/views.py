@@ -11,6 +11,7 @@ from CATdb.modules.requete import getdata
 from CATdb.modules.scarted_plot import analyis_arra_type
 from CATdb.modules.sample import sampling_get
 from CATdb.modules.graph import graph_treatment,graph_ecotype,graph_experiment_factors
+from CATdb.modules.tableau import tableau_treatment_specifique,tableau_treatment
 
 def explorationgraph(request):
     list_graph="<div> <ul><li>Treatment</li><li>Graph2</li></ul></div>"
@@ -30,6 +31,33 @@ def experiment(request):
     url1="CATdb/ficheexperiments/"
     url2="CATdb/exp/"
     return render(request, 'CATdb/experiment.html',{'titre_page':'Experiment','labelbael':labelbael,'color':color,'data_time':data_time,'value_tampon':value_tampon,'label1':label1,'titre_graph':'Analysis by Year','data':data,'url1':url1,'url2':url2})
+
+
+def project(request):
+    requete="SELECT project.project_name,experiment.experiment_name, project.public_date, project.is_public FROM chips.experiment,chips.project WHERE experiment.project_id = project.project_id and project.is_public='yes' order by project.public_date desc,project.project_name,experiment.experiment_name;"
+    #print(getdata(requete))
+    labelbael,color,data_time,value_tampon,label1=analyis_arra_type()
+    data=getdata(requete)
+    url1="CATdb/ficheexperiments/"
+    url2="CATdb/exp/"
+    return render(request, 'CATdb/experiment.html',{'titre_page':'Experiment','labelbael':labelbael,'color':color,'data_time':data_time,'value_tampon':value_tampon,'label1':label1,'titre_graph':'Analysis by Year','data':data,'url1':url1,'url2':url2})
+
+
+
+def treatment(request):
+    show_treatment=graph_treatment()
+    #print(getdata(requete))
+    labelbael,color,data_time,value_tampon,label1=analyis_arra_type()
+    parametre=request.GET.get('treatment','')
+    if parametre!='':
+        data=tableau_treatment_specifique(parametre)
+    else:
+        data=tableau_treatment()
+    url1="CATdb/ficheexperiments/"
+    url2="CATdb/exp/"
+    return render(request, 'CATdb/treatment.html',{'titre_page':'Treatment','data':data,'show_treatment':show_treatment})
+
+
 
 def ajax_check_email_fields(request):
     """
