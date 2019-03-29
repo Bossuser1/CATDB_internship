@@ -117,6 +117,14 @@ var feedback = (function ($) {
 			feedback.init(feedback_options);
 		});
 
+<!--  -->
+
+$('#menu_lab').ready(function(){
+var size=$(window).width()/70;
+var compt=$('#menu_lab .card').length;
+for (var i=0;i<compt;i++){$('#menu_lab .card:eq('+i+')').css('width',size+'rem');};
+})
+
 </script>
 
 <div class="row" style="min-height: 100px;">
