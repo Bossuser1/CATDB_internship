@@ -53,7 +53,9 @@ border-top: 2px solid darkcyan;
 }
 
 table{
-display: block;
+/*display: block;*/
+width: -webkit-fill-available;
+width: inherit;
 }
 
 #description_project .rnasformat a::before {
@@ -63,6 +65,15 @@ display: block;
 display: grid;
 grid-template-columns: fit-content(45%) fit-content(45%);
 }
+
+table tbody {
+tr:nth-child(even) {background: #CCC} !important;
+tr:nth-child(odd) {background: #FFF} !important;
+tr:nth-child(3n+2) {background: #FdF} !important;
+tr:nth-child(3n+1) {background: #CCC} !important;
+tr:nth-child(3n+2) {background: #FFF} !important;
+}
+
 </style>
 
 <div id="description_project" > 
@@ -76,7 +87,16 @@ grid-template-columns: fit-content(45%) fit-content(45%);
 {{sample|safe}}
 </div>
 
+<style>
+table tbody {
+tr:nth-child(even) {background: #CCC} !important;
+tr:nth-child(odd) {background: #FFF} !important;
+}
 
+table{margin-bottom:5%;}
+td{border: 1px solid;}
+
+</style>
 
 <script>
 var condiction='experiment_id={{experiment}}#project_id={{project}}';
@@ -148,6 +168,16 @@ var library=library+'</div>'
 $('#description_project').append(library);
 }catch{}
 
-</script>
 
+$("table").rowspanizer({vertical_align: 'middle'});
+
+$("table tr:even").css("background","#ccc");
+$("table tr:odd").css("background","#fff");
+var textnew="<div style='background: #f7f7f7;'>Sample contenant Description</div><div> Information </div>";
+
+$('.experiment_sample').ready(function(){
+$('#description_project').append(textnew);
+});
+</script>
+</div>
 {% endblock %}

@@ -4,7 +4,9 @@ from django.shortcuts import render
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 import json
-from django.http import HttpResponse
+import os
+from django.conf import settings
+from django.http import HttpResponse, Http404
 from django.http import HttpResponseRedirect
 
 from CATdb.modules.requete import getdata 
@@ -12,6 +14,24 @@ from CATdb.modules.scarted_plot import analyis_arra_type
 from CATdb.modules.sample import sampling_get
 from CATdb.modules.graph import graph_treatment,graph_ecotype,graph_experiment_factors
 from CATdb.modules.tableau import tableau_treatment_specifique,tableau_treatment
+
+
+def accueil(request):
+    #{{effectis_Organism}}{{effectis_Protocols}}{{effectis_analyis}}{{effectis_Ecotype}}
+    return render(request, 'CATdb/accueil.html',{'effectis_projects':417,'effectis_experiments':617,'effectis_Treatments':120,'effectis_Technologies':276,'effectis_Ecotype':256,'effectis_analyis':765,'effectis_Protocols':145,'effectis_Organism':278})
+    
+
+
+def download(request):
+    #request, path
+    file_path = os.path.join(settings.MEDIA_ROOT, path)
+    if os.path.exists(file_path):
+        with open(file_path, 'rb') as fh:
+            response = HttpResponse(fh.read(), content_type="application/vnd.ms-excel")
+            response['Content-Disposition'] = 'inline; filename=' + os.path.basename(file_path)
+            return response
+    raise Http404
+
 
 def explorationgraph(request):
     list_graph="<div> <ul><li>Treatment</li><li>Graph2</li></ul></div>"

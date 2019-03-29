@@ -1,0 +1,220 @@
+{% extends "CATdb/home.html" %}
+{% block content %}
+
+<style>
+#menu_lab{
+  display:grid;
+  grid-template-columns: fit-content(25%) fit-content(25%) fit-content(25%) ;
+  
+}
+
+.show_card{
+ min-width:150px;
+ min-height: 150px;
+  border: 1px solid #05ffb0;
+  margin:12px;
+ text-align: center;  
+}
+
+#menu_lab .card{
+ margin:12px;
+}
+.card-img-top{
+height: 40%;
+}
+
+.center{
+	position: fixed;
+	top: 50%;
+	right: 0px;
+	width: 95px;
+	height: 0px;
+	text-align:right;
+	z-index:9999;
+	margin-top:-15px;
+  }
+  
+.center a{
+	transform: rotate(-90deg);
+	-webkit-transform: rotate(-90deg); 
+	-moz-transform: rotate(-90deg); 
+	-o-transform: rotate(-90deg); 
+	filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+	display: block; 
+	background: #06c; 
+	text-align:center;
+	height: 70px; 
+	width: 165px;
+	padding: 8px 16px;
+	color: #fff; 
+	font-family: Arial, sans-serif; 
+	font-size: 25px; 
+	font-weight: bold; 
+	text-decoration: none; 
+	border-bottom: solid 1px #333; border-left: solid 1px #333; border-right: solid 1px #fff;	  
+}
+  
+.center a:hover { 
+	background: #CCC; 
+}
+
+
+
+</style>
+<script>
+$('.nav.flex-column.nav-pills').hide();
+
+$('.col-12.col-md-2.col-xl-2.bd-sidebar').css('background','#fff');
+$('.col-12.col-md-2.col-xl-2.bd-sidebar').append('<div class="alert alert-info">CATdb provides access to a large collection of trancriptomic data for Arabidopsis thaliana, mainly hybridized with the 2-colors CATMA (Complete Arabidopsis Transcriptome Micro-Array, Crow et al. NAR 2003). The CATMA design has been updated to include almost all the annotated genes in Arabidopsis (TAIR + EuGene predictions)</div>');
+
+$('.col-12.col-md-2.col-xl-2.bd-sidebar').append('<div class="alert alert-info">CATdb stores data of 22 array types to study trancriptome of various species (mainly Plants). These array designs are produced with different technologies (Affymetrix, NimbleGen, Agilent)</div>');
+var feedback = (function ($) {
+
+	'use strict';
+
+	function appendFeedback(feedback_options) {
+		var model_html = '<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">';
+		model_html += '<div class="modal-dialog modal-dialog-centered" role="document">';
+		model_html += '<div class="modal-content">';
+		model_html += '<div class="modal-header">';
+		model_html += '<h5 class="modal-title" id="exampleModalLongTitle">' + feedback_options.title + '</h5>';
+		model_html += '<button type="button" class="close" data-dismiss="modal" aria-label="Close">';
+		model_html += '<span aria-hidden="true">&times;</span>';
+		model_html += '</button>';
+		model_html += '</div>';
+		model_html += '<div class="modal-body">';
+		model_html += 'First Graph';
+		model_html += '</div>';
+		model_html += '<div class="modal-footer">';
+		model_html += '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>';
+		model_html += '</div>';
+		model_html += '</div>';
+		model_html += '</div>';
+		model_html += '</div>';
+
+		model_html += '<div class="center">';
+		model_html += '<a href="#" data-toggle="modal" data-target="#exampleModalCenter">Graph</a>';
+		model_html += '</div>';
+
+		$('body').append(model_html);
+	}
+
+	function init(feedback_options) {
+		appendFeedback(feedback_options);
+	}
+
+    return {
+		init : init,
+    };
+
+}(jQuery));
+
+	$(document).ready(function () {
+			feedback_options = {
+				title: "Graph"
+			};
+
+			feedback.init(feedback_options);
+		});
+
+</script>
+
+<div class="row" style="min-height: 100px;">
+<div class="alert alert-warning mqc_loading_warning" style="width: 100%;"><span class="glyphicon glyphicon-time"></span>Welcome To CATDB web site <br>
+From CATdb you can access all the details of transcriptome experiments from experiment design with a description of each sample (plant, growth conditions, treatments) to statistical analyses (normalized expression data and differential analyses).
+
+</div>
+</div>
+<div class="row">
+<div class="col-md-3"></div>
+<div class="col" id="menu_lab">
+<div class="card" style="width: 18rem;">
+  <img class="card-img-top" src="https://dr282zn36sxxg.cloudfront.net/datastreams/f-d%3A81d6b4382e04dd4eac4367df9d3535b185c3707f83bce31b073c106e%2BIMAGE%2BIMAGE.1" alt="Card image cap">
+  <div class="card-body">
+    <h5 class="card-title">{{effectis_projects}} Project(s)</h5>
+    <p class="card-text">See More</p>
+    <a href="#" class="btn btn-primary">See More</a>
+  </div>
+</div>  
+<div class="card" style="width: 18rem;">
+  <img class="card-img-top" src="http://tools.ips2.u-psud.fr/projects/GEM2NET/logos/GEM2NET02_wf_small.jpg" alt="Card image cap">
+  <div class="card-body">
+    <h5 class="card-title">GEM2net</h5>
+    <p class="card-text" style="font-size: 10px;font-weight: bold;">GEM2Net is a new module of CATdb which the main objective is to provide a global overview of gene response of Arabidopsis under stress stimuli. This approach is based on a clustering of a subset of CATdb data and explores various resources to annotate clusters in order to get insights into gene functions.</p>
+    <p class="card-text" style="font-size: 10px;font-weight: bold;">In CATdb, projects selected for GEM2Net are indicated by this icon <img src="http://tools.ips2.u-psud.fr/projects/GEM2NET/logos/GEM2NET_logo5_small.png"> ... click on it to access data & analyses.</p>
+    <a href="http://tools.ips2.u-psud.fr//GEM2NET/" class="btn btn-primary">See More</a>
+  </div>
+</div> 
+<div class="card" style="width: 18rem;">
+  <img class="card-img-top" src="https://www.agilent.com/cs/publishingimages/miRNA-522x294-agilent.jpg" alt="Card image cap">
+  <div class="card-body">
+    <h5 class="card-title">{{effectis_experiments}} Experiment(s)</h5>
+    <p class="card-text">Text1.</p>
+    <a href="#" class="btn btn-primary">See More</a>
+  </div>
+</div>
+
+<div class="card" style="width: 18rem;">
+  <img class="card-img-top" src="https://res.mdpi.com/genes/genes-10-00015/article_deploy/html/images/genes-10-00015-g001.png" alt="Card image cap">
+  <div class="card-body">
+    <h5 class="card-title"> {{effectis_Treatments}} Treatment(s)</h5>
+    <p class="card-text">Text1</p>
+    <a href="#" class="btn btn-primary">See More</a>
+  </div>
+</div>      
+<div class="card" style="width: 18rem;">
+  <img class="card-img-top" src="https://thenypost.files.wordpress.com/2018/09/180925-minority-business-owner-after-dna-test-feature.jpg?quality=90&strip=all&w=618&h=410&crop=1" alt="Card image cap">
+  <div class="card-body">
+    <h5 class="card-title">{{effectis_Protocols}} Protocol(s)</h5>
+    <p class="card-text">Text1</p>
+    <a href="#" class="btn btn-primary">See More</a>
+  </div>
+</div>
+
+<div class="card" style="width: 18rem;">
+  <img class="card-img-top" src="https://inra-dam-front-resources-cdn.brainsonic.com/ressources/afile/455335-0d05f-picture_client_format_2-ciseaux-moleculaires.jpg" alt="Card image cap">
+  <div class="card-body">
+    <h5 class="card-title">{{effectis_Technologies}} Technologie(s)</h5>
+    <p class="card-text">Text1</p>
+    <a href="#" class="btn btn-primary">See More</a>
+  </div>
+</div>
+   
+<div class="card" style="width: 18rem;">
+  <img class="card-img-top" src="http://www.plantcell.org/content/plantcell/26/2/520/F7.medium.gif" alt="Card image cap">
+  <div class="card-body">
+    <h5 class="card-title">({{effectis_analyis}}) Analysis</h5> 
+    <p class="card-text">Text1.</p>
+    <a href="#" class="btn btn-primary">See More</a>
+  </div>
+</div>
+
+<div class="card" style="width: 18rem;">
+  <img class="card-img-top" src="https://www.researchgate.net/profile/Fumei_Zhao/publication/297594377/figure/fig5/AS:349849737285632@1460422085136/VIGS-of-PDS-gene-in-the-reproductive-organs-of-different-plant-species-A-NbPDS.png" alt="Card image cap">
+  <div class="card-body">
+    <h5 class="card-title">({{effectis_Ecotype}})Ecotype(s)</h5>
+    <p class="card-text"> Text1</p>
+    <a href="#" class="btn btn-primary">See More</a>  
+  </div>
+</div>
+  <div class="card" style="width: 18rem;">
+  <img class="card-img-top" src="https://www.nightsea.com/wp-content/uploads/2014/07/Arabidopsis_green_filter_test-12.jpg" alt="Card image cap">
+  <div class="card-body">
+    <h5 class="card-title">({{effectis_Organism}}) Organism</h5> 
+    <p class="card-text"> Text1</p>
+    <a href="#" class="btn btn-primary">See More</a>
+  </div>
+</div>
+     
+  
+</div>  
+<div class="col"></div>
+</div>
+
+<div class="row" style="min-height: 100px;">
+
+</div>
+
+
+
+{% endblock %}
