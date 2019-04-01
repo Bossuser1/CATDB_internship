@@ -15,5 +15,11 @@ urlpatterns = [
     url('^explore.html$', views.explorationgraph),
     url('^ajax/chekEmail$',views.ajax_check_email_fields),
     url('^ficheexperiment.html$',views.ficheexperiment),
-    url('^download',views.download)
+    url('^technologies.html$',views.technologies_page),
+    url('^download',views.download),
+    url('^ecotype.html$', views.treatment),
+    url('^protocol.html$', views.treatment),
+    url('^analysis.html$', views.treatment),
+    url('^Organism.html$', views.treatment),
+    
 ]+static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -89,6 +89,33 @@ def tableau_treatment_specifique(key):
     html+="</tbody></table>"
     return html
 
-
-
+def count_effectif():
+    datafin={}
+    requete="SELECT count(project.project_id) FROM  chips.project where project.is_public='yes';"
+    r,data=getdata(requete)
+    datafin['effectifs_projects']=int(data[0][0])
+    requete="SELECT count(experiment.experiment_id),count(distinct experiment.experiment_id) FROM chips.project, chips.experiment WHERE project.project_id = experiment.project_id and project.is_public='yes';"
+    r,data=getdata(requete)
+    datafin['effectifs_experiments']=int(data[0][0])
+    #datafin['effectifs_distinct_experiments']=int(data[0][1])
+    
+    requete="SELECT count(distinct treatment.treatment_type) as distinct_ex,count(treatment.treatment_type) Total_ex FROM chips.treatment,chips.experiment,chips.project "\
+    "WHERE experiment.experiment_id = treatment.experiment_id AND experiment.project_id = treatment.project_id and project.project_id=treatment.project_id and project.is_public='yes';"
+    r,data=getdata(requete)
+    datafin['effectifs_Total_treatments']=int(data[0][1])
+    datafin['effectifs_distinct_treatments']=int(data[0][0])    
+    
+    requete="SELECT count(distinct(experiment.analysis_type)) FROM chips.project, chips.experiment WHERE project.project_id = experiment.project_id and project.is_public='yes';"
+    r,data=getdata(requete)
+    datafin['effectifs_technologis']=int(data[0][0])
+    requete="select count(*) from (SELECT distinct(experiment.analysis_type),experiment.array_type FROM chips.project,chips.experiment WHERE project.project_id = experiment.project_id and project.is_public='yes') as df;"
+    r,data=getdata(requete)
+    datafin['effectifs_type_technologie']=int(data[0][0])
+    
+    requete="SELECT project.public_date as dat, project.project_id FROM chips.project where project.is_public='yes';"
+    r,data=getdata(requete)
+    data=pd.DataFrame(data)
+    datafin['moyenne_projects_by_year']=14    
+    return datafin
+#dat=count_effectif()
 #print(html)    

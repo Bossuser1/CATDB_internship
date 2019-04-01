@@ -56,7 +56,7 @@ def sampling_get(key,filtre_list=[]):
     except:
         pass    
     #html_body+="</tbody>"
-    html='<table style="font-size: calc(100%);"><tbody>'+thead+html_body+'</tbody>'
+    html='<table style="font-size: calc(100%);"><tbody>'+thead+html_body+'</tbody></table>'
     return html
 #print(html)
 

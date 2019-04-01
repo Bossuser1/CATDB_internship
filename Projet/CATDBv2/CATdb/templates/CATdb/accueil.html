@@ -1,5 +1,11 @@
+
 {% extends "CATdb/home.html" %}
+{% load staticfiles %}
 {% block content %}
+<script src="{% static "bibliotheque/highgraph/code/highcharts.js" %}"/></script>
+<script src="{% static "bibliotheque/highgraph/code/modules/exporting.js" %}"/></script>
+<script src="{% static "bibliotheque/highgraph/code/modules/export-data.js" %}"/></script>
+<script src="{% static "bibliotheque/highgraph/code/modules/drilldown.js" %}"/></script>
 
 <style>
 #menu_lab{
@@ -58,6 +64,21 @@ height: 40%;
 	background: #CCC; 
 }
 
+@media (min-width: 576px)
+.modal-dialog {
+    min-height: 80vh !important ;
+    min-width: 900px  !important; /* 80vw*/
+    /*max-width: 900px !important;*/
+    margin: 1.75rem auto;
+}
+
+@import 'https://code.highcharts.com/css/highcharts.css';
+
+#array_type_id {
+	height: 400px;
+	max-width: 800px;
+	margin: 0 auto;
+}
 
 
 </style>
@@ -75,7 +96,7 @@ var feedback = (function ($) {
 	function appendFeedback(feedback_options) {
 		var model_html = '<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">';
 		model_html += '<div class="modal-dialog modal-dialog-centered" role="document">';
-		model_html += '<div class="modal-content">';
+		model_html += '<div class="modal-content" >';
 		model_html += '<div class="modal-header">';
 		model_html += '<h5 class="modal-title" id="exampleModalLongTitle">' + feedback_options.title + '</h5>';
 		model_html += '<button type="button" class="close" data-dismiss="modal" aria-label="Close">';
@@ -83,7 +104,14 @@ var feedback = (function ($) {
 		model_html += '</button>';
 		model_html += '</div>';
 		model_html += '<div class="modal-body">';
-		model_html += 'First Graph';
+		
+		model_html += '<div class="panel-group"><div class="panel panel-default">';
+      model_html += '<div class="panel-heading"><h4 class="panel-title"><a data-toggle="collapse" href="#menu_project_col">Project</a><a data-toggle="collapse" href="#menu_Gem2net_col">Gem2net</a></h4></div>';
+      model_html += '<div id="menu_project_col" class="panel-collapse collapse"><div  class="panel-body"></div><div class="panel-footer">Panel Footer</div></div>';
+      model_html += '<div id="menu_Gem2net_col" class="panel-collapse collapse"><div class="panel-body">Panel Body</div><div class="panel-footer">Panel Footer</div></div>';
+        model_html += '</div></div>';
+		
+		
 		model_html += '</div>';
 		model_html += '<div class="modal-footer">';
 		model_html += '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>';
@@ -93,7 +121,7 @@ var feedback = (function ($) {
 		model_html += '</div>';
 
 		model_html += '<div class="center">';
-		model_html += '<a href="#" data-toggle="modal" data-target="#exampleModalCenter">Graph</a>';
+		model_html += '<a href="explore.html">Graph</a>'; //data-toggle="modal" data-target="#exampleModalCenter"
 		model_html += '</div>';
 
 		$('body').append(model_html);
@@ -133,6 +161,12 @@ From CATdb you can access all the details of transcriptome experiments from expe
 
 </div>
 </div>
+
+
+<div class="row" id="menu_array_col_body" >
+
+</div>
+
 <div class="row">
 <div class="col-md-3"></div>
 <div class="col" id="menu_lab">
@@ -140,8 +174,8 @@ From CATdb you can access all the details of transcriptome experiments from expe
   <img class="card-img-top" src="https://dr282zn36sxxg.cloudfront.net/datastreams/f-d%3A81d6b4382e04dd4eac4367df9d3535b185c3707f83bce31b073c106e%2BIMAGE%2BIMAGE.1" alt="Card image cap">
   <div class="card-body">
     <h5 class="card-title">{{effectis_projects}} Project(s)</h5>
-    <p class="card-text">See More</p>
-    <a href="#" class="btn btn-primary">See More</a>
+    <p class="card-text" style="font-size: 10px;font-weight: bold;">La plateforme CATDB enregistre differentes projects biologiques et ses projects sont au nombres  de {{moyenne_projects_by_year}} soit une moyenne de ..... par annnées qui sont rendus publics.</p>
+    <a href="project.html" class="btn btn-primary">See More</a> 
   </div>
 </div>  
 <div class="card" style="width: 18rem;">
@@ -157,8 +191,8 @@ From CATdb you can access all the details of transcriptome experiments from expe
   <img class="card-img-top" src="https://www.agilent.com/cs/publishingimages/miRNA-522x294-agilent.jpg" alt="Card image cap">
   <div class="card-body">
     <h5 class="card-title">{{effectis_experiments}} Experiment(s)</h5>
-    <p class="card-text">Text1.</p>
-    <a href="#" class="btn btn-primary">See More</a>
+    <p class="card-text"> Les differentes experiences contenus dans la base de données sont multiples mais focalisées sur les plantes et ceux ci vont aussi bien d'une experience avec differents types de facteurs de experiences (abiotics,biotiques,...) .</p>
+    <a href="experiment.html" class="btn btn-primary">See More</a>
   </div>
 </div>
 
@@ -166,16 +200,16 @@ From CATdb you can access all the details of transcriptome experiments from expe
   <img class="card-img-top" src="https://res.mdpi.com/genes/genes-10-00015/article_deploy/html/images/genes-10-00015-g001.png" alt="Card image cap">
   <div class="card-body">
     <h5 class="card-title"> {{effectis_Treatments}} Treatment(s)</h5>
-    <p class="card-text">Text1</p>
-    <a href="#" class="btn btn-primary">See More</a>
+    <p class="card-text">Les {{effectis_distinct_Treatments}} distincts Treatments contenus dans la base de données permenttent ainsi au biologistes de pouvoir étudier au mieux les gènes chez les organisms etudies.</p>
+    <a href="treatment.html" class="btn btn-primary">See More</a>
   </div>
 </div>      
 <div class="card" style="width: 18rem;">
   <img class="card-img-top" src="https://thenypost.files.wordpress.com/2018/09/180925-minority-business-owner-after-dna-test-feature.jpg?quality=90&strip=all&w=618&h=410&crop=1" alt="Card image cap">
   <div class="card-body">
     <h5 class="card-title">{{effectis_Protocols}} Protocol(s)</h5>
-    <p class="card-text">Text1</p>
-    <a href="#" class="btn btn-primary">See More</a>
+    <p class="card-text">Les Protocoles utilisées sont ainsi repretoriées pour guider le biologiste à pouvoir reffectuer ou analyser par lui même les resultats obtenus lors des experiments.</p>
+    <a href="protocol.html" class="btn btn-primary">See More</a> 
   </div>
 </div>
 
@@ -184,7 +218,7 @@ From CATdb you can access all the details of transcriptome experiments from expe
   <div class="card-body">
     <h5 class="card-title">{{effectis_Technologies}} Technologie(s)</h5>
     <p class="card-text">Text1</p>
-    <a href="#" class="btn btn-primary">See More</a>
+    <a href="technologies.html" class="btn btn-primary">See More</a> 
   </div>
 </div>
    
@@ -193,7 +227,7 @@ From CATdb you can access all the details of transcriptome experiments from expe
   <div class="card-body">
     <h5 class="card-title">({{effectis_analyis}}) Analysis</h5> 
     <p class="card-text">Text1.</p>
-    <a href="#" class="btn btn-primary">See More</a>
+    <a href="analysis.html" class="btn btn-primary">See More</a> 
   </div>
 </div>
 
@@ -201,27 +235,75 @@ From CATdb you can access all the details of transcriptome experiments from expe
   <img class="card-img-top" src="https://www.researchgate.net/profile/Fumei_Zhao/publication/297594377/figure/fig5/AS:349849737285632@1460422085136/VIGS-of-PDS-gene-in-the-reproductive-organs-of-different-plant-species-A-NbPDS.png" alt="Card image cap">
   <div class="card-body">
     <h5 class="card-title">({{effectis_Ecotype}})Ecotype(s)</h5>
-    <p class="card-text"> Text1</p>
-    <a href="#" class="btn btn-primary">See More</a>  
+    <p class="card-text"> Les écotypes servants dans les experimences sont variées et permenttent d'avoir une vision gloable des interactions que peuevnt subit l'organisme étudiés dans son environement</p>
+    <a href="ecotype.html" class="btn btn-primary">See More</a>  
   </div>
 </div>
   <div class="card" style="width: 18rem;">
   <img class="card-img-top" src="https://www.nightsea.com/wp-content/uploads/2014/07/Arabidopsis_green_filter_test-12.jpg" alt="Card image cap">
   <div class="card-body">
-    <h5 class="card-title">({{effectis_Organism}}) Organism</h5> 
-    <p class="card-text"> Text1</p>
-    <a href="#" class="btn btn-primary">See More</a>
+    <h5 class="card-title"> {{effectis_Organism}} Organism(s)</h5> 
+    <p class="card-text"> Les differents Organisms étudieés pas les projects de transcriptomes aussi Bien que les Organsimes comme l'Arabidopsis que medicago truncatula  <br> <br></p>
+    <a href="Organism.html" class="btn btn-primary">See More</a>
   </div>
 </div>
      
   
 </div>  
-<div class="col"></div>
+<div class="col" ></div>
+</div>
+<div  id="array_type_id" >
+
 </div>
 
-<div class="row" style="min-height: 100px;">
 
-</div>
+<div class="row" id="menu_project_col_body" ></div>
+
+<script type="text/javascript">
+
+
+Highcharts.chart('menu_array_col_body', {
+    chart: {
+        type: 'column'
+    },
+    title: {
+        text: 'Distribution  of Projects in CATDB by Species and by Technologies, at {{data_today}}'
+    },
+    subtitle: {
+        text: 'Click the columns  to view species. Source:CATDB'
+    },
+    xAxis: {
+        type: 'category'
+    },
+    yAxis: {
+        title: {
+            text: 'Total percent projects'
+        }
+
+    },
+    legend: {
+        enabled: false
+    },
+    plotOptions: {
+        series: {
+            borderWidth: 0,
+            dataLabels: {
+                enabled: true,
+                format: '{point.y:.0f}'
+            }
+        }
+    },
+
+    tooltip: {
+        headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+        pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
+    },
+    {{project_repatition|safe}}
+
+});
+
+
+</script>
 
 
 

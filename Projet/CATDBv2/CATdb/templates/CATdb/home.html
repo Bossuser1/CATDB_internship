@@ -229,13 +229,19 @@
             <div class="col-12 col-md-2 col-xl-2 bd-sidebar">
                <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                   <a class="nav-link active" id="v-pills-listproject" data-toggle="pill" role="tab" aria-controls="v-pills-home" aria-selected="true" href="experiment.html">New Project</a>
-                  <a class="nav-link " id="v-pills-profile-tab" data-toggle="pill" role="tab" aria-controls="v-pills-profile" aria-selected="false" href="experiment.html">Lists Projects</a>
+                  <a class="nav-link " id="v-pills-project" data-toggle="pill" role="tab" aria-controls="v-pills-project" aria-selected="false" href="experiment.html">Projects</a>
                   <a class="nav-link " id="v-pills-profile-tab" data-toggle="pill" role="tab" aria-controls="v-pills-profile" aria-selected="false" href="explore.html">Explore Database</a>
                   {{list_graph|safe}}
-<a class="nav-link" id="experiment" data-toggle="pill" role="tab" aria-controls="v-pills-messages" aria-selected="false" href="experiment.html">Experiments</a>               
-<a class="nav-link" id="treatment" data-toggle="pill" role="tab" aria-controls="v-pills-messages" aria-selected="false" href="treatment.html">Treatments</a>               
+<a class="nav-link" id="experiment" data-toggle="pill" role="tab" aria-controls="v-pills-experiment" aria-selected="false" href="experiment.html">Experiments</a>               
+<a class="nav-link" id="treatment" data-toggle="pill" role="tab" aria-controls="v-pills-treatment" aria-selected="false" href="treatment.html">Treatments</a>               
+<a class="nav-link" id="ecotype" data-toggle="pill" role="tab" aria-controls="v-pills-ecotype" aria-selected="false" href="ecotype.html">Ecotypes</a>               
+<a class="nav-link" id="protocol" data-toggle="pill" role="tab" aria-controls="v-pills-protocol" aria-selected="false" href="protocol.html">Protocols</a>               
+<a class="nav-link" id="analysis" data-toggle="pill" role="tab" aria-controls="v-pills-analysis" aria-selected="false" href="analysis.html">Analysis</a>               
+<a class="nav-link" id="Organism" data-toggle="pill" role="tab" aria-controls="v-pills-Organism" aria-selected="false" href="Organism.html">Organisms</a>               
+
+
 		
-		<a class="nav-link " id="experiment_link" data-toggle="pill" role="tab" aria-controls="v-pills-messages" aria-selected="false" href="ficheexperiment.html">Fiches experiments</a>
+		<!--<a class="nav-link " id="experiment_link" data-toggle="pill" role="tab" aria-controls="v-pills-messages" aria-selected="false" href="ficheexperiment.html">Fiches experiments</a>-->
                   <!-- <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" role="tab" aria-controls="v-pills-settings" aria-selected="false">Settings</a>-->
                </div>
             </div>
@@ -246,9 +252,17 @@
          </div>
         <footer class="page-footer font-small blue">
 
+<div id="foot" style="display: flex;/*! flex-grow: unset; */justify-content: space-between;">
+         <img src="http://tools.ips2.u-psud.fr/projects/transcriptome/CATdb_style/logoInra3.png" >  <!-- Images -->
+         <img src="http://tools.ips2.u-psud.fr/projects/transcriptome/CATdb_style/logoCnrs3.gif" >  <!-- Images CNRS -->
+         <img src="http://tools.ips2.u-psud.fr/projects/transcriptome/CATdb_style/logoInapg3.gif" >  <!-- Images AGROP -->
+         <img src="http://tools.ips2.u-psud.fr/projects/transcriptome/CATdb_style/logoEvry3.gif" >  <!-- Images AGROP -->         
+         
+        </div>
+
   <!-- Copyright -->
   <div class="footer-copyright text-center py-3">© 2019 Copyright:
-    <a href="https://mdbootstrap.com/education/bootstrap/"> IPS2</a>
+    <a href="http://ips2.u-psud.fr/fr/bases-de-donnees/catdb.html"> IPS2</a>
   </div>
   <!-- Copyright -->
 

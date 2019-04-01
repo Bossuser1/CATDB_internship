@@ -5,6 +5,7 @@ from django.shortcuts import render
 # -*- coding: utf-8 -*-
 import json
 import os
+import datetime
 from django.conf import settings
 from django.http import HttpResponse, Http404
 from django.http import HttpResponseRedirect
@@ -12,13 +13,17 @@ from django.http import HttpResponseRedirect
 from CATdb.modules.requete import getdata 
 from CATdb.modules.scarted_plot import analyis_arra_type
 from CATdb.modules.sample import sampling_get
-from CATdb.modules.graph import graph_treatment,graph_ecotype,graph_experiment_factors
-from CATdb.modules.tableau import tableau_treatment_specifique,tableau_treatment
+from CATdb.modules.graph import graph_treatment,graph_ecotype,graph_experiment_factors,crosstablespeciesbytechnologie
+from CATdb.modules.tableau import tableau_treatment_specifique,tableau_treatment,count_effectif
 
 
 def accueil(request):
+    i = datetime.datetime.now()
+    date_time=str(i.year)+'-'+str(i.month)+'-'+str(i.day) 
+    dat=count_effectif()
+    graphcross=crosstablespeciesbytechnologie()
     #{{effectis_Organism}}{{effectis_Protocols}}{{effectis_analyis}}{{effectis_Ecotype}}
-    return render(request, 'CATdb/accueil.html',{'effectis_projects':417,'effectis_experiments':617,'effectis_Treatments':120,'effectis_Technologies':276,'effectis_Ecotype':256,'effectis_analyis':765,'effectis_Protocols':145,'effectis_Organism':278})
+    return render(request, 'CATdb/accueil.html',{'project_repatition':graphcross,'data_today':date_time,'moyenne_projects_by_year':dat['moyenne_projects_by_year'],'effectis_projects':dat['effectifs_projects'],'effectis_experiments':dat['effectifs_experiments'],'effectis_Treatments':str(dat['effectifs_Total_treatments']),'effectis_distinct_Treatments':dat['effectifs_distinct_treatments'],'effectis_Technologies':276,'effectis_Ecotype':256,'effectis_analyis':765,'effectis_Protocols':145,'effectis_Organism':278})
     
 
 
@@ -39,6 +44,9 @@ def explorationgraph(request):
     show_ecotype=graph_ecotype()    
     show_experiment_factors=graph_experiment_factors()
     return render(request, 'CATdb/graph/explore_graph.html',{'list_graph':list_graph,'titre_page':'Explore Databases','show_treatment':show_treatment,'show_ecotype':show_ecotype,'show_experiment_factors':show_experiment_factors})
+
+def technologies_page(request):
+    return render(request, 'CATdb/Technologies.html',{})
 
 
 
