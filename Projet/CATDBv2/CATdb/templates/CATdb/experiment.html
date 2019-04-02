@@ -19,13 +19,13 @@
     border-right: 5px solid #007bff;
 }
 </style>
-<div class="graph_comment"> Experiment Table Graph1:{{titre_graph}} </div>
-{% include "CATdb/graph/graph.html" %}
 
 <!-- contenu -->
 <div class="comment_graph">  Contenant: </div>
-<div onclick="/ficheexperiement.html?experiment=592"> Project RNA seq : CAT-seq </div>
-<div onclick="/ficheexperiement.html?experiment=640"> Project RNA seq : JC2013_SYBIOPOP_2014 Experiment:Large genotype and population</div>
+<div><a href="/CATdb/ficheexperiment.html?experiment=592"> Project RNA seq : CAT-seq </a></div>
+<div onclick="/CATdb/ficheexperiment.html?experiment=640"><a href="/CATdb/ficheexperiment.html?experiment=640"> Project RNA seq : JC2013_SYBIOPOP_2014 Experiment:Large genotype and population </a></div>
 
-
+<div>
+<a href="http://tools.ips2.u-psud.fr/cgi-bin/projects/CATdb/catdb_projects_Ath.pl"> lien Project Micro Array </a> 
+</div>
 {% endblock %}
