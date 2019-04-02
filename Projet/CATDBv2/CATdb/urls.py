@@ -11,7 +11,7 @@ urlpatterns = [
     path('', views.accueil),
     url('^experiment.html$', views.experiment),
     url('^treatment.html$', views.treatment),
-    url('^project.html$', views.project),
+    url('^project.html$', views.project_all),
     url('^explore.html$', views.explorationgraph),
     url('^ajax/chekEmail$',views.ajax_check_email_fields),
     url('^ficheexperiment.html$',views.ficheexperiment),
@@ -21,5 +21,4 @@ urlpatterns = [
     url('^protocol.html$', views.treatment),
     url('^analysis.html$', views.treatment),
     url('^Organism.html$', views.treatment),
-    
-]+static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+]+static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

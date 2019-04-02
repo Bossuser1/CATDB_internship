@@ -139,9 +139,12 @@ var infolibaraby=infolibaraby+'<div> <label>Mapping Type:</label>'+Data[1]._valu
 var infolibaraby=infolibaraby+'<div> <label>Type of Sequence:</label>'+Data[1]._value['seq_type']+'</div>';
 var infolibaraby=infolibaraby+'<div> <label>Multihits:</label>'+Data[1]._value['multihits']+'</div>';
 var infolibaraby=infolibaraby+'<div> <label>Stranded:</label>'+Data[1]._value['stranded']+'</div>';
-var infolibaraby=infolibaraby+'<div> <label>Project file:</label><a href="{{sortage_link}}'+Data[1]._value['project_file']+'"><img src="{% static "/img/icons8-fichier-image.svg" %}" style="width: 25px;height: 15px;" >'+'</a></div>';
-var infolibaraby=infolibaraby+'<div> <label>Resume file:</label><a href="{{sortage_link}}'+Data[1]._value['resume_file']+'"><img src="{% static "/img/icons8-fichier-image.svg" %}" style="width: 25px;height: 15px;" onclick="{{sortage_link}}'+Data[1]._value['resume_file']+'">'+'</a></div>'; 
-var infolibaraby=infolibaraby+'<div> <label>Log file:</label><a href="{{sortage_link}}'+Data[1]._value['log_file']+'"><img src="{% static "/img/icons8-fichier-image.svg" %}" style="width: 25px;height: 15px;" onclick="{{sortage_link}}'+Data[1]._value['log_file']+'">'+'</a></div>';
+var link_project='{{sortage_link}}'+Data[1]._value['project_file'];
+var infolibaraby=infolibaraby+'<div> <label>Project file:</label><a href="'+link_project+'" target="_self"> <img src="{% static "/img/icons8-fichier-image.svg" %}" style="width: 25px;height: 15px;">'+'</a></div>';
+var link_reusme='{{sortage_link}}'+Data[1]._value['resume_file'];
+var infolibaraby=infolibaraby+'<div onclick="save_file(link_reusme);"> <label>Resume file:</label><img src="{% static "/img/icons8-fichier-image.svg" %}" style="width: 25px;height: 15px;">'+'</div>'; 
+var link_log='{{sortage_link}}'+Data[1]._value['log_file'];
+var infolibaraby=infolibaraby+'<div  onclick="save_file(link_log);"> <label>Log file:</label><img src="{% static "/img/icons8-fichier-image.svg" %}" style="width: 25px;height: 15px;">'+'</div>';
 var infolibaraby=infolibaraby+'<div> <label>Bankref desc:</label>'+Data[1]._value['bankref_desc']+'</div>';
 var infolibaraby=infolibaraby+'</div>'
 $('#description_project').append(infolibaraby);
@@ -153,6 +156,8 @@ var Data_labry=DG_execQuery('rnaseqlibrary','',condiction);
 }catch{
 };
 
+ //href="{{sortage_link}}'+Data[1]._value['resume_file']+'"
+ 
 var library="";
 try{
 var library=library+'<div style="background: #f7f7f7;">RNAseq Library Description</div><div class="library_out">'
@@ -178,6 +183,8 @@ $('#description_project').append(textnew);
 
 
 $('.page-footer').hide();
+
+
 </script>
 </div>
 </div>

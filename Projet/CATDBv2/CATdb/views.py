@@ -48,7 +48,8 @@ def explorationgraph(request):
 def technologies_page(request):
     return render(request, 'CATdb/Technologies.html',{})
 
-
+def project_all(request):
+    return render(request, 'CATdb/project_list.html',{})
 
 
 def experiment(request):
@@ -139,7 +140,7 @@ def ficheexperiment(request):
                 
                 echantilon=sampling_get(experiment_id)
         
-            sortage_link='/CATDb/ftp/'
+            sortage_link='/CATdb/ftp/'
             return render(request,'CATdb/ficheexperiment.html',{'titre_page':'File_experiment','sortage_link':sortage_link,'experiment':experiment_id,'project':project_id,'sample':echantilon})
         else:
             return HttpResponseRedirect('http://urgv.evry.inra.fr/cgi-bin/projects/CATdb/consult_expce.pl?experiment_id='+experiment_id)

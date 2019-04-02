@@ -7,14 +7,13 @@
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.0/css/all.css">
       <link rel='stylesheet' href="{% static "css/all.css" %}">
       <link rel='stylesheet' href="{% static "bibliotheque/bootstrap/css/bootstrap.min.css" %}">
-            
-
+         
       <script src="{% static "bibliotheque/jquery-3.3.1.min.js" %}"/></script>
    <script src="{% static "js/d3.v3.min.js" %}"/></script> 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
 	 crossorigin="anonymous"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-	 crossorigin="anonymous"></script>
+	<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+	 crossorigin="anonymous"></script>-->
 
     <script>
     function rgb2hex(rgb){
@@ -26,6 +25,100 @@
     }
     
     !function(t,n,e,i){"use strict";function a(n,e){this.element=n,this.settings=t.extend({},o,e),this._defaults=o,this._name=s,this.init()}var s="rowspanizer",o={vertical_align:"top"};t.extend(a.prototype,{init:function(){var n=this,e=t(this.element),i=[];e.find("tr").each(function(n,e){t(this).find("td").each(function(n,e){var a=t(e),s=a.html();if("undefined"!=typeof i[n]&&"dato"in i[n]&&i[n].dato==s){var o=i[n].elem.data("rowspan");("undefined"==o||isNaN(o))&&(o=1),i[n].elem.data("rowspan",parseInt(o)+1).addClass("rowspan-combine"),a.addClass("rowspan-remove")}else i[n]={dato:s,elem:a}})}),t(".rowspan-combine").each(function(e,i){var a=t(this);a.attr("rowspan",a.data("rowspan")).css({"vertical-align":n.settings.vertical_align})}),t(".rowspan-remove").remove()}}),t.fn[s]=function(n){return this.each(function(){t.data(this,"plugin_"+s)||t.data(this,"plugin_"+s,new a(this,n))})}}(jQuery,window,document);
+    
+    var saveData = (function () {
+    //var a = document.createElement("a");
+    //document.body.appendChild(a);
+    //a.style = "display: none";
+    return function (data, fileName) {
+            
+        //var json = JSON.stringify(data),
+        //    blob = new Blob([json], {type: "octet/stream"}),
+        //    url = window.URL.createObjectURL(blob);
+        //a.href = url;
+        //a.download = fileName;
+        //a.click();
+        //window.URL.revokeObjectURL(url);
+    };
+}());
+    
+(function($, undefined) {
+    "use strict";
+
+    // use this transport for "binary" data type
+    $.ajaxTransport("+binary", function(options, originalOptions, jqXHR) {
+        // check for conditions and support for blob / arraybuffer response type
+        if (window.FormData && ((options.dataType && (options.dataType == 'binary')) || (options.data && ((window.ArrayBuffer && options.data instanceof ArrayBuffer) || (window.Blob && options.data instanceof Blob))))) {
+            return {
+                // create new XMLHttpRequest
+                send: function(headers, callback) {
+                    // setup all variables
+                    var xhr = new XMLHttpRequest(),
+                        url = options.url,
+                        type = options.type,
+                        async = options.async || true,
+                        // blob or arraybuffer. Default is blob
+                        dataType = options.responseType || "blob",
+                        data = options.data || null,
+                        username = options.username || null,
+                        password = options.password || null;
+
+                    xhr.addEventListener('load', function() {
+                        var data = {};
+                        data[options.dataType] = xhr.response;
+                        // make callback and send data
+                        callback(xhr.status, xhr.statusText, data, xhr.getAllResponseHeaders());
+                    });
+                    xhr.addEventListener('error', function() {
+                        var data = {};
+                        data[options.dataType] = xhr.response;
+                        // make callback and send data
+                        callback(xhr.status, xhr.statusText, data, xhr.getAllResponseHeaders());
+                    });
+
+                    xhr.open(type, url, async, username, password);
+
+                    // setup custom headers
+                    for (var i in headers) {
+                        xhr.setRequestHeader(i, headers[i]);
+                    }
+
+                    xhr.responseType = dataType;
+                    xhr.send(data);
+                },
+                abort: function() {}
+            };
+        }
+    });
+})(window.jQuery);    
+
+
+function save_file(filename){	
+$.ajax({
+  url:filename,
+  type: "GET",
+  dataType: "binary",
+  async:false,
+  //headers:{'Content-Type':'text/txt','X-Requested-With':'XMLHttpRequest'},
+  processData: false,
+  success: function(result){
+  url = window.URL.createObjectURL(result);
+  var a = document.createElement("a");
+  //var currentlocation=window.location;
+  document.body.appendChild(a);
+  a.style = "display: none";
+  a.href = url;
+  a.target="_self";
+  console.log(result);
+  a.click();
+  window.URL.revokeObjectURL(url);
+  //window.location.href=currentlocation;
+  
+	  // do something with binary data
+  }
+});
+};
+
     
      </script>
     
@@ -229,7 +322,7 @@
             <div class="col-12 col-md-2 col-xl-2 bd-sidebar">
                <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                   <a class="nav-link active" id="v-pills-listproject" data-toggle="pill" role="tab" aria-controls="v-pills-home" aria-selected="true" href="experiment.html">New Project</a>
-                  <a class="nav-link " id="v-pills-project" data-toggle="pill" role="tab" aria-controls="v-pills-project" aria-selected="false" href="experiment.html">Projects</a>
+                  <a class="nav-link " id="v-pills-project" data-toggle="pill" role="tab" aria-controls="v-pills-project" aria-selected="false" href="project.html">Projects</a>
                   <a class="nav-link " id="v-pills-profile-tab" data-toggle="pill" role="tab" aria-controls="v-pills-profile" aria-selected="false" href="explore.html">Explore Database</a>
                   {{list_graph|safe}}
 <a class="nav-link" id="experiment" data-toggle="pill" role="tab" aria-controls="v-pills-experiment" aria-selected="false" href="experiment.html">Experiments</a>               

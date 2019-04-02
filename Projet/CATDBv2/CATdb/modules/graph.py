@@ -273,30 +273,7 @@ def crosstablespeciesbytechnologie():
         souselemen+='"data":['+current_data
         souselemen+=']},'
     text=element[:-1]+']}], \n "drilldown":{"series":['+souselemen[:-1]+']}'  
-    text1=""" "series":[{"name":"Species","colorByPoint": true,"data":
-	 [{
-            "name": "Arabidopsis RNASeq",
-            "y": 62.74,
-            "drilldown":"RnasArib"
-        },{
-            "name": "Other",
-            "y": 7.62,
-            "drilldown":"other"
-        }]
-	}],"drilldown": {
-"series":[{"name": "Arabidopsis RNASeq",
-            "id": "RnasArib",
-            "data":[["v43.0",0.17],
-                ["v43.0",0.17],
-                ["v29.0",0.26]]},
-        {"name": "Other",
-         "id": "other",
-         "data":[["v43.0",0.17],
-                ["v43.0",0.17],
-                ["v29.0",0.26]]}
-	]} """ 
-    
-    return text#,data_pth1
+    return text
 
 #"series":[{"name":"Species","colorByPoint": true,"data":[{"name":"Arabidopsis thaliana Arrays","y":276,"drilldown":"ArabidopsisthalianaArrays"},{"name":"Arabidopsis thaliana RNA-Seq","y":1,"drilldown":"ArabidopsisthalianaRNA-Seq"},{"name":"Other Arrays","y":76,"drilldown":"OtherArrays"},{"name":"Other CGH","y":1,"drilldown":"OtherCGH"},{"name":"Other RNA-Seq","y":2,"drilldown":"OtherRNA-Seq"}],"drilldown":{"series":[{"name":"Arabidopsis thaliana Arrays","id":ArabidopsisthalianaArrays"data":[["v43.0",0.17],["v41.0",0.17],["v47.0",0.17]]},{"name":"Arabidopsis thaliana RNA-Seq","id":ArabidopsisthalianaRNA-Seq"data":[["v43.0",0.17],["v41.0",0.17],["v47.0",0.17]]},{"name":"Other Arrays","id":OtherArrays"data":[["v43.0",0.17],["v41.0",0.17],["v47.0",0.17]]},{"name":"Other CGH","id":OtherCGH"data":[["v43.0",0.17],["v41.0",0.17],["v47.0",0.17]]},{"name":"Other RNA-Seq","id":OtherRNA-Seq"data":[["v43.0",0.17],["v41.0",0.17],["v47.0",0.17]]}]}
 #
