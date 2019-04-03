@@ -117,5 +117,60 @@ def count_effectif():
     data=pd.DataFrame(data)
     datafin['moyenne_projects_by_year']=14    
     return datafin
-#dat=count_effectif()
-#print(html)    
+
+def get_tableau_format_special(requete):
+    r,memory=getdata(requete)
+    data=pd.DataFrame(memory,columns=r)
+    affiche=['Nbs of Experiments','Nbs of Mutants','Nbs of Organs','Nbs of Genotypes']
+    list_column=['experiment_name','mutant_type','organ','genotype']
+    data3=None
+    for k in range(int(len(list_column)/2)):
+        data1=data[['project_name',list_column[2*k]]]
+        data1=data1.groupby('project_name')[list_column[2*k]].nunique()
+        data2=data[['project_name',list_column[2*k+1]]].loc[data[list_column[2*k+1]]!=None]
+        data2=data2.groupby('project_name')[list_column[2*k+1]].nunique()
+        try:
+            data3=pd.concat([data3,data1],axis=1).fillna(0)
+        except:
+            pass
+        try:
+            data3=pd.concat([data3,data2],axis=1).fillna(0)
+        except:
+            data3=pd.concat([data1,data2],axis=1).fillna(0)
+            pass
+    data3=data3.reset_index(level=0)        
+
+    data=data3
+
+    
+    corps_table=data.to_html().split('<tbody>')[1].split('</tbody>')[0]
+    columm_name=""" <tr><th>N°</th>"""
+    for element in affiche:
+        columm_name+="<th>"+element+"</th>"
+    columm_name+="""</tr>"""
+    tableau_id="example"
+    tableau="""
+    <table id='"""+tableau_id+"""' class="display" style="width:100%">
+            <thead>
+            """+columm_name+"""
+            </thead>
+            <tbody>"""+corps_table+"""
+            </tbody>
+            <tfoot>
+            """+columm_name+"""
+            </tfoot>
+        </table>
+    
+    <script>
+    $(document).ready(function() {
+        $('#"""+tableau_id+"""').DataTable( {
+            "scrollY":        "400px",
+            "scrollCollapse": true,
+            "paging":         false
+        } );
+    } );
+    </script>
+    """
+    return tableau    
+
+

@@ -2,10 +2,7 @@
 {% extends "CATdb/home.html" %}
 {% load staticfiles %}
 {% block content %}
-<script src="{% static "bibliotheque/highgraph/code/highcharts.js" %}"/></script>
-<script src="{% static "bibliotheque/highgraph/code/modules/exporting.js" %}"/></script>
-<script src="{% static "bibliotheque/highgraph/code/modules/export-data.js" %}"/></script>
-<script src="{% static "bibliotheque/highgraph/code/modules/drilldown.js" %}"/></script>
+
 
 <style>
 #menu_lab{
@@ -86,9 +83,6 @@ height: 40%;
 $('.nav.flex-column.nav-pills').hide();
 
 $('.col-12.col-md-2.col-xl-2.bd-sidebar').css('background','#fff');
-$('.col-12.col-md-2.col-xl-2.bd-sidebar').append('<div class="alert alert-info">CATdb provides access to a large collection of trancriptomic data for Arabidopsis thaliana, mainly hybridized with the 2-colors CATMA (Complete Arabidopsis Transcriptome Micro-Array, Crow et al. NAR 2003). The CATMA design has been updated to include almost all the annotated genes in Arabidopsis (TAIR + EuGene predictions)</div>');
-
-$('.col-12.col-md-2.col-xl-2.bd-sidebar').append('<div class="alert alert-info">CATdb stores data of 22 array types to study trancriptome of various species (mainly Plants). These array designs are produced with different technologies (Affymetrix, NimbleGen, Agilent)</div>');
 var feedback = (function ($) {
 
 	'use strict';
@@ -155,10 +149,9 @@ for (var i=0;i<compt;i++){$('#menu_lab .card:eq('+i+')').css('width',size+'rem')
 
 </script>
 
-<div class="row" style="min-height: 100px;">
-<div class="alert alert-warning mqc_loading_warning" style="width: 100%;"><span class="glyphicon glyphicon-time"></span>Welcome To CATDB web site <br>
+<div id="infowelcome" class="row" style="min-height: 100px;">
+<div  class="alert alert-warning mqc_loading_warning" style="width: 100%;"><span class="glyphicon glyphicon-time"></span>Welcome To CATDB web site <br>
 From CATdb you can access all the details of transcriptome experiments from experiment design with a description of each sample (plant, growth conditions, treatments) to statistical analyses (normalized expression data and differential analyses).
-
 </div>
 </div>
 
@@ -191,7 +184,7 @@ From CATdb you can access all the details of transcriptome experiments from expe
   <img class="card-img-top" src="https://www.agilent.com/cs/publishingimages/miRNA-522x294-agilent.jpg" alt="Card image cap">
   <div class="card-body">
     <h5 class="card-title">{{effectis_experiments}} Experiment(s)</h5>
-    <p class="card-text"> The different experiments contained in the database are multiple but focused on plants and these go as well from an experience with different types of factors of experiments (abiotics, biotics... .</p>
+    <p class="card-text" style="font-size: 10px;font-weight: bold;"> The different experiments contained in the database are multiple but focused on plants and these go as well from an experience with different types of factors of experiments (abiotics, biotics... .</p>
     <a href="experiment.html" class="btn btn-primary">See More</a>
   </div>
 </div>
@@ -200,7 +193,7 @@ From CATdb you can access all the details of transcriptome experiments from expe
   <img class="card-img-top" src="https://res.mdpi.com/genes/genes-10-00015/article_deploy/html/images/genes-10-00015-g001.png" alt="Card image cap">
   <div class="card-body">
     <h5 class="card-title"> {{effectis_Treatments}} Treatment(s)</h5>
-    <p class="card-text">The {{effectis_distinct_Treatments}} distincts Treatments contained in the database thus enabling biologists to study the genes in the study organisms.</p>
+    <p class="card-text" style="font-size: 10px;font-weight: bold;">The {{effectis_distinct_Treatments}} distincts Treatments contained in the database thus enabling biologists to study the genes in the study organisms.</p>
     <a href="treatment.html" class="btn btn-primary">See More</a>
   </div>
 </div>      
@@ -208,7 +201,7 @@ From CATdb you can access all the details of transcriptome experiments from expe
   <img class="card-img-top" src="https://thenypost.files.wordpress.com/2018/09/180925-minority-business-owner-after-dna-test-feature.jpg?quality=90&strip=all&w=618&h=410&crop=1" alt="Card image cap">
   <div class="card-body">
     <h5 class="card-title">{{effectis_Protocols}} Protocol(s)</h5>
-    <p class="card-text">The protocols used are thus listed to guide the biologist to be able to re-perform or analyse by himself the results obtained during the Experiments.</p>
+    <p class="card-text" style="font-size: 10px;font-weight: bold;">The protocols used are thus listed to guide the biologist to be able to re-perform or analyse by himself the results obtained during the Experiments.</p>
     <a href="protocol.html" class="btn btn-primary">See More</a> 
   </div>
 </div>
@@ -217,7 +210,7 @@ From CATdb you can access all the details of transcriptome experiments from expe
   <img class="card-img-top" src="https://inra-dam-front-resources-cdn.brainsonic.com/ressources/afile/455335-0d05f-picture_client_format_2-ciseaux-moleculaires.jpg" alt="Card image cap">
   <div class="card-body">
     <h5 class="card-title">{{effectis_Technologies}} Technologie(s)</h5>
-    <p class="card-text">Text1</p>
+    <p class="card-text" style="font-size: 10px;font-weight: bold;"></p>
     <a href="technologies.html" class="btn btn-primary">See More</a> 
   </div>
 </div>
@@ -225,8 +218,8 @@ From CATdb you can access all the details of transcriptome experiments from expe
 <div class="card" style="width: 18rem;">
   <img class="card-img-top" src="http://www.plantcell.org/content/plantcell/26/2/520/F7.medium.gif" alt="Card image cap">
   <div class="card-body">
-    <h5 class="card-title">({{effectis_analyis}}) Analysis</h5> 
-    <p class="card-text">Text1.</p>
+    <h5 class="card-title">{{effectis_analyis}}  Analysis</h5> 
+    <p class="card-text" style="font-size: 10px;font-weight: bold;"></p>
     <a href="analysis.html" class="btn btn-primary">See More</a> 
   </div>
 </div>
@@ -234,8 +227,8 @@ From CATdb you can access all the details of transcriptome experiments from expe
 <div class="card" style="width: 18rem;">
   <img class="card-img-top" src="https://www.researchgate.net/profile/Fumei_Zhao/publication/297594377/figure/fig5/AS:349849737285632@1460422085136/VIGS-of-PDS-gene-in-the-reproductive-organs-of-different-plant-species-A-NbPDS.png" alt="Card image cap">
   <div class="card-body">
-    <h5 class="card-title">({{effectis_Ecotype}})Ecotype(s)</h5>
-    <p class="card-text"> Experiencing ecotypes are varied and allow for a global view of the interactions that can occur in the environment of the organism studied</p>
+    <h5 class="card-title">{{effectis_Ecotype}} Ecotype(s)</h5>
+    <p class="card-text" style="font-size: 10px;font-weight: bold;"> Experiencing ecotypes are varied and allow for a global view of the interactions that can occur in the environment of the organism studied</p>
     <a href="ecotype.html" class="btn btn-primary">See More</a>  
   </div>
 </div>
@@ -243,15 +236,18 @@ From CATdb you can access all the details of transcriptome experiments from expe
   <img class="card-img-top" src="https://www.nightsea.com/wp-content/uploads/2014/07/Arabidopsis_green_filter_test-12.jpg" alt="Card image cap">
   <div class="card-body">
     <h5 class="card-title"> {{effectis_Organism}} Organism(s)</h5> 
-    <p class="card-text"> The different organisms studied by transcriptoma projects as well as organisms such as Arabidopsis as Medicago truncatula  <br> <br></p>
+    <p class="card-text" style="font-size: 10px;font-weight: bold;"> The different organisms studied by transcriptoma projects as well as organisms such as Arabidopsis as Medicago truncatula  <br> <br></p>
     <a href="Organism.html" class="btn btn-primary">See More</a>
   </div>
 </div>
      
   
 </div>  
-<div class="col" ></div>
+<div class="col"></div>
+
 </div>
+<div class="row" id="text_foot"></div>
+
 <div  id="array_type_id" >
 
 </div>
@@ -290,21 +286,65 @@ Highcharts.chart('menu_array_col_body', {
             dataLabels: {
                 enabled: true,
                 format: '{point.y:.0f}'
-            }
+            },
+            point: {
+                    events: {
+                        click: function () {
+                        //console.log(this.name);
+                        action_graph_onclick(this.name);
+                            //alert('Category: ' + this.category + ', value: ' + this.y);
+                        }
+                    }
+              }      
         }
     },
 
     tooltip: {
         headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
-        pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
+        pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}</b> of total<br/>'
     },
     {{project_repatition|safe}}
 
 });
 
+function action_graph_onclick(data){
+ if (data!==null){
+ var data=String(data).split('by')
+ var direction="Organism.html?name="+data[0]+"?technologe="+data[0];
+ var url_got="/CATdb/"+direction
+ window.location.href=url_got
+}
 
+};
+
+
+
+$('#text_foot').append('<div class="alert alert-info">CATdb provides access to a large collection of trancriptomic data for Arabidopsis thaliana, mainly hybridized with the 2-colors CATMA (Complete Arabidopsis Transcriptome Micro-Array, Crow et al. NAR 2003). The CATMA design has been updated to include almost all the annotated genes in Arabidopsis (TAIR + EuGene predictions)</div>');
+$('#text_foot').append('<div class="alert alert-info">CATdb stores data of 22 array types to study trancriptome of various species (mainly Plants). These array designs are produced with different technologies (Affymetrix, NimbleGen, Agilent)</div>');
+
+$('.row.flex-xl-nowrap').css('background','rgb(234, 236, 236)');
+$('.col-12.col-md-2.col-xl-2.bd-sidebar').css('background','rgb(234, 236, 236)');
+
+var counter = 10;
+var intervalId = null;
+function finish() {
+  clearInterval(intervalId);
+  $('#infowelcome').hide();
+}
+
+function bip() {
+    counter--;
+    if(counter == 0) finish();
+    else {	
+ //console.log("text"+counter);
+    }
+}
+
+function start(){
+  intervalId = setInterval(bip, 1000);
+}	
+start();
 </script>
-
 
 
 {% endblock %}

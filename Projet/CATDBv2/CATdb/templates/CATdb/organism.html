@@ -1,0 +1,44 @@
+{% extends "CATdb/home.html" %}
+{% load staticfiles %}
+{% block content %}
+
+<!--<link rel="stylesheet" href="{% static "bibliotheque/table/dataTables.css" %}">-->
+<script src="{% static "bibliotheque/table/dataTables.min.js" %}"/></script>
+
+<script>
+$('#v-pills-listproject').attr('class','nav-link');
+$('#Organism').attr('class','nav-link active');
+</script>
+<div class="comment"> 
+
+
+
+</div>
+
+<!-- graph -->
+<style>
+.graph_comment,.comment_graph{
+    border: aquamarine;
+    background: #b6a6a6;
+    text-align: center;
+    border-left: 5px solid #007bff;
+    border-right: 5px solid #007bff;
+}
+.odd{
+background: #fff;
+}
+
+.even{
+background: #f7f7f7;
+}
+
+</style>
+<div class="graph_comment"> Organisms  </div>
+{{graph|safe}}
+
+<!-- contenu -->
+<div class="comment_graph">  Contenant {{titre}} </div>
+
+{{tableau|safe}}
+
+{% endblock %}

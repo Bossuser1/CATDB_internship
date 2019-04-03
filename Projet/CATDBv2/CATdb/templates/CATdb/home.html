@@ -14,7 +14,11 @@
 	 crossorigin="anonymous"></script>
 	<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
 	 crossorigin="anonymous"></script>-->
-
+<script src="{% static "bibliotheque/highgraph/code/highcharts.js" %}"/></script>
+<script src="{% static "bibliotheque/highgraph/code/modules/exporting.js" %}"/></script>
+<script src="{% static "bibliotheque/highgraph/code/modules/export-data.js" %}"/></script>
+<script src="{% static "bibliotheque/highgraph/code/modules/drilldown.js" %}"/></script>
+<script src="{% static "bibliotheque/highgraph/code/modules/wordcloud.js" %}"/></script>
     <script>
     function rgb2hex(rgb){
      rgb = rgb.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
@@ -332,10 +336,6 @@ $.ajax({
 <a class="nav-link" id="analysis" data-toggle="pill" role="tab" aria-controls="v-pills-analysis" aria-selected="false" href="analysis.html">Analysis</a>               
 <a class="nav-link" id="Organism" data-toggle="pill" role="tab" aria-controls="v-pills-Organism" aria-selected="false" href="Organism.html">Organisms</a>               
 
-
-		
-		<!--<a class="nav-link " id="experiment_link" data-toggle="pill" role="tab" aria-controls="v-pills-messages" aria-selected="false" href="ficheexperiment.html">Fiches experiments</a>-->
-                  <!-- <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" role="tab" aria-controls="v-pills-settings" aria-selected="false">Settings</a>-->
                </div>
             </div>
             <div class="content col-md-9" style="margin-left: 3%;margin-top: 2%;">

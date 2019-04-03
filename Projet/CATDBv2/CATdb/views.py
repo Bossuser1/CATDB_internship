@@ -6,6 +6,7 @@ from django.shortcuts import render
 import json
 import os
 import datetime
+import pandas as pd
 from django.conf import settings
 from django.http import HttpResponse, Http404
 from django.http import HttpResponseRedirect
@@ -14,7 +15,11 @@ from CATdb.modules.requete import getdata
 from CATdb.modules.scarted_plot import analyis_arra_type
 from CATdb.modules.sample import sampling_get
 from CATdb.modules.graph import graph_treatment,graph_ecotype,graph_experiment_factors,crosstablespeciesbytechnologie
-from CATdb.modules.tableau import tableau_treatment_specifique,tableau_treatment,count_effectif
+from CATdb.modules.tableau import tableau_treatment_specifique,tableau_treatment,count_effectif,get_tableau_format_special
+from CATdb.modules.comptwordmodel import countword
+
+public_condition="""and project.is_public='yes'"""
+
 
 
 def accueil(request):
@@ -39,17 +44,77 @@ def download(request):
 
 
 def explorationgraph(request):
-    list_graph="<div> <ul><li>Treatment</li><li>Graph2</li></ul></div>"
+    list_graph="<div> <ul><li>Organs</li><li>Treatment</li><li>Graph2</li></ul></div>"
     show_treatment=graph_treatment()
     show_ecotype=graph_ecotype()    
     show_experiment_factors=graph_experiment_factors()
-    return render(request, 'CATdb/graph/explore_graph.html',{'list_graph':list_graph,'titre_page':'Explore Databases','show_treatment':show_treatment,'show_ecotype':show_ecotype,'show_experiment_factors':show_experiment_factors})
+
+    requete1="""SELECT 
+    sample.organ , 
+    count(distinct project.project_id) as weight
+    FROM 
+      chips.experiment, 
+      chips.sample_source, 
+      chips.sample, 
+      chips.project,chips.organism
+    WHERE 
+      sample_source.experiment_id = experiment.experiment_id AND
+      sample_source.experiment_id = sample.experiment_id AND
+      sample.sample_source_id = sample_source.sample_source_id AND
+      project.project_id = sample_source.project_id and organism.organism_id=sample_source.organism_id
+    """+public_condition+""" 
+    group by sample.organ ;
+    """
+    colnames,memory=getdata(requete1)#group by project.project_name,organism.organism_name,sample_source.mutant_type
+    data=pd.DataFrame(memory,columns=colnames)
+    graphcount=countword(data,"visualisation des organes ","organ","organism_graph_1","datasp","organ","weight")
+    return render(request, 'CATdb/graph/explore_graph.html',{'list_graph':list_graph,'titre_page':'Explore Databases','count_organ':graphcount,'show_treatment':show_treatment,'show_ecotype':show_ecotype,'show_experiment_factors':show_experiment_factors})
 
 def technologies_page(request):
     return render(request, 'CATdb/Technologies.html',{})
 
 def project_all(request):
     return render(request, 'CATdb/project_list.html',{})
+
+def organism(request):
+    parametre_oragnism=request.GET.get('name','').replace('?','').replace('=','')
+    if parametre_oragnism!='':
+        condition_string="and organism.organism_name like'%"+parametre_oragnism+"%'"
+    else:
+        condition_string=""
+    
+    parametre_technolologie=request.GET.get('technologie','').replace('?','').replace('=','')
+    title=parametre_oragnism+" "+parametre_technolologie
+    requete="""SELECT distinct project.project_name,experiment.experiment_name,sample_source.mutant,sample.organ,sample_source.mutant_type,sample_source.genotype,organism.organism_name
+    FROM chips.organism,chips.experiment, chips.sample_source,chips.project,chips.sample WHERE  sample.sample_source_id=sample_source.sample_source_id and sample_source.organism_id = organism.organism_id AND
+    experiment.experiment_id=sample_source.experiment_id  and project.project_id = sample_source.project_id """+condition_string+"""
+    """+public_condition+""" 
+    ;"""
+    
+    requete1="""SELECT 
+    sample.organ , 
+    count(distinct project.project_id) as weight
+    FROM 
+      chips.experiment, 
+      chips.sample_source, 
+      chips.sample, 
+      chips.project,chips.organism
+    WHERE 
+      sample_source.experiment_id = experiment.experiment_id AND
+      sample_source.experiment_id = sample.experiment_id AND
+      sample.sample_source_id = sample_source.sample_source_id AND
+      project.project_id = sample_source.project_id and organism.organism_id=sample_source.organism_id
+    """+condition_string+"""
+    """+public_condition+""" 
+    group by sample.organ ;
+    """
+    colnames,memory=getdata(requete1)#group by project.project_name,organism.organism_name,sample_source.mutant_type
+    data=pd.DataFrame(memory,columns=colnames)
+    
+    graph=countword(data,"visualisation des organes ","organ","organism_graph_1","datasp","organ","weight")
+    
+    tableau=get_tableau_format_special(requete)
+    return render(request, 'CATdb/organism.html',{'titre':title,'tableau':tableau,'graph':graph})
 
 
 def experiment(request):
