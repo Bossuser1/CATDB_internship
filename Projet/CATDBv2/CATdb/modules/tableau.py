@@ -213,10 +213,12 @@ def run_script_complete_data(conditionpublic,filtrerequete):
     dat0=dat0.set_index(['project_id'])
     return dat0,dat1,dat2,dat3,dat4,dat5
 
+  
+
 def formatage_affichage(dat0,dat1,dat2,dat3,dat4,dat5):
     # par cour une seule fois la boucle
-    afficheall="""<style>  #first{ font-size: 10px;   border: 1px solid #e2e2e2;}  #first tr:nth-child(2n) {background: #dfedf1;}</style>  <table id="first"> """ 
-    afficheall+="""<thead>"""
+    afficheall="""<style>  #first{ font-size: 10px;   border: 1px solid #e2e2e2;}  #first tr:nth-child(2n) {background: #dfedf1;}</style> <div style="display:flex;justify-content: space-around;font-size: 12px;background: #b6a6a6;border-left: 5px solid #007bff;border-right: 5px solid #007bff;border-bottom: 2px solid;border-top: 1px solid;"><div> Totals Projects: """+str(len(list(dat0.index)))+""" </div><div>Search:<input type="text" id="name_table"></div> <select onchange="runscript_action_list(this.value);"><option value="10">10</option><option value="20">20</option> <option value="30">30</option><option value="50">50</option></select>  </div> <table id="first"> """ 
+    afficheall+="""<thead style="border-bottom: 2px solid;">"""
     affichealhed="<tr>"
     affichealhed+="<th>Project</th>"
     affichealhed+="<th>Title</th>"
@@ -230,10 +232,11 @@ def formatage_affichage(dat0,dat1,dat2,dat3,dat4,dat5):
     
     afficheall+=affichealhed+"""</thead><tbody>"""
     
-    
+    cptage=0
     for key in list(dat0.index):
+        cptage+=1
         try:
-            affiche="<tr>"
+            affiche="<tr class='tablerow"+str(cptage)+"'>"
             var1=expression_regulier(str(dat0.loc[key,'title']))
             affiche+="<td><a href='/project="+dat0.loc[key,'project_name']+"'>"+dat0.loc[key,'project_name']+"</a></td>\n" #nom project
             var1=expression_regulier(str(dat0.loc[key,'title']))
@@ -350,8 +353,20 @@ def formatage_affichage(dat0,dat1,dat2,dat3,dat4,dat5):
     afficheall+="<tfoot>"
     afficheall+=affichealhed
     afficheall+="</tfoot>"
-    afficheall+="</table>" 
-    return afficheall
+    afficheall+="</table>"
+    java="""<script>
+    
+    function runscript_action_list(element){
+    for (var i=element;i<440;i++){
+    var text='first tbody .tablerow'+i
+    try{
+    $("#"+text).hide();
+    }catch{};
+    };
+    };  
+    </script>"""
+    
+    return afficheall+java
 
 
 def creat_table_liste(conditionpublic,filtrerequete):
