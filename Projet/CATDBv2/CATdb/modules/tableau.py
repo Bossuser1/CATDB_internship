@@ -23,6 +23,8 @@ except:
 import  pandas as pd
 import random
 
+
+
 def tableau_treatment():    
     requete="SELECT experiment.project_id,experiment.experiment_id,treatment.treatment_type,experiment.experiment_name ,project.title,project.project_name FROM chips.treatment,chips.experiment,chips.project"\
     " WHERE experiment.experiment_id = treatment.experiment_id AND experiment.project_id = treatment.project_id and project.project_id=treatment.project_id ;"
@@ -171,6 +173,191 @@ def get_tableau_format_special(requete):
     } );
     </script>
     """
-    return tableau    
+    return tableau 
+
+   
+
+def expression_regulier(var1):
+    var1=var1.replace('  ','').replace('\n','').replace('	','')
+    return var1
+
+def run_script_complete_data(conditionpublic,filtrerequete):
+    ###nom_project
+    requete="SELECT project.project_id,project.title,project.project_name FROM chips.project"\
+    " WHERE "+conditionpublic+filtrerequete+";"
+    r,data=getdata(requete)
+    dat1=pd.DataFrame(data,columns=r).drop_duplicates()
+    ####bibliographie
+    requete="SELECT project.project_id,project_biblio.pubmed_id FROM chips.project, chips.project_biblio WHERE  project_biblio.project_id = project.project_id and "\
+    ""+conditionpublic+filtrerequete+";"
+    r,data=getdata(requete)
+    dat2=pd.DataFrame(data,columns=r).drop_duplicates()
+    
+    ##section corrdianteur
+    requete="SELECT project.project_id,contact.contact_id,"\
+    "  contact.last_name FROM chips.project, chips.contact, "\
+    "  chips.project_coordinator WHERE project_coordinator.contact_id = contact.contact_id AND "\
+    "  project_coordinator.project_id=project.project_id and "+conditionpublic+filtrerequete+"; "
+    r,data=getdata(requete)
+    dat3=pd.DataFrame(data,columns=r).drop_duplicates()
+    
+    #experiement organ
+    requete="SELECT distinct sample.project_id,sample.experiment_id,sample.organ,experiment.experiment_name,experiment.analysis_type FROM chips.project, chips.sample,chips.experiment "\
+    " WHERE sample.project_id = experiment.project_id AND "\
+    " experiment.experiment_id = sample.experiment_id and project.project_id=sample.project_id and "+conditionpublic+filtrerequete+"; "
+    r,data=getdata(requete)
+    dat4=pd.DataFrame(data,columns=r).drop_duplicates()
+    
+    dat5=dat4[[u'project_id',u'experiment_name',u'analysis_type']].drop_duplicates()
+    dat0=dat1
+    dat0=dat0.set_index(['project_id'])
+    return dat0,dat1,dat2,dat3,dat4,dat5
+
+def formatage_affichage(dat0,dat1,dat2,dat3,dat4,dat5):
+    # par cour une seule fois la boucle
+    afficheall="""<style>  #first{ font-size: 10px;   border: 1px solid #e2e2e2;}  #first tr:nth-child(2n) {background: #dfedf1;}</style>  <table id="first"> """ 
+    afficheall+="""<thead>"""
+    affichealhed="<tr>"
+    affichealhed+="<th>Project</th>"
+    affichealhed+="<th>Title</th>"
+    affichealhed+="<th>Ref Bibiolgraph</th>"
+    affichealhed+="<th>Coord</th>"
+    affichealhed+="<th>Organ</th>"
+    affichealhed+="<th>Experiment Type</th>"
+    affichealhed+="<th>Experiment</th>"
+    affichealhed+="<th>File</th>"
+    affichealhed+="</tr>"
+    
+    afficheall+=affichealhed+"""</thead><tbody>"""
+    
+    
+    for key in list(dat0.index):
+        try:
+            affiche="<tr>"
+            var1=expression_regulier(str(dat0.loc[key,'title']))
+            affiche+="<td><a href='/project="+dat0.loc[key,'project_name']+"'>"+dat0.loc[key,'project_name']+"</a></td>\n" #nom project
+            var1=expression_regulier(str(dat0.loc[key,'title']))
+            affiche+="<td>"+var1+"</td> \n" #titre +pubimed
+            try:
+                var2=list(dat2[dat2['project_id']==int(key)].pubmed_id)
+                publmed=""
+                if len(var2)>1:
+                    publmed="<table>"
+                    for elemnt in var2:
+                        publmed+="<tr><td><a href='/reference="+str(elemnt)+"'>"+expression_regulier(str(elemnt))+"</a></td></tr>"
+                    publmed+="</table>"
+                elif len(var2)==1:
+                    publmed=""+expression_regulier(str(var2[0]))+""
+                else:
+                    publmed=""
+            except:
+                publmed=""
+                pass
+                
+            affiche+="<td>"+publmed+"</td>\n" #publimed
+            
+            var1=list(dat3[dat3['project_id']==int(key)].contact_id)
+            var2=list(dat3[dat3['project_id']==int(key)].last_name)
+            try:    
+                if len(var2)>0:
+                    contact="<table>"
+                    for kv in range(len(var2)):
+                        contact+="<tr><td><a href='/contact_id="+str(var1[kv])+"'>"+str(var2[kv])+"</a></td></tr>"
+                    contact+="</table>"
+                elif len(var2)==1:
+                    contact=contact.replace('<table>','').replace('</table>','')
+                    contact=contact.replace('</table>','')
+                else:
+                    contact=""
+            except:
+                print("attention")
+                contact=""
+                pass
+            affiche+="<td>"+contact+"</td>\n" #publimed
+        
+            #organ
+            var2=list(set(list(dat4[dat4['project_id']==int(key)].organ)))
+            try:    
+                if len(var2)>0:
+                    organ="<table>"
+                    for kv in range(len(var2)):
+                        organ+="<tr><td><a href='/organ="+str(var2[kv])+"'>"+var2[kv]+"</a></td></tr>"
+                    organ+="</table>"
+                elif len(var2)==1:
+                    organ=organ.replace('<table>','').replace('</table>','')
+                else:
+                    organ=""
+            except:
+                print("attention")
+                organ=""
+                pass
+            affiche+="<td>"+organ+"</td>\n" 
+            
+            #experiment_name(erreur)
+            var2=list(dat5[dat5['project_id']==int(key)].experiment_name)
+            var3=list(dat5[dat5['project_id']==int(key)].analysis_type)
+            try:    
+                if len(var2)>0:
+                    download="<table>"
+                    experimen="<table>"
+                    strexperiment="<table>"
+                    act=var3[0]
+                    for kv in range(len(var2)):
+                        act=var3[kv]
+                        if kv>0:
+                            bf=var3[kv-1]
+                        else:
+                            bf=""
+                        try:    
+                            if bf==act:
+                                valpus="<br>"
+                            else:
+                                valpus=act
+                        except:
+                            valpus=act
+                            pass
+                        experimen+="<tr><td><a href='/experiment="+str(var2[kv])+"'>"+var2[kv]+"</a></td></tr>"
+                        download+="<tr><td><a href='/donwload="+str(var2[kv])+"'>"+"fichier"+"</a></td></tr>"
+                        strexperiment+="<tr><td>"+valpus+"</td></tr>"
+                    
+                    experimen+="</table>"
+                    download+="</table>"
+                    strexperiment+="</table>"
+                elif len(var2)==1:
+                    experimen=experimen.replace('<table>','').replace('</table>','')
+                    download=download.replace('<table>','').replace('</table>','')
+                    strexperiment=strexperiment.replace('<table>','').replace('</table>','')
+                else:
+                    experimen=""
+                    strexperiment=""
+                    download=""
+            except:
+                experimen=""
+                strexperiment=""
+                download=""
+                pass
+            affiche+="<td>"+strexperiment+"</td>\n"
+            affiche+="<td>"+experimen+"</td>\n"
+            affiche+="<td>"+download+"</td>\n"
+    
+            affiche+="</tr>"    
+        except:
+            affiche=""
+            pass
+    
+        afficheall+=affiche    
+    afficheall+="</tbody>"
+    afficheall+="<tfoot>"
+    afficheall+=affichealhed
+    afficheall+="</tfoot>"
+    afficheall+="</table>" 
+    return afficheall
+
+
+def creat_table_liste(conditionpublic,filtrerequete):
+    dat0,dat1,dat2,dat3,dat4,dat5=run_script_complete_data(conditionpublic,filtrerequete)
+    afficheall=formatage_affichage(dat0,dat1,dat2,dat3,dat4,dat5)
+    return afficheall
+
 
 

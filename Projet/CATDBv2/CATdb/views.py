@@ -15,11 +15,12 @@ from CATdb.modules.requete import getdata
 from CATdb.modules.scarted_plot import analyis_arra_type
 from CATdb.modules.sample import sampling_get
 from CATdb.modules.graph import graph_treatment,graph_ecotype,graph_experiment_factors,crosstablespeciesbytechnologie
-from CATdb.modules.tableau import tableau_treatment_specifique,tableau_treatment,count_effectif,get_tableau_format_special
+from CATdb.modules.tableau import creat_table_liste,tableau_treatment_specifique,tableau_treatment,count_effectif,get_tableau_format_special
 from CATdb.modules.comptwordmodel import countword
 
 public_condition="""and project.is_public='yes'"""
-
+conditionpublic="project.is_public<>' '"#yes
+filtrerequete="  " #and project.project_id=256
 
 
 def accueil(request):
@@ -67,14 +68,15 @@ def explorationgraph(request):
     """
     colnames,memory=getdata(requete1)#group by project.project_name,organism.organism_name,sample_source.mutant_type
     data=pd.DataFrame(memory,columns=colnames)
-    graphcount=countword(data,"visualisation des organes ","organ","organism_graph_1","datasp","organ","weight")
+    graphcount=countword(data,"visualisation of Organs ","organ","organism_graph_1","datasp","organ","weight")
     return render(request, 'CATdb/graph/explore_graph.html',{'list_graph':list_graph,'titre_page':'Explore Databases','count_organ':graphcount,'show_treatment':show_treatment,'show_ecotype':show_ecotype,'show_experiment_factors':show_experiment_factors})
 
 def technologies_page(request):
     return render(request, 'CATdb/Technologies.html',{})
 
 def project_all(request):
-    return render(request, 'CATdb/project_list.html',{})
+    tableau=creat_table_liste(conditionpublic,filtrerequete)
+    return render(request, 'CATdb/project_list.html',{'tableau':tableau})
 
 def organism(request):
     parametre_oragnism=request.GET.get('name','').replace('?','').replace('=','')
@@ -111,7 +113,7 @@ def organism(request):
     colnames,memory=getdata(requete1)#group by project.project_name,organism.organism_name,sample_source.mutant_type
     data=pd.DataFrame(memory,columns=colnames)
     
-    graph=countword(data,"visualisation des organes ","organ","organism_graph_1","datasp","organ","weight")
+    graph=countword(data,"visualisation Of organs ","organ","organism_graph_1","datasp","organ","weight")
     
     tableau=get_tableau_format_special(requete)
     return render(request, 'CATdb/organism.html',{'titre':title,'tableau':tableau,'graph':graph})
