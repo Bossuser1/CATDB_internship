@@ -247,7 +247,7 @@ def formatage_affichage(dat0,dat1,dat2,dat3,dat4,dat5):
                 if len(var2)>1:
                     publmed="<table>"
                     for elemnt in var2:
-                        publmed+="<tr><td><a href='/reference="+str(elemnt)+"'>"+expression_regulier(str(elemnt))+"</a></td></tr>"
+                        publmed+="<tr><td><a href='http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?db=pubmed&term="+str(elemnt)+"'>"+expression_regulier(str(elemnt))+"</a></td></tr>"
                     publmed+="</table>"
                 elif len(var2)==1:
                     publmed=""+expression_regulier(str(var2[0]))+""
