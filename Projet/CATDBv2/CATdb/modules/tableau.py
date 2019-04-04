@@ -244,13 +244,14 @@ def formatage_affichage(dat0,dat1,dat2,dat3,dat4,dat5):
             try:
                 var2=list(dat2[dat2['project_id']==int(key)].pubmed_id)
                 publmed=""
-                if len(var2)>1:
+                if len(var2)>0:
                     publmed="<table>"
                     for elemnt in var2:
                         publmed+="<tr><td><a href='http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?db=pubmed&term="+str(elemnt)+"'>"+expression_regulier(str(elemnt))+"</a></td></tr>"
                     publmed+="</table>"
                 elif len(var2)==1:
-                    publmed=""+expression_regulier(str(var2[0]))+""
+                    publmed=publmed.replace('<table>','').replace('</table>','')
+                    publmed=publmed.replace('</table>','')
                 else:
                     publmed=""
             except:
