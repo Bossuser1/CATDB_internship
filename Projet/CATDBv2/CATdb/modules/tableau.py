@@ -208,7 +208,7 @@ def run_script_complete_data(conditionpublic,filtrerequete):
     r,data=getdata(requete)
     dat4=pd.DataFrame(data,columns=r).drop_duplicates()
     
-    dat5=dat4[[u'project_id',u'experiment_name',u'analysis_type']].drop_duplicates()
+    dat5=dat4[[u'project_id',u'experiment_id',u'experiment_name',u'analysis_type']].drop_duplicates()
     dat0=dat1
     dat0=dat0.set_index(['project_id'])
     return dat0,dat1,dat2,dat3,dat4,dat5
@@ -298,6 +298,7 @@ def formatage_affichage(dat0,dat1,dat2,dat3,dat4,dat5):
             
             #experiment_name(erreur)
             var2=list(dat5[dat5['project_id']==int(key)].experiment_name)
+            var4=list(dat5[dat5['project_id']==int(key)].experiment_id)
             var3=list(dat5[dat5['project_id']==int(key)].analysis_type)
             try:    
                 if len(var2)>0:
@@ -319,7 +320,13 @@ def formatage_affichage(dat0,dat1,dat2,dat3,dat4,dat5):
                         except:
                             valpus=act
                             pass
-                        experimen+="<tr><td><a href='/experiment="+str(var2[kv])+"'>"+var2[kv]+"</a></td></tr>"
+                        #var4[kv]
+                        if act=='RNA-Seq':
+                            urlget="/CATdb/ficheexperiment.html?experiment="
+                        else:
+                            urlget="http://tools.ips2.u-psud.fr/cgi-bin/projects/CATdb/consult_expce.pl?experiment_id="
+                            
+                        experimen+="<tr><td><a href='"+urlget+str(var4[kv])+"'>"+var2[kv]+"</a></td></tr>"
                         download+="<tr><td><a href='/donwload="+str(var2[kv])+"'>"+"fichier"+"</a></td></tr>"
                         strexperiment+="<tr><td>"+valpus+"</td></tr>"
                     
