@@ -184,7 +184,7 @@ def expression_regulier(var1):
 def run_script_complete_data(conditionpublic,filtrerequete):
     ###nom_project
     requete="SELECT project.project_id,project.title,project.project_name FROM chips.project"\
-    " WHERE "+conditionpublic+filtrerequete+";"
+    " WHERE "+conditionpublic+filtrerequete+" order by project.project_name;"
     r,data=getdata(requete)
     dat1=pd.DataFrame(data,columns=r).drop_duplicates()
     ####bibliographie
@@ -211,13 +211,95 @@ def run_script_complete_data(conditionpublic,filtrerequete):
     dat5=dat4[[u'project_id',u'experiment_id',u'experiment_name',u'analysis_type']].drop_duplicates()
     dat0=dat1
     dat0=dat0.set_index(['project_id'])
-    return dat0,dat1,dat2,dat3,dat4,dat5
+    
+    requete="""select distinct dt.array_type_name,dt.array_type_id,dt.experiment_id,dt.project_id from (SELECT 
+      array_type.array_type_id, 
+      "array".array_type_name, 
+      experiment.experiment_id, 
+      project.project_id
+    FROM 
+      chips.hybridization, 
+      chips.array_batch, 
+      chips."array", 
+      chips.project, 
+      chips.array_type, 
+      chips.experiment
+    WHERE 
+      hybridization.array_id = "array".array_id AND
+      array_batch.array_type_id = array_type.array_type_id AND
+      "array".array_batch_id = array_batch.array_batch_id AND
+      experiment.experiment_id = hybridization.experiment_id and
+    project.project_id=experiment.project_id ) as dt  order by dt.project_id  ;
+    """
+    r,data=getdata(requete)
+    dat6=pd.DataFrame(data,columns=r).drop_duplicates()
+    
+    
+    
+    return dat0,dat1,dat2,dat3,dat4,dat5,dat6
 
   
 
-def formatage_affichage(dat0,dat1,dat2,dat3,dat4,dat5):
+def formatage_affichage(dat0,dat1,dat2,dat3,dat4,dat5,dat6):
     # par cour une seule fois la boucle
-    afficheall="""<style>  #first{ font-size: 10px;   border: 1px solid #e2e2e2;}  #first tr:nth-child(2n) {background: #dfedf1;}</style> <div style="display:flex;justify-content: space-around;font-size: 12px;background: #b6a6a6;border-left: 5px solid #007bff;border-right: 5px solid #007bff;border-bottom: 2px solid;border-top: 1px solid;"><div> Totals Projects: """+str(len(list(dat0.index)))+""" </div><div>Search:<input type="text" id="name_table"></div> <select onchange="runscript_action_list(this.value);"><option value="10">10</option><option value="20">20</option> <option value="30">30</option><option value="50">50</option></select>  </div> <table id="first"> """ 
+    afficheall="""
+    <script>
+    var open_pop="false";
+    function information_get_element(element,$Tablename){
+    var Data=[];
+    if ($Tablename='contact'){$ListDataCond='contact_id='+element}
+    
+    if ($ListDataCond!=''){var instruction={'data_requete_element':$Tablename,'value_search':$ListDataCond}}
+	else{var instruction={'data_requete_element':$Tablename}};
+	$.ajax({
+	    type:"GET",
+	    data:instruction,
+	    dataType: "json",
+	    async: false,
+	    url:"/CATdb/data/getinformation",
+	    success: function(data) {
+		Data=data;
+		console.log(data[1]._value);
+        $('#popinfor_corps').empty();
+        $('#popinformation').attr("style","position: absolute;top:"+0+";z-index: 3;background-color: white;min-width: 500px;");
+        $('#popinfor_corps').append("<div> First name:"+data[1]._value['first_name']+"</div>");
+        $('#popinfor_corps').append("<div> Last name: "+data[1]._value['last_name']+" </div>");
+        //$('#popinformation').append("<div> Phone: "+data[1]._value['phone']+" </div>");
+        $('#popinfor_corps').append("<div>  Email:"+data[1]._value['email']+" </div>");
+        $('#popinfor_corps').append("<div>  Instistution:"+data[1]._value['institution']+" </div>");
+        //$('#popinformation').append("<div>  Laboratory: "+data[1]._value['laboratory']+" </div>");
+        open_pop="true";
+         
+
+	    },
+	error:function(err) { console.clear();console.log('error'+$Tablename);}
+	});
+    
+    
+    
+    
+    };
+    
+    
+    $("#first").ready(function(){
+    $("#first").on("click",function(){
+    try{
+    if (open_pop=="false"){
+    console.log(open_pop);
+    //$('#popinformation').hide();
+    //open_pop="false";
+    } else{
+    console.log(open_pop);
+    }
+    }catch{}
+    
+    
+    
+    });
+    });
+    
+    </script>
+    <style> #list_element{margin-bottom:2px;text-align:center;font-size: 12px;background: #b6a6a6;border-left: 5px solid #007bff;border-right: 5px solid #007bff;border-bottom: 2px solid;border-top: 1px solid;} #list_element a {margin: 2px; text-decoration:underline;cursor:pointer;font-size:10px;}   #first{ font-size: 10px;   border: 1px solid #e2e2e2;}  #first tr:nth-child(2n) {background: #dfedf1;}</style> <div style="display:flex;justify-content: space-around;font-size: 12px;background: #b6a6a6;border-left: 5px solid #007bff;border-right: 5px solid #007bff;border-bottom: 2px solid;border-top: 1px solid;"><div> Totals Projects: """+str(len(list(dat0.index)))+""" </div><div>Search:<input type="text" id="name_table"></div> <select onchange="runscript_action_list(this.value);"><option value="10">10</option><option value="20">20</option> <option value="30">30</option><option value="50">50</option></select>  </div> <table id="first"> """ 
     afficheall+="""<thead style="border-bottom: 2px solid;">"""
     affichealhed="<tr>"
     affichealhed+="<th>Project</th>"
@@ -226,12 +308,11 @@ def formatage_affichage(dat0,dat1,dat2,dat3,dat4,dat5):
     affichealhed+="<th>Coord</th>"
     affichealhed+="<th>Organ</th>"
     affichealhed+="<th>Experiment Type</th>"
+    affichealhed+="<th>Materiel Type</th>"
     affichealhed+="<th>Experiment</th>"
     affichealhed+="<th>File</th>"
     affichealhed+="</tr>"
-    
     afficheall+=affichealhed+"""</thead><tbody>"""
-    
     cptage=0
     for key in list(dat0.index):
         cptage+=1
@@ -266,7 +347,7 @@ def formatage_affichage(dat0,dat1,dat2,dat3,dat4,dat5):
                 if len(var2)>0:
                     contact="<table>"
                     for kv in range(len(var2)):
-                        contact+="<tr><td><a href='/contact_id="+str(var1[kv])+"'>"+str(var2[kv])+"</a></td></tr>"
+                        contact+="<tr><td><a  onclick='information_get_element("+str(var1[kv])+",\"contact\");' style='cursor:pointer;text-decoration:underline;'>"+str(var2[kv])+"</a></td></tr>"
                     contact+="</table>"
                 elif len(var2)==1:
                     contact=contact.replace('<table>','').replace('</table>','')
@@ -306,6 +387,7 @@ def formatage_affichage(dat0,dat1,dat2,dat3,dat4,dat5):
                     download="<table>"
                     experimen="<table>"
                     strexperiment="<table>"
+                    materiel="<table>"
                     act=var3[0]
                     for kv in range(len(var2)):
                         act=var3[kv]
@@ -328,26 +410,44 @@ def formatage_affichage(dat0,dat1,dat2,dat3,dat4,dat5):
                             urlget="http://tools.ips2.u-psud.fr/cgi-bin/projects/CATdb/consult_expce.pl?experiment_id="
                             
                         experimen+="<tr><td><a href='"+urlget+str(var4[kv])+"'>"+var2[kv]+"</a></td></tr>"
+                        var31=""
+                        var32=""
+                        try:
+                            var31=list(set(list(dat6[dat6['project_id']==int(key)][dat6['experiment_id']==int(var4[kv])].array_type_name)))
+                            var32=list(set(list(dat6[dat6['project_id']==int(key)][dat6['experiment_id']==int(var4[kv])].array_type_id)))
+                        except:
+                            var31=""
+                            var32=""
+                            pass
+                        try:
+                            materiel+="<tr><td><a href='/donwload="+str(var32[0])+"'>"+str(var31[0])+"</a></td></tr>"
+                        except:
+                            pass
                         download+="<tr><td><a href='/donwload="+str(var2[kv])+"'>"+"fichier"+"</a></td></tr>"
                         strexperiment+="<tr><td>"+valpus+"</td></tr>"
-                    
+                                                                                                                                                                                                                                                                                                                                
                     experimen+="</table>"
+                    materiel+="</table>"
                     download+="</table>"
                     strexperiment+="</table>"
                 elif len(var2)==1:
                     experimen=experimen.replace('<table>','').replace('</table>','')
+                    materiel=materiel.replace('<table>','').replace('</table>','')
                     download=download.replace('<table>','').replace('</table>','')
                     strexperiment=strexperiment.replace('<table>','').replace('</table>','')
                 else:
                     experimen=""
                     strexperiment=""
+                    materiel=""
                     download=""
             except:
                 experimen=""
                 strexperiment=""
                 download=""
+                materiel=""
                 pass
             affiche+="<td>"+strexperiment+"</td>\n"
+            affiche+="<td>"+materiel+"</td>\n"
             affiche+="<td>"+experimen+"</td>\n"
             affiche+="<td>"+download+"</td>\n"
     
@@ -358,28 +458,90 @@ def formatage_affichage(dat0,dat1,dat2,dat3,dat4,dat5):
     
         afficheall+=affiche    
     afficheall+="</tbody>"
-    afficheall+="<tfoot>"
+    afficheall+="<tfoot   style='border-top: 2px solid;'>"
     afficheall+=affichealhed
     afficheall+="</tfoot>"
-    afficheall+="</table>"
-    java="""<script>
+    afficheall+="""</table><div id='list_element'></div>
     
+    <div id="popinformation">
+    
+    <div class="modal-header">
+        <h5 class="modal-title" id="popinformationLabel">Title</h5>
+        <button type="button" class="close" onclick='$("#popinformation").hide();' data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+    </div>
+    <div id="popinfor_corps" class="modal-body">
+    
+    
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick='$("#popinformation").hide();'>Close</button>
+    </div>
+    
+    </div>
+    
+    
+    
+    """
+    
+    
+    java="""<script>
+       
+    
+    
+    var action="false";
     function runscript_action_list(element){
-    for (var i=element;i<440;i++){
+    
+    for (var i=element-1;i<"""+str(cptage)+""";i++){
     var text='first tbody .tablerow'+i
     try{
     $("#"+text).hide();
     }catch{};
     };
-    };  
-    </script>"""
+    action="true";
+    return action;
+    };
     
+    var element=[];
+    var comptage_element=10;
+    var total="""+str(cptage)+""";
+    for (var i=0;i<=(total/comptage_element);i++){
+        element.push(i*comptage_element);    
+    }
+    
+    for (var i=1;i<element.length;i++){  
+    $("#list_element").append("<a onclick='change("+i+","+total+","+comptage_element+");'>"+i+'</a>');
+    
+    }
+    function change(i,total,comptage_element){
+    
+    for (var j=0;j<=total;j++){
+    var text='first tbody .tablerow'+j
+    
+    if (j<=comptage_element*(i-1) || j>=i*comptage_element){
+    $("#"+text).hide();
+    }else{
+    $("#"+text).show();
+    }
+    
+    }
+    }
+    </script>
+    
+    
+    
+    
+    
+    
+    
+    """
     return afficheall+java
 
 
 def creat_table_liste(conditionpublic,filtrerequete):
-    dat0,dat1,dat2,dat3,dat4,dat5=run_script_complete_data(conditionpublic,filtrerequete)
-    afficheall=formatage_affichage(dat0,dat1,dat2,dat3,dat4,dat5)
+    dat0,dat1,dat2,dat3,dat4,dat5,dat6=run_script_complete_data(conditionpublic,filtrerequete)
+    afficheall=formatage_affichage(dat0,dat1,dat2,dat3,dat4,dat5,dat6)
     return afficheall
 
 

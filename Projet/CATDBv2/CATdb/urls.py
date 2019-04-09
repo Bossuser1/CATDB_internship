@@ -21,4 +21,5 @@ urlpatterns = [
     url('^protocol.html$', views.treatment),
     url('^analysis.html$', views.treatment),
     url('^Organism.html$', views.organism),
+    url('^data/getinformation$', views.get_information_pop),
 ]+static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

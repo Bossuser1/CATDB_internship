@@ -18,9 +18,28 @@ from CATdb.modules.graph import graph_treatment,graph_ecotype,graph_experiment_f
 from CATdb.modules.tableau import creat_table_liste,tableau_treatment_specifique,tableau_treatment,count_effectif,get_tableau_format_special
 from CATdb.modules.comptwordmodel import countword
 
+shema="chips"
 public_condition="""and project.is_public='yes'"""
 conditionpublic="project.is_public<>' '"#yes
 filtrerequete="  " #and project.project_id=256
+
+
+
+def pass_json(colnames,memory):
+    cpt=0
+    data=dict()
+    for ele in range(len(memory)):
+        cpt=cpt+1
+        col=[]
+        for ele1 in memory[ele]:
+            col.append(str(ele1))
+        dictionary ={'_key':cpt,"_value":dict(zip(colnames,col))}
+        data[cpt]=dictionary
+    return data
+    
+    
+
+
 
 
 def accueil(request):
@@ -213,3 +232,21 @@ def ficheexperiment(request):
             return HttpResponseRedirect('http://urgv.evry.inra.fr/cgi-bin/projects/CATdb/consult_expce.pl?experiment_id='+experiment_id)
     else:
         return HttpResponseRedirect('http://urgv.evry.inra.fr/cgi-bin/projects/CATdb/consult_expce.pl?experiment_id='+experiment_id)
+
+
+def get_information_pop(request):
+    
+    parametre=request.GET.get('data_requete_element','')
+    condiction=request.GET.get('value_search','')
+    if parametre=='contact':
+        requete="""SELECT * from chips.contact where """+condiction+";"
+        info=getdata(requete)
+        data=pass_json(info[0],info[1])
+    if parametre=="array_tye":
+        requete="Select array_type_name,platform_name,platform_type,note,spotting_plate,\
+        slide_dim,surface_type,coating_type,nature_attachment,strand,user_id,submission_date,\
+        arrayer_IN_file, arrayer_OUT_file,metablock_nb,metacol_nb,metarow_nb,col_nb,row_nb,\
+        avg_spot_dim, spot_nb, geo_platform, array_probe_file from "+shema+".array_type where array_type_id="+condiction+";"
+        info=getdata(requete)
+        data=pass_json(info[0],info[1])
+    return HttpResponse(json.dumps(data), content_type="application/json") 
