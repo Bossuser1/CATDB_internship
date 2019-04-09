@@ -184,7 +184,7 @@ def expression_regulier(var1):
 def run_script_complete_data(conditionpublic,filtrerequete):
     ###nom_project
     requete="SELECT project.project_id,project.title,project.project_name FROM chips.project"\
-    " WHERE "+conditionpublic+filtrerequete+" order by project.project_name;"
+    " WHERE "+conditionpublic+filtrerequete+" ;"
     r,data=getdata(requete)
     dat1=pd.DataFrame(data,columns=r).drop_duplicates()
     ####bibliographie
@@ -382,6 +382,8 @@ def formatage_affichage(dat0,dat1,dat2,dat3,dat4,dat5,dat6):
             var2=list(dat5[dat5['project_id']==int(key)].experiment_name)
             var4=list(dat5[dat5['project_id']==int(key)].experiment_id)
             var3=list(dat5[dat5['project_id']==int(key)].analysis_type)
+            var31a=""
+            var31=""
             try:    
                 if len(var2)>0:
                     download="<table>"
@@ -410,8 +412,7 @@ def formatage_affichage(dat0,dat1,dat2,dat3,dat4,dat5,dat6):
                             urlget="http://tools.ips2.u-psud.fr/cgi-bin/projects/CATdb/consult_expce.pl?experiment_id="
                             
                         experimen+="<tr><td><a href='"+urlget+str(var4[kv])+"'>"+var2[kv]+"</a></td></tr>"
-                        var31=""
-                        var32=""
+                        var31a=var31
                         try:
                             var31=list(set(list(dat6[dat6['project_id']==int(key)][dat6['experiment_id']==int(var4[kv])].array_type_name)))
                             var32=list(set(list(dat6[dat6['project_id']==int(key)][dat6['experiment_id']==int(var4[kv])].array_type_id)))
@@ -419,10 +420,16 @@ def formatage_affichage(dat0,dat1,dat2,dat3,dat4,dat5,dat6):
                             var31=""
                             var32=""
                             pass
-                        try:
-                            materiel+="<tr><td><a href='/donwload="+str(var32[0])+"'>"+str(var31[0])+"</a></td></tr>"
-                        except:
-                            pass
+                        if var31a==var31:
+                            try:
+                                materiel+="<tr><td><a href='/donwload="+str(var32[0])+"'>"+"."+"</a></td></tr>"
+                            except:
+                                pass
+                        else:
+                            try:
+                                materiel+="<tr><td><a href='/donwload="+str(var32[0])+"'>"+str(var31[0])+"</a></td></tr>"
+                            except:
+                                pass
                         download+="<tr><td><a href='/donwload="+str(var2[kv])+"'>"+"fichier"+"</a></td></tr>"
                         strexperiment+="<tr><td>"+valpus+"</td></tr>"
                                                                                                                                                                                                                                                                                                                                 
