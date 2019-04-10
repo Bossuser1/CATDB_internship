@@ -183,7 +183,7 @@ def expression_regulier(var1):
 
 def run_script_complete_data(conditionpublic,filtrerequete):
     ###nom_project
-    requete="SELECT project.project_id,project.title,project.project_name FROM chips.project"\
+    requete="SELECT project.project_id,project.title,project.project_name,gem2net_id FROM chips.project"\
     " WHERE "+conditionpublic+filtrerequete+" ;"
     r,data=getdata(requete)
     dat1=pd.DataFrame(data,columns=r).drop_duplicates()
@@ -202,7 +202,7 @@ def run_script_complete_data(conditionpublic,filtrerequete):
     dat3=pd.DataFrame(data,columns=r).drop_duplicates()
     
     #experiement organ
-    requete="SELECT distinct sample.project_id,sample.experiment_id,sample.organ,experiment.experiment_name,experiment.analysis_type FROM chips.project, chips.sample,chips.experiment "\
+    requete="SELECT distinct sample.project_id,sample.experiment_id,sample.organ,sample.sample_source_id,experiment.experiment_name,experiment.analysis_type FROM chips.project, chips.sample,chips.experiment "\
     " WHERE sample.project_id = experiment.project_id AND "\
     " experiment.experiment_id = sample.experiment_id and project.project_id=sample.project_id and "+conditionpublic+filtrerequete+"; "
     r,data=getdata(requete)
@@ -234,13 +234,21 @@ def run_script_complete_data(conditionpublic,filtrerequete):
     r,data=getdata(requete)
     dat6=pd.DataFrame(data,columns=r).drop_duplicates()
     
-    
-    
-    return dat0,dat1,dat2,dat3,dat4,dat5,dat6
+    requete="SELECT experiment.experiment_id,rnaseqlibrary.experiment_id,rnaseqlibrary.sequencer FROM chips.experiment,chips.rnaseqlibrary WHERE \
+    experiment.project_id = rnaseqlibrary.project_id and experiment.experiment_id = rnaseqlibrary.experiment_id;"
+    r,data=getdata(requete)
+    dat7=pd.DataFrame(data,columns=r).drop_duplicates()
+
+    requete="SELECT sample_source.organism_id,organism.organism_id, sample_source.sample_source_id, sample_source.experiment_id, sample_source.project_id, organism.organism_name FROM chips.ecotype, chips.organism,  chips.sample_source WHERE organism.organism_id = sample_source.organism_id;"
+    r,data=getdata(requete)
+    dat8=pd.DataFrame(data,columns=r).drop_duplicates()
+
+
+    return dat0,dat1,dat2,dat3,dat4,dat5,dat6,dat7,dat8
 
   
 
-def formatage_affichage(dat0,dat1,dat2,dat3,dat4,dat5,dat6):
+def formatage_affichage(dat0,dat1,dat2,dat3,dat4,dat5,dat6,dat7,dat8):
     # par cour une seule fois la boucle
     afficheall="""
     <script>
@@ -306,20 +314,31 @@ def formatage_affichage(dat0,dat1,dat2,dat3,dat4,dat5,dat6):
     affichealhed+="<th>Title</th>"
     affichealhed+="<th>Ref Bibiolgraph</th>"
     affichealhed+="<th>Coord</th>"
+    affichealhed+="<th>Organism</th>"
     affichealhed+="<th>Organ</th>"
     affichealhed+="<th>Experiment Type</th>"
-    affichealhed+="<th>Materiel Type</th>"
+    #affichealhed+="<th>Materiel Type</th>"
     affichealhed+="<th>Experiment</th>"
-    affichealhed+="<th>File</th>"
+    affichealhed+="<th>Data/Swaps</th>"
     affichealhed+="</tr>"
     afficheall+=affichealhed+"""</thead><tbody>"""
     cptage=0
     for key in list(dat0.index):
         cptage+=1
         try:
+            vargenm2net=""
+            add_gemnt2net=""
             affiche="<tr class='tablerow"+str(cptage)+"'>"
             var1=expression_regulier(str(dat0.loc[key,'title']))
-            affiche+="<td><a href='/project="+dat0.loc[key,'project_name']+"'>"+dat0.loc[key,'project_name']+"</a></td>\n" #nom project
+            try:
+                vargenm2net=str(int(dat0.loc[key,'gem2net_id']))
+            except:
+                pass
+            if vargenm2net!="nan" and vargenm2net!="" :
+                add_gemnt2net='<a href="http://tools.ips2.u-psud.fr//GEM2NET/Profiles.php?project_id='+vargenm2net+'" ><img src="http://tools.ips2.u-psud.fr/projects/GEM2NET/logos/GEM2NET_logo5_transpa.png" style="width: 20%;height:20%;"><a>'
+            else:
+                add_gemnt2net=""
+            affiche+="<td><a href='/project="+dat0.loc[key,'project_name']+"'>"+dat0.loc[key,'project_name']+"</a>  "+add_gemnt2net+"</td>\n" #nom project
             var1=expression_regulier(str(dat0.loc[key,'title']))
             affiche+="<td>"+var1+"</td> \n" #titre +pubimed
             try:
@@ -364,18 +383,41 @@ def formatage_affichage(dat0,dat1,dat2,dat3,dat4,dat5,dat6):
             var2=list(set(list(dat4[dat4['project_id']==int(key)].organ)))
             try:    
                 if len(var2)>0:
+                    organism="<table>"
                     organ="<table>"
+                    varsample_source=""
+                    varorganisme=""
                     for kv in range(len(var2)):
                         organ+="<tr><td><a href='/organ="+str(var2[kv])+"'>"+var2[kv]+"</a></td></tr>"
+                        
+                        
+                        varorganisme1=varorganisme
+                        try:
+                            varsample_source=list(set(list(dat4[dat4['project_id']==int(key)][dat4['organ']==var2[kv]].sample_source_id)))[0]
+                            varorganisme=list(dat8[dat8['sample_source_id']==varsample_source].organism_name)[0]#list(set(list(dat8[dat8['project_id']==int(key)][dat8['sample_source_id']==int(varsample_source)].organsim_name)))
+                            if varorganisme1!=varorganisme:
+                                organism+="<tr><td>"+varorganisme+"</td></tr>"
+                            else:
+                                organism+="<tr><td>"+ +"</td></tr>"
+                        except:
+                            print("attention organism")
+                            #print(varsample_source)
+                            pass
+                    organism+="</table>"
                     organ+="</table>"
                 elif len(var2)==1:
                     organ=organ.replace('<table>','').replace('</table>','')
+                    organism=organism.replace('<table>','').replace('</table>','')
                 else:
                     organ=""
+                    organism=""
+                    
             except:
                 print("attention")
                 organ=""
+                organism=""
                 pass
+            affiche+="<td>"+organism+"</td>\n" 
             affiche+="<td>"+organ+"</td>\n" 
             
             #experiment_name(erreur)
@@ -430,7 +472,14 @@ def formatage_affichage(dat0,dat1,dat2,dat3,dat4,dat5,dat6):
                                 materiel+="<tr><td><a href='/donwload="+str(var32[0])+"'>"+str(var31[0])+"</a></td></tr>"
                             except:
                                 pass
-                        download+="<tr><td><a href='/donwload="+str(var2[kv])+"'>"+"fichier"+"</a></td></tr>"
+                        try:
+                            if str(var31[0])[0:5]=="CATMA":
+                                download+="<tr><td><a href='http://tools.ips2.u-psud.fr/cgi-bin/projects/CATdb/cons_diff.pl?project_id="+str(key)+"&experiment_id="+str(var4[kv])+"&platform="+str(var31[0])[0:5]+"'>"+"file"+"</a></td></tr>"
+                            else :
+                                download+="<tr><td> </td></tr>"
+                        except:    
+                            download+="<tr><td>  </td></tr>"
+                            pass
                         strexperiment+="<tr><td>"+valpus+"</td></tr>"
                                                                                                                                                                                                                                                                                                                                 
                     experimen+="</table>"
@@ -454,7 +503,7 @@ def formatage_affichage(dat0,dat1,dat2,dat3,dat4,dat5,dat6):
                 materiel=""
                 pass
             affiche+="<td>"+strexperiment+"</td>\n"
-            affiche+="<td>"+materiel+"</td>\n"
+            #affiche+="<td>"+materiel+"</td>\n"
             affiche+="<td>"+experimen+"</td>\n"
             affiche+="<td>"+download+"</td>\n"
     
@@ -547,8 +596,8 @@ def formatage_affichage(dat0,dat1,dat2,dat3,dat4,dat5,dat6):
 
 
 def creat_table_liste(conditionpublic,filtrerequete):
-    dat0,dat1,dat2,dat3,dat4,dat5,dat6=run_script_complete_data(conditionpublic,filtrerequete)
-    afficheall=formatage_affichage(dat0,dat1,dat2,dat3,dat4,dat5,dat6)
+    dat0,dat1,dat2,dat3,dat4,dat5,dat6,dat7,dat8=run_script_complete_data(conditionpublic,filtrerequete)
+    afficheall=formatage_affichage(dat0,dat1,dat2,dat3,dat4,dat5,dat6,dat7,dat8)
     return afficheall
 
 
